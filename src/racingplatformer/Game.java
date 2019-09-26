@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.MainMenuGui;
 import racingplatformer.renderengine.gui.RenderHelper;
@@ -39,6 +40,9 @@ public class Game extends Canvas
     //The current active gui which is drawn on the screen
     private Gui activeGui;
     
+    //The current active race
+    private Race activeRace;
+    
     //Booleans to tell if music is enabled
     private boolean isMusicActivated;
     //Booleans to tell if sound effects are enabled 
@@ -55,7 +59,10 @@ public class Game extends Canvas
     public Game()
     {
         this.gameRunning = true;
+        
         activeGui = null;
+        activeRace = null;
+        
         isMusicActivated = true;
         areSoundEffectsActivated = true;
         playerInputButtons = new int[4][4];
@@ -107,7 +114,8 @@ public class Game extends Canvas
         double scale = 1.0f;
         
         MainMenuGui mainMenu = new MainMenuGui(this);
-        this.activeGui = mainMenu;
+        //this.activeGui = mainMenu;
+        this.setActiveRace(new Race(this));
         
         while(gameRunning)
         {
@@ -122,6 +130,13 @@ public class Game extends Canvas
             double mouseX = MouseInfo.getPointerInfo().getLocation().getX() - this.getParent().getLocationOnScreen().x;
             double mouseY = MouseInfo.getPointerInfo().getLocation().getY() - this.getParent().getLocationOnScreen().y; 
             
+            //Update the races current logic
+            if(this.getActiveRace() != null)
+            {
+                this.getActiveRace().onUpdate();
+            }
+            
+            
             if(this.getActiveGui() != null)
             {
                 //Dividing by widthFactor and heightFactor moves the coordinates from the screen size to our psuedo size
@@ -131,14 +146,16 @@ public class Game extends Canvas
             //Gets the graphics which is used to draw to the canvas
             Graphics2D g = (Graphics2D)strategy.getDrawGraphics();
             
+            //Render the current races screens
+            if(this.getActiveRace() != null)
+            {
+                this.getActiveRace().render(g);
+            }
+            
             //Calls the draw method of the active gui if it is not null
             if(this.getActiveGui() != null)
             {
                 this.getActiveGui().draw(g);
-            }
-            else
-            {
-                RenderHelper.clearScreen(g, this);
             }
 
             g.dispose();
@@ -221,6 +238,16 @@ public class Game extends Canvas
     public void setActiveGui(Gui gui)
     {
         this.activeGui = gui;
+    }
+    
+    public Race getActiveRace()
+    {
+        return this.activeRace;
+    }
+    
+    public void setActiveRace(Race race)
+    {
+        this.activeRace = race;
     }
     
     public boolean getIsMusicActivated()

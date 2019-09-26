@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.HashSet;
 import racingplatformer.Game;
+import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.components.Button;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
 
@@ -42,7 +43,7 @@ public class SetupRaceMenuGui extends Gui
     {
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
-        
+        this.gameInstance.setActiveRace(new Race(this.gameInstance));
     }
     
     public void onMainMenuButtonClicked()

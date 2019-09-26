@@ -5,12 +5,20 @@
  */
 package racingplatformer.race;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Luke
  */
 public class Track 
 {
+    
+    public Track()
+    {
+    }
+    
     /***
      * Generates a random track and returns the object
      * @return randomly generated track
