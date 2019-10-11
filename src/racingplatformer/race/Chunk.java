@@ -28,7 +28,6 @@ public class Chunk
         this.chunkID = cnkID;
         this.boundaryList = new ArrayList();
         this.gameObjectList = new ArrayList<>();
-        this.boundaryList.add(new TrackSegment(1, cnkID));
     }
     
     public void onUpdate(Race race)
@@ -62,14 +61,18 @@ public class Chunk
         return this.chunkID;
     }
     
-    public void renderChunk(Graphics2D g, Screen screen, Game gameInstance)
+    public void renderGameObjects(Graphics2D g, Screen screen, Game gameInstance)
     {
-        //Draw the track segments first
-        ((TrackSegment)this.boundaryList.get(0)).render(g, screen, gameInstance);
         for(GameObject o : gameObjectList)
         {
             o.render(g, screen, gameInstance);
         }
+    }
+    
+    public void renderTrack(Graphics2D g, Screen screen, Game gameInstance)
+    {
+        //Draw the track segments first
+        ((TrackSegment)this.boundaryList.get(0)).render(g, screen, gameInstance);
     }
     
     public void addGameObject(GameObject o)
@@ -85,6 +88,14 @@ public class Chunk
         if(this.gameObjectList.contains(o))
         {
             this.gameObjectList.remove(o);
+        }
+    }
+    
+    public void addBoundary(TrackSegment trackSegment)
+    {
+        if(!this.boundaryList.contains(trackSegment))
+        {
+            this.boundaryList.add(trackSegment);
         }
     }
 }

@@ -41,10 +41,8 @@ public class Race
         this.loadedChunksList = new ArrayList<>();
         Porche porche = new Porche(100.f, 100.f);
         this.screen = new Screen(1, gameInst, porche);
-        this.chunk = new Chunk(0);
-        this.chunk.addGameObject(porche);
-        this.chunkList.add(chunk);
-        this.chunkList.add(new Chunk(1));
+        Track.generateTrack(10340340L, this.chunkList);
+        this.chunkList.get(0).addGameObject(porche);
     }
     
     /***

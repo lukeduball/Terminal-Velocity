@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import racingplatformer.Game;
+import racingplatformer.math.PerlinNoise;
 import racingplatformer.math.Vector2f;
 import racingplatformer.renderengine.Screen;
 
@@ -37,9 +38,11 @@ public class TrackSegment
     private void generatePointList(int chunkID)
     {
         Random rand = new Random();
-        for(int i = 0; i < 50; i++)
+        PerlinNoise pNoise = new PerlinNoise(8932937492483242575L);
+        for(int i = 0; i < 251; i++)
         {
-            Vector2f point = new Vector2f((chunkID * 250.f) + i*5, rand.nextFloat() * 10 + 150);
+            float height = pNoise.getNoise(i+chunkID*250, 100);
+            Vector2f point = new Vector2f((chunkID * 250.f) + i,  -height + 150);
             pointList.add(point);
         }
     }
@@ -47,13 +50,25 @@ public class TrackSegment
     public void render(Graphics2D g, Screen screen, Game gameInstance)
     {
         g.setColor(Color.green);
-        int[] xPoints = new int[pointList.size()];
-        int[] yPoints = new int[pointList.size()];
+        g.setStroke(new BasicStroke(10));
+        int[] xPoints = new int[pointList.size()+2];
+        int[] yPoints = new int[pointList.size()+2];
+        
+        //Creates a point below the screen to draw a filled in track on the left boundary
+        xPoints[0] = (int)((pointList.get(0).getX() - screen.getWorldRenderX()) * screen.getScaleFactor());
+        yPoints[0] = (int)(screen.getHeight() + 10);
+        
         for(int i = 0; i < pointList.size(); i++)
-        {
-            xPoints[i] = (int)( (pointList.get(i).getX() - screen.getWorldRenderX()) * screen.getScaleFactor());
-            yPoints[i] = (int)( (pointList.get(i).getY() - screen.getWorldRenderY()) * screen.getScaleFactor());
+        { 
+            xPoints[i+1] = (int)( (pointList.get(i).getX() - screen.getWorldRenderX()) * screen.getScaleFactor());
+            yPoints[i+1] = (int)( (pointList.get(i).getY() - screen.getWorldRenderY()) * screen.getScaleFactor());
         }
-        g.drawPolyline(xPoints, yPoints, pointList.size());
+        
+        //Creates a point below the screen to draw a filled in track on the right boundary
+        xPoints[pointList.size()+1] = (int)( (pointList.get(pointList.size()-1).getX() - screen.getWorldRenderX()) * screen.getScaleFactor());
+        yPoints[pointList.size()+1] = (int)(screen.getHeight() + 10);
+                
+        g.fillPolygon(xPoints, yPoints, pointList.size()+2);
+        g.setStroke(new BasicStroke());
     }
 }

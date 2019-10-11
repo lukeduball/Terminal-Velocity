@@ -63,7 +63,15 @@ public class Screen
             //Safeguard against attempting to draw a null chunk
             if(chunk != null)
             {
-                chunk.renderChunk(g, this, gameInstance);
+                chunk.renderTrack(g, this, gameInstance);
+            }
+        }
+        
+        for(Chunk chunk : this.loadedChunks)
+        {
+            if(chunk != null)
+            {
+                chunk.renderGameObjects(g, this, gameInstance);
             }
         }
     }

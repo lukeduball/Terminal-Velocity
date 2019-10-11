@@ -5,10 +5,8 @@
  */
 package racingplatformer.gameobject.vehicles;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import racingplatformer.Game;
 import racingplatformer.math.Vector2f;
 import racingplatformer.renderengine.ResourceManager;

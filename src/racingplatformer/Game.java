@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.MainMenuGui;
-import racingplatformer.renderengine.gui.RenderHelper;
 
 /**
  *
