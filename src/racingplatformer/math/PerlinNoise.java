@@ -56,7 +56,6 @@ public class PerlinNoise
             {
                 range = 1;
             }
-            break;
         }
         
         return noise;

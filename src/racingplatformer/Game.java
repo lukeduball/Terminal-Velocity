@@ -13,6 +13,11 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.FixtureDef;
+import org.jbox2d.dynamics.World;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.MainMenuGui;
@@ -113,8 +118,10 @@ public class Game extends Canvas
         double scale = 1.0f;
         
         MainMenuGui mainMenu = new MainMenuGui(this);
-        //this.activeGui = mainMenu;
-        this.setActiveRace(new Race(this));
+        this.activeGui = mainMenu;
+        //this.setActiveRace(new Race(this));
+        
+        World world = new World(new Vec2(0.0f, -1.0f));
         
         while(gameRunning)
         {

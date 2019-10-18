@@ -6,8 +6,8 @@
 package racingplatformer.gameobject;
 
 import java.awt.Graphics2D;
+import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
-import racingplatformer.math.Vector2f;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -17,7 +17,7 @@ import racingplatformer.renderengine.Screen;
 public abstract class GameObject 
 {
     protected float rotation = 0.0f;
-    protected Vector2f position;
+    protected Vec2 position;
     
     public GameObject()
     {
@@ -29,7 +29,7 @@ public abstract class GameObject
         return rotation;
     }
     
-    public Vector2f getPosition()
+    public Vec2 getPosition()
     {
         return position;
     }

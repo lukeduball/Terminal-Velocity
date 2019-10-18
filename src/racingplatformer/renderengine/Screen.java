@@ -86,7 +86,7 @@ public class Screen
     {
         if(this.focusVehicle != null)
         {
-            Chunk currentChunk = race.getChunkFromLocation(this.focusVehicle.getPosition().getX());
+            Chunk currentChunk = race.getChunkFromLocation(this.focusVehicle.getPosition().x);
             if(this.loadedChunks[1] != currentChunk && currentChunk != null)
             {
                 race.unloadChunk(getChunkToUnload(currentChunk, this.loadedChunks[1]));
@@ -195,12 +195,12 @@ public class Screen
     
     public float getWorldRenderX()
     {
-        return this.focusVehicle.getPosition().getX() - 250.f;
+        return this.focusVehicle.getPosition().x - 250.f;
     }
     
     public float getWorldRenderY()
     {
-        return this.focusVehicle.getPosition().getY() - 186.f;
+        return this.focusVehicle.getPosition().y - 186.f;
     }
     
 }

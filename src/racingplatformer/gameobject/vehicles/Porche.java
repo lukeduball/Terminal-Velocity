@@ -7,8 +7,8 @@ package racingplatformer.gameobject.vehicles;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
-import racingplatformer.math.Vector2f;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.Screen;
 
@@ -23,7 +23,7 @@ public class Porche extends Vehicle
     
     public Porche(float x, float y)
     {
-        this.position = new Vector2f(x, y);
+        this.position = new Vec2(x, y);
     }
     
     @Override
@@ -33,7 +33,7 @@ public class Porche extends Vehicle
         
         this.wheelRotation += 0.01;
         //this.rotation += 0.01;
-        this.position = this.position.add(new Vector2f(1.0f, 0.0f));
+        this.position = this.position.add(new Vec2(1.0f, 0.0f));
         
         float frameWidth = (270.0f/4.0f);
         float factor = frameWidth / porcheImg.getWidth(null);

@@ -5,13 +5,12 @@
  */
 package racingplatformer.gameobject.vehicles;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
-import racingplatformer.math.Vector2f;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -32,7 +31,7 @@ public class Vehicle extends GameObject
     //Acceleration of the vehicle
     private float acceleration;
     
-    private Vector2f velocity;
+    private Vec2 velocity;
     
     protected float wheelRotation;
     
@@ -58,7 +57,7 @@ public class Vehicle extends GameObject
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
         
         AffineTransform at = new AffineTransform();
-        at.translate(screen.getX() + (this.getPosition().getX() - screen.getWorldRenderX()) * screen.getScaleFactor(), screen.getY() + (this.getPosition().getY() - screen.getWorldRenderY()) * screen.getScaleFactor());
+        at.translate(screen.getX() + (this.getPosition().x - screen.getWorldRenderX()) * screen.getScaleFactor(), screen.getY() + (this.getPosition().y - screen.getWorldRenderY()) * screen.getScaleFactor());
         at.rotate(this.getRotation(), width * screen.getScaleFactor() / 2.0f, height * screen.getScaleFactor() / 2.0f);
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
@@ -71,8 +70,8 @@ public class Vehicle extends GameObject
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
         
-        float xPos = screen.getX() + (this.getPosition().getX() - screen.getWorldRenderX() + xOff) * screen.getScaleFactor();
-        float yPos = screen.getY() + (this.getPosition().getY() - screen.getWorldRenderY() + yOff) * screen.getScaleFactor();
+        float xPos = screen.getX() + (this.getPosition().x - screen.getWorldRenderX() + xOff) * screen.getScaleFactor();
+        float yPos = screen.getY() + (this.getPosition().y - screen.getWorldRenderY() + yOff) * screen.getScaleFactor();
         
         float frameCenterX = (-xOff  + frameWidth / 2.0f) * screen.getScaleFactor();
         float frameCenterY = (-yOff + frameHeight / 2.0f) * screen.getScaleFactor();

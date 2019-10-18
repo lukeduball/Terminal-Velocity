@@ -35,7 +35,7 @@ public class Chunk
         List<GameObject> removeList = new ArrayList<>();
         for(GameObject o : gameObjectList)
         {
-            int chunkPos = (int)(o.getPosition().getX() / 250.f);
+            int chunkPos = (int)(o.getPosition().x / 250.f);
             if(chunkPos != this.chunkID)
             {
                 //Remove game object from list
