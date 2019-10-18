@@ -33,10 +33,10 @@ public class Game extends Canvas
     private boolean gameRunning;
     
     //Pseudo values for the height and width, place all our things within these bounds and they are scaled up to the window size
-    private static final float PSUEDO_WIDTH = 500;
-    private static final float PSUEDO_HEIGHT = 280;
+    private static final float PSEUDO_WIDTH = 500;
+    private static final float PSEUDO_HEIGHT = 280;
     
-    //Factors that can convert the Psuedo width and height to the real screen value
+    //Factors that can convert the Pseudo width and height to the real screen value
     private static float widthFactor;
     private static float heightFactor;
     
@@ -55,7 +55,7 @@ public class Game extends Canvas
     private int[][] playerInputButtons;
     
     //Constants used to make setting player inputs easier to read
-    public static final int FOWARD = 0;
+    public static final int FORWARD = 0;
     public static final int BACKWARD = 1;
     public static final int TILT_UP = 2;
     public static final int TILT_DOWN = 3;
@@ -70,7 +70,7 @@ public class Game extends Canvas
         isMusicActivated = true;
         areSoundEffectsActivated = true;
         playerInputButtons = new int[4][4];
-        this.initDefualtKeyControls();
+        this.initDefaultKeyControls();
         
         //Creates the window that contains the canvas
         JFrame container = new JFrame("Racing Platformer");
@@ -96,11 +96,11 @@ public class Game extends Canvas
         //Sets the exit button on the top right of the window so it closes
         container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        //Registers these classes so that it caputes keyboard input and mouse input
+        //Registers these classes so that it captures keyboard input and mouse input
         this.addKeyListener(new KeyHandler(this));
         this.addMouseListener(new MouseHandler(this));
         
-        //Sets the window so that it is the current window to caputre input
+        //Sets the window so that it is the current window to capture input
         this.requestFocus();
         
         //Sets the canvas so that there things are drawn to an offscreen buffer
@@ -128,9 +128,9 @@ public class Game extends Canvas
             long delta = System.currentTimeMillis() - lastLoopTime;
             lastLoopTime = System.currentTimeMillis();
             
-            //Sets the width factors by dividing the window width and height in pixels by our psuedo values
-            Game.widthFactor = this.getParent().getWidth() / PSUEDO_WIDTH;
-            Game.heightFactor = this.getParent().getHeight() / PSUEDO_HEIGHT;
+            //Sets the width factors by dividing the window width and height in pixels by our pseudo values
+            Game.widthFactor = this.getParent().getWidth() / PSEUDO_WIDTH;
+            Game.heightFactor = this.getParent().getHeight() / PSEUDO_HEIGHT;
             
             //Gets the mouse location on the screen relative to the jFrame window
             double mouseX = MouseInfo.getPointerInfo().getLocation().getX() - this.getParent().getLocationOnScreen().x;
@@ -145,7 +145,7 @@ public class Game extends Canvas
             
             if(this.getActiveGui() != null)
             {
-                //Dividing by widthFactor and heightFactor moves the coordinates from the screen size to our psuedo size
+                //Dividing by widthFactor and heightFactor moves the coordinates from the screen size to our pseudo size
                 this.getActiveGui().onUpdate(mouseX / Game.getWidthFactor(), mouseY / Game.getHeightFactor());
             }
             
@@ -187,31 +187,31 @@ public class Game extends Canvas
         g.gameLoop();
     }
     
-    private void initDefualtKeyControls()
+    private void initDefaultKeyControls()
     {
-        this.playerInputButtons[0][FOWARD] = 87;
+        this.playerInputButtons[0][FORWARD] = 87;
         this.playerInputButtons[0][BACKWARD] = 83;
         this.playerInputButtons[0][TILT_UP] = 65;
         this.playerInputButtons[0][TILT_DOWN] = 68;
         
-        this.playerInputButtons[1][FOWARD] = 89;
+        this.playerInputButtons[1][FORWARD] = 89;
         this.playerInputButtons[1][BACKWARD] = 72;
         this.playerInputButtons[1][TILT_UP] = 71;
         this.playerInputButtons[1][TILT_DOWN] = 74;
         
-        this.playerInputButtons[2][FOWARD] = 80;
+        this.playerInputButtons[2][FORWARD] = 80;
         this.playerInputButtons[2][BACKWARD] = 59;
         this.playerInputButtons[2][TILT_UP] = 76;
         this.playerInputButtons[2][TILT_DOWN] = 222;
         
-        this.playerInputButtons[3][FOWARD] = 38;
+        this.playerInputButtons[3][FORWARD] = 38;
         this.playerInputButtons[3][BACKWARD] = 40;
         this.playerInputButtons[3][TILT_UP] = 37;
         this.playerInputButtons[3][TILT_DOWN] = 39;
     }
     
     /**
-     * Gives the factor that changes the psuedo width to real window width space
+     * Gives the factor that changes the pseudo width to real window width space
      * @return width factor to compute real window space
      */
     public static float getWidthFactor()
@@ -220,7 +220,7 @@ public class Game extends Canvas
     }
     
     /**
-     * Gives the height factor that changes the psuedo height to real window height space
+     * Gives the height factor that changes the pseudo height to real window height space
      * @return height factor to compute real window space
      */
     public static float getHeightFactor()
