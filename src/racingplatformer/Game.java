@@ -32,7 +32,7 @@ public class Game extends Canvas
     
     private boolean gameRunning;
     
-    //Psuedo values for the height and width, place all our things within these bounds and they are scaled up to the window size
+    //Pseudo values for the height and width, place all our things within these bounds and they are scaled up to the window size
     private static final float PSUEDO_WIDTH = 500;
     private static final float PSUEDO_HEIGHT = 280;
     
