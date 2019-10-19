@@ -118,10 +118,8 @@ public class Game extends Canvas
         double scale = 1.0f;
         
         MainMenuGui mainMenu = new MainMenuGui(this);
-        this.activeGui = mainMenu;
-        //this.setActiveRace(new Race(this));
-        
-        World world = new World(new Vec2(0.0f, -1.0f));
+        //this.activeGui = mainMenu;
+        this.setActiveRace(new Race(this));
         
         while(gameRunning)
         {
@@ -151,7 +149,6 @@ public class Game extends Canvas
             
             //Gets the graphics which is used to draw to the canvas
             Graphics2D g = (Graphics2D)strategy.getDrawGraphics();
-            
             //Render the current races screens
             if(this.getActiveRace() != null)
             {
@@ -293,5 +290,10 @@ public class Game extends Canvas
     public int[] getPlayerControlKeys(int playerID)
     {
         return this.playerInputButtons[playerID];
+    }
+    
+    public Graphics2D getGraphics()
+    {
+        return (Graphics2D)this.strategy.getDrawGraphics();
     }
 }
