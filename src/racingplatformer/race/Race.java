@@ -51,27 +51,20 @@ public class Race
     
     public Race(Game gameInst)
     {
+        world = new World(new Vec2(0.0f, 9.0f));  
+        
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
         Porche porche = new Porche(100.f, 100.f);
         this.screen = new Screen(1, gameInst, porche);
-        Track.generateTrack(10340340L, this.chunkList);
+        Track.generateTrack(world, 10340340L, this.chunkList);
         this.chunkList.get(0).addGameObject(porche);
         
-        world = new World(new Vec2(0.0f, 9.0f));
-        
-        BodyDef bd = new BodyDef();
-        bd.type = BodyType.DYNAMIC;
-        bd.position.set(87.f, 50.f);
-        CircleShape cs = new CircleShape();
-        cs.m_radius = 10f;
-        FixtureDef fd = new FixtureDef();
-        fd.shape = cs;
-        fd.density = 0.5f;
-        fd.friction = 0.3f;
-        fd.restitution = 0.5f;
-        world.createBody(bd).createFixture(fd);
+        for(int i = 0; i < 10; i++)
+        {
+            this.createCircleShape(0.0f + 25*i, 50.0f, world);
+        }
         
         BodyDef def = new BodyDef();
         def.type = BodyType.STATIC;
@@ -89,6 +82,21 @@ public class Race
         DebugDrawTV debugDraw = new DebugDrawTV(this.screen, gameInstance.getGraphics());
         debugDraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
         world.setDebugDraw(debugDraw);
+    }
+    
+    private void createCircleShape(float x, float y, World world)
+    {
+        BodyDef bd = new BodyDef();
+        bd.type = BodyType.DYNAMIC;
+        bd.position.set(x, y);
+        CircleShape cs = new CircleShape();
+        cs.m_radius = 10f;
+        FixtureDef fd = new FixtureDef();
+        fd.shape = cs;
+        fd.density = 0.5f;
+        fd.friction = 0.3f;
+        fd.restitution = 0.5f;
+        world.createBody(bd).createFixture(fd);
     }
     
     /***

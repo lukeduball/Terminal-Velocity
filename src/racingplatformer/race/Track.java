@@ -8,6 +8,7 @@ package racingplatformer.race;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.jbox2d.dynamics.World;
 
 /**
  *
@@ -32,14 +33,14 @@ public class Track
         return null;
     }
     
-    public static void generateTrack(long seed, List<Chunk> chunkList)
+    public static void generateTrack(World world, long seed, List<Chunk> chunkList)
     {
         Random rand = new Random();
         int totalChunks = rand.nextInt(75) + 200;
         for(int i = 0; i < totalChunks; i++)
         {
             Chunk chunk = new Chunk(i);
-            chunk.addBoundary(new TrackSegment(1, i));
+            chunk.addBoundary(new TrackSegment(1, i, world));
             chunkList.add(chunk);
         }
     }
