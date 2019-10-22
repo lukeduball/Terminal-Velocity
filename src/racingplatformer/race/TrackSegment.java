@@ -11,7 +11,14 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.jbox2d.collision.shapes.ChainShape;
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
+import org.jbox2d.dynamics.World;
 import racingplatformer.Game;
 import racingplatformer.math.PerlinNoise;
 import racingplatformer.renderengine.Screen;
@@ -25,19 +32,32 @@ public class TrackSegment
     //This value is used to connect segments that exist in different chunks
     private final int segmentID;
     private List<Vec2> pointList;
+    private Body physicsBody;
     
-    public TrackSegment(int id, int chunkID)
+    public TrackSegment(int id, int chunkID, World world)
     {
         this.segmentID = id;
         this.pointList = new ArrayList<>();
         this.generatePointList(chunkID);
+        
+        BodyDef bd = new BodyDef();
+        bd.type = BodyType.STATIC;
+        ChainShape cShape = new ChainShape();
+        cShape.createChain(this.pointList.toArray(new Vec2[this.pointList.size()]), this.pointList.size());
+        FixtureDef fd = new FixtureDef();
+        fd.shape = cShape;
+        fd.density = 0.5f;
+        fd.friction = 0.3f;
+        fd.restitution = 0.5f;
+        physicsBody = world.createBody(bd);
+        physicsBody.createFixture(fd);
     }
     
     private void generatePointList(int chunkID)
     {
         Random rand = new Random();
         PerlinNoise pNoise = new PerlinNoise(8932937492483242575L);
-        for(int i = 0; i < 251; i++)
+        for(int i = 0; i < 251; i+=10)
         {
             float height = pNoise.getNoise(i+chunkID*250, 100);
             Vec2 point = new Vec2((chunkID * 250.f) + i,  -height + 150);

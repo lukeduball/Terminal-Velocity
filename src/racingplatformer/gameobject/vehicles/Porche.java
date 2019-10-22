@@ -32,8 +32,8 @@ public class Porche extends Vehicle
         //Need to rework rendering system so that the same aspect ratio is always maintaned in Screen Rendering
         
         this.wheelRotation += 0.01;
-        //this.rotation += 0.01;
-        this.position = this.position.add(new Vec2(1.0f, 0.0f));
+        this.rotation += 0.00;
+        this.position = this.position.add(new Vec2(0.0f, 0.0f));
         
         float frameWidth = (270.0f/4.0f);
         float factor = frameWidth / porcheImg.getWidth(null);

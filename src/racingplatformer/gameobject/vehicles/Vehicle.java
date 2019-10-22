@@ -56,9 +56,12 @@ public class Vehicle extends GameObject
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
         
+        Vec2 screenPos = screen.worldToScreenCoordinate(this.getPosition());
+        Vec2 rotationOffset = new Vec2(width, height).mul(screen.getScaleFactor() / 2.0f);
+        
         AffineTransform at = new AffineTransform();
-        at.translate(screen.getX() + (this.getPosition().x - screen.getWorldRenderX()) * screen.getScaleFactor(), screen.getY() + (this.getPosition().y - screen.getWorldRenderY()) * screen.getScaleFactor());
-        at.rotate(this.getRotation(), width * screen.getScaleFactor() / 2.0f, height * screen.getScaleFactor() / 2.0f);
+        at.translate(screenPos.x, screenPos.y);
+        at.rotate(this.getRotation(), rotationOffset.x, rotationOffset.y);
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
     }
@@ -70,19 +73,18 @@ public class Vehicle extends GameObject
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
         
-        float xPos = screen.getX() + (this.getPosition().x - screen.getWorldRenderX() + xOff) * screen.getScaleFactor();
-        float yPos = screen.getY() + (this.getPosition().y - screen.getWorldRenderY() + yOff) * screen.getScaleFactor();
+        Vec2 wheelPos = this.getPosition().add(new Vec2(xOff, yOff));
+        Vec2 screenPos = screen.worldToScreenCoordinate(wheelPos);
         
-        float frameCenterX = (-xOff  + frameWidth / 2.0f) * screen.getScaleFactor();
-        float frameCenterY = (-yOff + frameHeight / 2.0f) * screen.getScaleFactor();
+        Vec2 frameCenterOffset = new Vec2(-xOff + frameWidth / 2.0f, 
+                -yOff + frameHeight / 2.0f).mul(screen.getScaleFactor());
         
-        float wheelCenterX = width / 2.0f * screen.getScaleFactor();
-        float wheelCenterY = height / 2.0f * screen.getScaleFactor();
+        Vec2 wheelCenterOffset = new Vec2(width, height).mul(screen.getScaleFactor() / 2.0f);
         
         AffineTransform at = new AffineTransform();
-        at.translate(xPos, yPos);
-        at.rotate(this.getRotation(), frameCenterX, frameCenterY);
-        at.rotate(this.wheelRotation, wheelCenterX, wheelCenterY);
+        at.translate(screenPos.x, screenPos.y);
+        at.rotate(this.getRotation(), frameCenterOffset.x, frameCenterOffset.y);
+        at.rotate(this.wheelRotation, wheelCenterOffset.x, wheelCenterOffset.y);
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
     }

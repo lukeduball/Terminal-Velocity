@@ -111,22 +111,18 @@ public class Game extends Canvas
     
     private void gameLoop()
     {
-        long lastLoopTime = System.currentTimeMillis();
-        long secondCounter = 0l;
-        int frames = 0;
-        double theta = 0.0f;
-        double scale = 1.0f;
+        final int TARGET_FPS = 60;
+        final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+        long lastFpsTime = 0L;
+        int fps = 0;
         
         MainMenuGui mainMenu = new MainMenuGui(this);
-        this.activeGui = mainMenu;
-        //this.setActiveRace(new Race(this));
-        
-        World world = new World(new Vec2(0.0f, -1.0f));
+        //this.activeGui = mainMenu;
+        this.setActiveRace(new Race(this));
         
         while(gameRunning)
         {
-            long delta = System.currentTimeMillis() - lastLoopTime;
-            lastLoopTime = System.currentTimeMillis();
+            long currentTime = System.nanoTime();
             
             //Sets the width factors by dividing the window width and height in pixels by our pseudo values
             Game.widthFactor = this.getParent().getWidth() / PSEUDO_WIDTH;
@@ -151,7 +147,6 @@ public class Game extends Canvas
             
             //Gets the graphics which is used to draw to the canvas
             Graphics2D g = (Graphics2D)strategy.getDrawGraphics();
-            
             //Render the current races screens
             if(this.getActiveRace() != null)
             {
@@ -168,16 +163,23 @@ public class Game extends Canvas
             //Shows the drawn image on the screen
             strategy.show();
             
-            //Just a simple counter that counts how many frames there are per second
-            secondCounter += delta;
-            frames ++;
-            if(secondCounter > 1000)
+            long updateTime = System.nanoTime() - currentTime;
+            
+            lastFpsTime += updateTime;
+            fps++;
+            
+            if(lastFpsTime >= 1000000000)
             {
-                secondCounter = 0l;
-                frames = 0;
+                System.out.println("FPS: "+fps);
+                lastFpsTime = 0L;
+                fps = 0;
             }
             
-            try{ Thread.sleep(10); } catch(InterruptedException e) {}
+            long waitTime = (OPTIMAL_TIME - updateTime) / 1000000;
+            if(waitTime > 0)
+            {
+                try{ Thread.sleep(waitTime); } catch(InterruptedException e) {}
+            }
         }
     }
     
@@ -293,5 +295,10 @@ public class Game extends Canvas
     public int[] getPlayerControlKeys(int playerID)
     {
         return this.playerInputButtons[playerID];
+    }
+    
+    public Graphics2D getGraphics()
+    {
+        return (Graphics2D)this.strategy.getDrawGraphics();
     }
 }

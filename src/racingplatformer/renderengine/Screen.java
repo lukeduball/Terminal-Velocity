@@ -8,6 +8,7 @@ package racingplatformer.renderengine;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
 import racingplatformer.race.Chunk;
@@ -201,6 +202,13 @@ public class Screen
     public float getWorldRenderY()
     {
         return this.focusVehicle.getPosition().y - 186.f;
+    }
+    
+    public Vec2 worldToScreenCoordinate(Vec2 worldSpace)
+    {
+        Vec2 vec = new Vec2(this.getX() + (worldSpace.x - getWorldRenderX()) * this.getScaleFactor(), 
+                this.getY() + (worldSpace.y - getWorldRenderY())*this.getScaleFactor() );
+        return vec;
     }
     
 }
