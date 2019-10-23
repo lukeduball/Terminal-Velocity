@@ -12,6 +12,7 @@ import racingplatformer.Game;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.Screen;
 
+
 /**
  *
  * @author Luke
@@ -20,9 +21,11 @@ public class Porche extends Vehicle
 {
     private static Image porcheImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_frame.png");
     private static Image porcheWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_wheel.png");
+    private Vec2 velocity;
     
-    public Porche(float x, float y)
+    public Porche(float x, float y, Vec2 velocity)
     {
+    	super(x,y, 300, 9, velocity);
         this.position = new Vec2(x, y);
     }
     
@@ -31,7 +34,7 @@ public class Porche extends Vehicle
     {
         //Need to rework rendering system so that the same aspect ratio is always maintaned in Screen Rendering
         
-        this.wheelRotation += 0.01;
+        this.wheelRotation += 0.010;
         this.rotation += 0.00;
         this.position = this.position.add(new Vec2(0.0f, 0.0f));
         

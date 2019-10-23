@@ -35,14 +35,17 @@ public class Vehicle extends GameObject
     
     protected float wheelRotation;
     
-    
+    public Vehicle(float x, float y, float mass, float acceleration, Vec2 velocity) {
+    	this.position = new Vec2(x, y);
+    	this.mass=mass;
+    	this.velocity=velocity;
+    	
+    	
+    }
     @Override
     public void onUpdate() 
     {
-        //Update the location of the vehicle
-        
-        //Depending on the controller it will move the vehicle based on those conditions
-        //controller.moveVehicle();
+    	
     }
 
     @Override
