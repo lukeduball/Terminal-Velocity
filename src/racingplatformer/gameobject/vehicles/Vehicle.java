@@ -91,5 +91,11 @@ public class Vehicle extends GameObject
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
     }
-    
+    public float translateToGameSpace(float offset, float transformed, float original)
+    {
+        float result = offset * transformed / original;
+        return result;
+    }
 }
+    
+

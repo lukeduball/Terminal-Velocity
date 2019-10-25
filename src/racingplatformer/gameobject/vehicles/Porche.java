@@ -53,11 +53,4 @@ public class Porche extends Vehicle
         this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
 
     }
-    
-    //TODO move this into a static function in a helper classs
-    private float translateToGameSpace(float offset, float transformed, float original)
-    {
-        float result = offset * transformed / original;
-        return result;
-    }
 }
