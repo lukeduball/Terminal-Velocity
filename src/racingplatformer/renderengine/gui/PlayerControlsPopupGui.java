@@ -30,7 +30,7 @@ public class PlayerControlsPopupGui extends PopupGui
         this.selectedPlayer = 0;
         //add components to components list here
         this.componentList.add(new Button("Exit", 176, 210, 148, 25, "Exit"));
-        this.componentList.add(inputFields[Game.FOWARD] = new CharField("Forward", 316, 97, 30, 30, 87));
+        this.componentList.add(inputFields[Game.FORWARD] = new CharField("Forward", 316, 97, 30, 30, 87));
         this.componentList.add(inputFields[Game.TILT_UP] = new CharField("TiltL", 282, 131, 30, 30, 65));
         this.componentList.add(inputFields[Game.TILT_DOWN] = new CharField("TiltR", 350, 131, 30, 30, 68));
         this.componentList.add(inputFields[Game.BACKWARD] = new CharField("Back", 316, 131, 30, 30, 83));
@@ -112,7 +112,7 @@ public class PlayerControlsPopupGui extends PopupGui
     
     public void onForwardKeyFieldTyped()
     {
-        this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.FOWARD] = this.inputFields[Game.FOWARD].getKeyCode();
+        this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.FORWARD] = this.inputFields[Game.FORWARD].getKeyCode();
     }
     
     public void onTiltLKeyFieldTyped()
