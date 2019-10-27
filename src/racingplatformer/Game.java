@@ -60,6 +60,9 @@ public class Game extends Canvas
     public static final int TILT_UP = 2;
     public static final int TILT_DOWN = 3;
     
+    //True if the current key for a given key code is down
+    private final boolean[] keys = new boolean[512];
+    
     public Game()
     {
         this.gameRunning = true;
@@ -300,5 +303,15 @@ public class Game extends Canvas
     public Graphics2D getGraphics()
     {
         return (Graphics2D)this.strategy.getDrawGraphics();
+    }
+    
+    public boolean[] getKeys()
+    {
+        return this.keys;
+    }
+    
+    public boolean isKeyDown(int keyCode)
+    {
+        return this.keys[keyCode];
     }
 }
