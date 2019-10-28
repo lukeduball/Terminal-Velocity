@@ -47,7 +47,7 @@ public class Chunk
                     chunk.addGameObject(o);
                 }
             }
-            o.onUpdate();
+            o.onUpdate(race);
         }
         
         for(GameObject o : removeList)

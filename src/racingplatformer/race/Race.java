@@ -41,7 +41,6 @@ public class Race
     //Stores all the information about the track
     private Track track;
     
-    private Chunk chunk;
     private Screen screen;
     private World world;
     
@@ -56,21 +55,21 @@ public class Race
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
-        Porche porche = new Porche(100.f, 100.f);
+        Porche porche = new Porche(world, 100.f, 50.f);
         this.screen = new Screen(1, gameInst, porche);
         Track.generateTrack(world, 10340340L, this.chunkList);
         this.chunkList.get(0).addGameObject(porche);
         
         for(int i = 0; i < 10; i++)
         {
-            this.createCircleShape(0.0f + 25*i, 50.0f, world);
+            //this.createCircleShape(0.0f + 25*i, 50.0f, world);
         }
         
         BodyDef def = new BodyDef();
         def.type = BodyType.STATIC;
         def.position.set(100.f, 100.f);
         PolygonShape pShape = new PolygonShape();
-        pShape.setAsBox(10, 10);
+        pShape.setAsBox(1000, 10);
         FixtureDef fd1 = new FixtureDef();
         fd1.shape = pShape;
         fd1.density = 0.5f;
@@ -163,5 +162,10 @@ public class Race
     private boolean isChunkLoaded(Chunk chunk)
     {
         return this.loadedChunksList.contains(chunk);
+    }
+    
+    public boolean isMappedKeyDown(int playerID, int keyIdentifier)
+    {
+        return this.gameInstance.isKeyDown(this.gameInstance.getPlayerControlKeys(playerID-1)[keyIdentifier]);
     }
 }

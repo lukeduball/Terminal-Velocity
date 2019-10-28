@@ -8,6 +8,7 @@ package racingplatformer.gameobject;
 import java.awt.Graphics2D;
 import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
+import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -34,6 +35,6 @@ public abstract class GameObject
         return position;
     }
     
-    public abstract void onUpdate();
+    public abstract void onUpdate(Race race);
     public abstract void render(Graphics2D g, Screen screen, Game gameInstance);
 }

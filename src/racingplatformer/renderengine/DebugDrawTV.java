@@ -54,7 +54,7 @@ public class DebugDrawTV extends DebugDraw
             yCoords[i] = (int)screenCoords.y;
         }
         Color c = new Color(clrf.x, clrf.y, clrf.z, 0.5f);
-        graphics.setColor(Color.red);
+        graphics.setColor(c);
         graphics.fillPolygon(xCoords, yCoords, vertexCount);
         
         drawPolygon(vec2s, vertexCount, clrf);

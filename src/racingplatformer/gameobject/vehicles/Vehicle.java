@@ -9,8 +9,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.joints.Joint;
+import org.jbox2d.dynamics.joints.WheelJoint;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
+import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -18,7 +22,7 @@ import racingplatformer.renderengine.Screen;
  * @author Luke
  */
 public class Vehicle extends GameObject
-{
+{    
     //Controller which chooses how to decide how to move this vehicle
     Controller controller;
     
@@ -35,9 +39,15 @@ public class Vehicle extends GameObject
     
     protected float wheelRotation;
     
+    protected Body frame;
+    protected Body rearWheel;
+    protected Body frontWheel;
+    protected WheelJoint rearWheelSpring;
+    protected WheelJoint frontWheelSpring;
+    
     
     @Override
-    public void onUpdate() 
+    public void onUpdate(Race race) 
     {
         //Update the location of the vehicle
         
@@ -49,6 +59,18 @@ public class Vehicle extends GameObject
     public void render(Graphics2D g, Screen screen, Game gameInstance) 
     {
         //Render the vehicle
+    }
+    
+    @Override
+    public Vec2 getPosition()
+    {
+        return this.frame.getPosition();
+    }
+    
+    @Override
+    public float getRotation()
+    {
+        return this.frame.getAngle();
     }
     
     protected void drawFrame(Graphics2D g, Image img, float width, float height, Screen screen, Game gameInstance)
