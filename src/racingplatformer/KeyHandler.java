@@ -32,6 +32,8 @@ public class KeyHandler extends KeyAdapter
         {
             gameInstance.getActiveGui().onKeyPressed(e);
         }
+        
+        this.gameInstance.getKeys()[e.getKeyCode()] = true;
     }
     
     /**
@@ -41,7 +43,7 @@ public class KeyHandler extends KeyAdapter
     @Override
     public void keyReleased(KeyEvent e)
     {
-        
+        this.gameInstance.getKeys()[e.getKeyCode()] = false;
     }
     
     /**

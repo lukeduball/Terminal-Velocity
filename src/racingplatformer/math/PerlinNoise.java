@@ -5,7 +5,6 @@
  */
 package racingplatformer.math;
 
-import java.util.Random;
 
 /**
  *
@@ -14,20 +13,34 @@ import java.util.Random;
 public class PerlinNoise 
 {
     private long seed;
-    private Random rand;
     
     public PerlinNoise(long s)
     {
         this.seed = s;
-        rand = new Random(s);
     }
     
     private int random(int x, int range)
     {
-        int index = x & 255;
+        int index = (int)((x + seed) & 255);
         int rand = permutation[index];
         float random = rand / 255.f;
         return (int)(range * random);
+    }
+    
+    public float getSmoothNoise(int x, int range)
+    {
+        int sampleSize = 166;
+        float noise = 0.0f;
+        
+        int sampleIndex = x / sampleSize;
+        float progress = (x%sampleSize)/(float)sampleSize;
+        
+        float leftRand = random(sampleIndex, range);
+        float rightRand = random(sampleIndex + 1, range);
+            
+        noise = cosineInterpolation(leftRand, rightRand, progress); 
+        
+        return noise;
     }
     
     public float getNoise(int x, int range)
@@ -47,7 +60,7 @@ public class PerlinNoise
             float leftRand = random(sampleIndex, range);
             float rightRand = random(sampleIndex + 1, range);
             
-            noise += (1-progress) * leftRand + progress * rightRand;
+            noise += cosineInterpolation(leftRand, rightRand, progress);
             
             sampleSize /= 2;
             range /= 2;
@@ -59,6 +72,17 @@ public class PerlinNoise
         }
         
         return noise;
+    }
+    
+    private float linearInterpolation(float left, float right, float progress)
+    {
+        return (1-progress) * left + progress * right;
+    }
+    
+    private float cosineInterpolation(float left, float right, float progress)
+    {
+        float mu2 = (1-(float)Math.cos(progress * Math.PI)) / 2;
+        return left*(1-mu2) + right * mu2;
     }
     
     //Random implemntation from Ken Perlin's advanced Perlin Noise https://mrl.nyu.edu/~perlin/noise/
