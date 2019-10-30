@@ -110,7 +110,7 @@ public class Screen
         }
     }
     
-    //Determines which chunk to unload based on if the new middle chunk is greator or less than the old middle chunk
+    //Determines which chunk to unload based on if the new middle chunk is greater or less than the old middle chunk
     private Chunk getChunkToUnload(Chunk currentChunk, Chunk previousMiddleChunk)
     {
         if(currentChunk == null || previousMiddleChunk == null)

@@ -32,7 +32,7 @@ public class Race
 {
     private Game gameInstance;
     
-    //Stores all of the chunks which contain track data and gameobjects located in the chunk
+    //Stores all of the chunks which contain track data and game objects located in the chunk
     private final List<Chunk> chunkList;
     
     //Stores all the currently loaded chunks to do logical updates on
@@ -51,7 +51,7 @@ public class Race
     
     public Race(Game gameInst)
     {
-        world = new World(new Vec2(0.0f, 9.0f));  
+        world = new World(new Vec2(0.0f, 9.81f));
         
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
