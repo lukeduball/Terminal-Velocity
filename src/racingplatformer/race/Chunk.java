@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ArrayList;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
-import racingplatformer.gameobject.vehicles.Porche;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -20,8 +19,10 @@ import racingplatformer.renderengine.Screen;
 public class Chunk 
 {
     private final int chunkID;
-    private final List boundaryList;
+    private final List<TrackSegment> boundaryList;
     private final List<GameObject> gameObjectList;
+    
+    public static int CHUNK_SIZE = 250;
     
     public Chunk(int cnkID)
     {
@@ -35,7 +36,7 @@ public class Chunk
         List<GameObject> removeList = new ArrayList<>();
         for(GameObject o : gameObjectList)
         {
-            int chunkPos = (int)(o.getPosition().x / 250.f);
+            int chunkPos = (int)(o.getPosition().x / (float)CHUNK_SIZE);
             if(chunkPos != this.chunkID)
             {
                 //Remove game object from list
@@ -72,7 +73,10 @@ public class Chunk
     public void renderTrack(Graphics2D g, Screen screen, Game gameInstance)
     {
         //Draw the track segments first
-        ((TrackSegment)this.boundaryList.get(0)).render(g, screen, gameInstance);
+        for(TrackSegment segment : this.boundaryList)
+        {
+            segment.render(g, screen, gameInstance); 
+        }
     }
     
     public void addGameObject(GameObject o)
