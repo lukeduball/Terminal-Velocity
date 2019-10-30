@@ -69,6 +69,7 @@ public class Porche extends Vehicle
         fd.shape = wheel;
         fd.density = 1.0f;
         fd.friction = 0.9f;
+        fd.filter.groupIndex=-2;
 
         Vec2 pWheelFPos = new Vec2(-70f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
         bd.position.set(pWheelFPos);
@@ -169,18 +170,22 @@ public class Porche extends Vehicle
 
         CircleShape circle = new CircleShape();
         circle.m_radius = 4f;
-
+        
+        
         BodyDef bd = new BodyDef();
         bd.type = BodyType.DYNAMIC;
         bd.position.set(position);
         frame = world.createBody(bd);
         frame.createFixture(chassis, 5.0f);
+        
 
         FixtureDef fd = new FixtureDef();
         fd.shape = circle;
         fd.density = 1.0f;
-        fd.friction = 1.0f;
+        fd.friction = -1.0f;
+        //fd.filter.groupIndex=-2;
 
+        
         Vec2 rearWheelPos = new Vec2(-10f, 4.5f).add(position);
         bd.position.set(rearWheelPos);
         rearWheel = world.createBody(bd);
@@ -190,7 +195,6 @@ public class Porche extends Vehicle
         bd.position.set(frontWheelPos);
         frontWheel = world.createBody(bd);
         frontWheel.createFixture(fd);
-
         WheelJointDef jd = new WheelJointDef();
         Vec2 axis = new Vec2(0.0f, 1.0f);
 

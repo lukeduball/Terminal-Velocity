@@ -48,6 +48,7 @@ public class TrackSegment
         fd.density = 0.5f;
         fd.friction = 1.0f;
         fd.restitution = 0.5f;
+        fd.filter.groupIndex=2;
         physicsBody = world.createBody(bd);
         physicsBody.createFixture(fd);
     }
