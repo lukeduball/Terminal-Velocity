@@ -39,7 +39,9 @@ public class Porche extends Vehicle
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
     }
-    public void constructPorche(World world, Vec2 startingPos){
+
+    public void constructPorche(World world, Vec2 startingPos)
+    {
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(-134.5f, -38.5f);
         vertices[1] = new Vec2(8.5f, -38.5f);
@@ -63,12 +65,18 @@ public class Porche extends Vehicle
         bd.type = BodyType.DYNAMIC;
         bd.position.set(startingPos);
         this.frame = world.createBody(bd);
-        this.frame.createFixture(chassis, 1.0f);
+        FixtureDef fdf=new FixtureDef();
+        fdf.shape=chassis;
+        fdf.filter.groupIndex=-2;
+        fdf.density=1.0f;
+        fdf.friction=(0.0f);
+        this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
         fd.density = 1.0f;
-        fd.friction = 1.5f;
+        fd.friction = 0.9f;
+        fd.filter.groupIndex=-2;
 
         Vec2 pWheelFPos = new Vec2(-70f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
         bd.position.set(pWheelFPos);
@@ -87,7 +95,7 @@ public class Porche extends Vehicle
         jd.motorSpeed = 0.0f;
         jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 100.0f;
+        jd.frequencyHz = 4.0f;
         jd.dampingRatio = 1.0f;
         this.rearWheelSpring = (WheelJoint)world.createJoint(jd);
 
@@ -95,10 +103,11 @@ public class Porche extends Vehicle
         jd.motorSpeed = 0.0f;
         jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 100.0f;
+        jd.frequencyHz = 4.0f;
         jd.dampingRatio = 1.0f;
         this.frontWheelSpring = (WheelJoint) world.createJoint(jd);
 
+        //TODO flip vehicle along y-axis
     }
 
     @Override
@@ -119,6 +128,16 @@ public class Porche extends Vehicle
         else
         {
             this.rearWheelSpring.enableMotor(false);
+        }
+
+        if(race.isMappedKeyDown(1, Game.TILT_UP))
+        {
+            this.frame.applyAngularImpulse(-15000.0f);
+        }
+
+        if(race.isMappedKeyDown(1, Game.TILT_DOWN))
+        {
+            this.frame.applyAngularImpulse(15000.0f);
         }
     }
 
@@ -142,8 +161,8 @@ public class Porche extends Vehicle
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, porcheImg.getWidth(null));
         
         this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen, gameInstance);
-        this.drawWheel(g, porcheWheelImg, leftWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
-        this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
+        this.drawWheel(g, porcheWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
+        this.drawWheel(g, porcheWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
 
     }
     

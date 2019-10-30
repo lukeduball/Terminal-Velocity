@@ -89,25 +89,21 @@ public class Vehicle extends GameObject
         g.drawImage(img, at, gameInstance);
     }
     
-    protected void drawWheel(Graphics2D g, Image img, float xOff, float yOff, float width, float frameWidth, float frameHeight, Screen screen, Game gameInstance)
+    protected void drawWheel(Graphics2D g, Image img, Body wheelBody, float width, Screen screen, Game gameInstance)
     {
         float factor = width / img.getWidth(null);
         float height = (float)img.getHeight(null) * factor;
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
         
-        Vec2 wheelPos = this.getPosition().add(new Vec2(xOff, yOff));
+        Vec2 wheelPos = wheelBody.getPosition().sub(new Vec2(width / 2.0f, height / 2.0f));
         Vec2 screenPos = screen.worldToScreenCoordinate(wheelPos);
-        
-        Vec2 frameCenterOffset = new Vec2(-xOff + frameWidth / 2.0f, 
-                -yOff + frameHeight / 2.0f).mul(screen.getScaleFactor());
         
         Vec2 wheelCenterOffset = new Vec2(width, height).mul(screen.getScaleFactor() / 2.0f);
         
         AffineTransform at = new AffineTransform();
         at.translate(screenPos.x, screenPos.y);
-        at.rotate(this.getRotation(), frameCenterOffset.x, frameCenterOffset.y);
-        at.rotate(this.wheelRotation, wheelCenterOffset.x, wheelCenterOffset.y);
+        at.rotate(wheelBody.getAngle() * 0.1, wheelCenterOffset.x, wheelCenterOffset.y);
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
     }
