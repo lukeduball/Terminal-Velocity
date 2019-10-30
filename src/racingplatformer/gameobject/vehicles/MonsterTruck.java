@@ -24,7 +24,7 @@ public class MonsterTruck extends Vehicle{
     private static Image mcBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_frame.png");
     private static Image mcWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_wheel.png");
 
-    public MonsterTruck(Vec2 startingPos, World world){
+    public void constructMonsterTruck(Vec2 startingPos, World world){
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(-130,-29.5f);
         vertices[1] = new Vec2(22,-56.5f);

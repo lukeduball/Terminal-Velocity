@@ -23,7 +23,7 @@ public class RallyRacer extends Vehicle{
     private static Image rrBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_frame.png");
     private static Image rrWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_wheel.png");
 
-    public RallyRacer(Vec2 startingPos, World world){
+    public void constructRallyRacer(Vec2 startingPos, World world){
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(109,-4);
         vertices[1] = new Vec2(127,14);
