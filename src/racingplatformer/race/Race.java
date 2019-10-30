@@ -55,7 +55,7 @@ public class Race
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
-        Porche porche = new Porche(world, 100.f, 0.f);
+        Porche porche = new Porche(world, 5.f, 75.f);
         this.screen = new Screen(1, gameInst, porche);
         Track.generateTrack(world, 10340340L, this.chunkList);
         this.chunkList.get(0).addGameObject(porche);
@@ -142,7 +142,7 @@ public class Race
     
     public Chunk getChunkFromLocation(float worldPositionX)
     {
-        int chunkID = (int)(worldPositionX / 250);
+        int chunkID = (int)(worldPositionX / Chunk.CHUNK_WIDTH);
         return getChunk(chunkID);
     }
     

@@ -22,8 +22,8 @@ public class Chunk
     private final List<TrackSegment> boundaryList;
     private final List<GameObject> gameObjectList;
     
-    public static int CHUNK_WIDTH = 250;
-    public static int CHUNK_HEIGHT = 186;
+    public static int CHUNK_WIDTH = 20;
+    public static int CHUNK_HEIGHT = 16;
     
     public Chunk(int cnkID)
     {

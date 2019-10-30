@@ -154,11 +154,11 @@ public class Porche extends Vehicle
         this.rotation += 0.00;
         this.position = this.position.add(new Vec2(0.0f, 0.0f));
         
-        float frameWidth = (270.0f/4.0f);
+        float frameWidth = (270.0f/64.0f);
         float factor = frameWidth / porcheImg.getWidth(null);
         float frameHeight = (float)porcheImg.getHeight(null) * factor;
         
-        float wheelWidth = (45.0f/4.0f);
+        float wheelWidth = (45.0f/64.0f);
         
         float leftWheelXOffset = translateToGameSpace(42, frameWidth, porcheImg.getWidth(null));
         float wheelYOffset = translateToGameSpace(39, frameHeight, porcheImg.getHeight(null));

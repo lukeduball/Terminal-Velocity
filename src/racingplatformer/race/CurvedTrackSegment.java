@@ -54,7 +54,7 @@ public class CurvedTrackSegment extends TrackSegment
     private void generatePointList(int chunkID, PerlinNoise pNoise)
     {
         Random rand = new Random();
-        for(int i = 0; i < 251; i+=10)
+        for(int i = 0; i < Chunk.CHUNK_WIDTH + 1; i++)
         {
             float height = pNoise.getSmoothNoise(i+chunkID*Chunk.CHUNK_WIDTH, 100);
             Vec2 point = new Vec2((chunkID * Chunk.CHUNK_WIDTH) + i,  -height + 150);
