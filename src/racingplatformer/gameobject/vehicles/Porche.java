@@ -30,9 +30,7 @@ import racingplatformer.renderengine.Screen;
  */
 public class Porche extends Vehicle
 {
-    private static Body pBody, pWheelF, pWheelR;
-    private WheelJoint pSpringF, pSpringR;
-    private static float pixelFactor = 1/64f;
+    private static float pixelFactor = 0.25f;
     private static Image porcheImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_frame.png");
     private static Image porcheWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_wheel.png");
     
@@ -43,14 +41,14 @@ public class Porche extends Vehicle
     }
     public void constructPorche(World world, Vec2 startingPos){
         Vec2[] vertices = new Vec2[8];
-        vertices[0] = new Vec2(269,0);
-        vertices[1] = new Vec2(126,0);
-        vertices[2] = new Vec2(6,33);
-        vertices[3] = new Vec2(0,68);
-        vertices[4] = new Vec2(69,77);
-        vertices[5] = new Vec2(179,77);
-        vertices[6] = new Vec2(260,65);
-        vertices[7] = new Vec2(263,42);
+        vertices[0] = new Vec2(-134.5f, -38.5f);
+        vertices[1] = new Vec2(8.5f, -38.5f);
+        vertices[2] = new Vec2(128.5f, -5.5f);
+        vertices[3] = new Vec2(134.5f, 29.5f);
+        vertices[4] = new Vec2(65.5f, 38.5f);
+        vertices[5] = new Vec2(-44.5f, 38.5f);
+        vertices[6] = new Vec2(-125.5f, 26.5f);
+        vertices[7] = new Vec2(-128.5f, 3.5f);
 
         for(int i = 0; i < vertices.length; i++){
             vertices[i].set(vertices[i].x*pixelFactor, vertices[i].y*pixelFactor);
@@ -64,42 +62,42 @@ public class Porche extends Vehicle
         BodyDef bd = new BodyDef();
         bd.type = BodyType.DYNAMIC;
         bd.position.set(startingPos);
-        pBody = world.createBody(bd);
-        pBody.createFixture(chassis, 1.0f);
+        this.frame = world.createBody(bd);
+        this.frame.createFixture(chassis, 1.0f);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
         fd.density = 1.0f;
         fd.friction = 0.9f;
 
-        Vec2 pWheelFPos = new Vec2(40*pixelFactor, 61*pixelFactor).add(startingPos);
+        Vec2 pWheelFPos = new Vec2(-70f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
         bd.position.set(pWheelFPos);
-        pWheelF = world.createBody(bd);
-        pWheelF.createFixture(fd);
+        this.rearWheel = world.createBody(bd);
+        this.rearWheel.createFixture(fd);
 
-        Vec2 pWheelRPos = new Vec2(205*pixelFactor, 61*pixelFactor).add(startingPos);
+        Vec2 pWheelRPos = new Vec2(95f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
         bd.position.set(pWheelRPos);
-        pWheelR = world.createBody(bd);
-        pWheelR.createFixture(fd);
+        this.frontWheel = world.createBody(bd);
+        this.frontWheel.createFixture(fd);
 
         WheelJointDef jd = new WheelJointDef();
         Vec2 axis = new Vec2(0.0f, 1.0f);
 
-        jd.initialize(pBody, pWheelF, pWheelF.getPosition(), axis);
+        jd.initialize(this.frame, this.rearWheel, this.rearWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f;
+        jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 0f;
-        jd.dampingRatio = 0f;
-        pSpringF = (WheelJoint) world.createJoint(jd);
+        jd.frequencyHz = 4.0f;
+        jd.dampingRatio = 1.0f;
+        this.rearWheelSpring = (WheelJoint)world.createJoint(jd);
 
-        jd.initialize(pBody, pWheelR, pWheelR.getPosition(), axis);
+        jd.initialize(this.frame, this.frontWheel, this.frontWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f;
+        jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 0f;
-        jd.dampingRatio = 0f;
-        pSpringR = (WheelJoint) world.createJoint(jd);
+        jd.frequencyHz = 4.0f;
+        jd.dampingRatio = 1.0f;
+        this.frontWheelSpring = (WheelJoint) world.createJoint(jd);
 
         //TODO flip vehicle along y-axis
     }
