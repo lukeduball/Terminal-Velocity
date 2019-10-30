@@ -121,6 +121,16 @@ public class Porche extends Vehicle
         {
             this.rearWheelSpring.enableMotor(false);
         }
+        
+        if(race.isMappedKeyDown(1, Game.TILT_UP))
+        {
+            this.frame.applyAngularImpulse(-15000.0f);
+        }
+        
+        if(race.isMappedKeyDown(1, Game.TILT_DOWN))
+        {
+            this.frame.applyAngularImpulse(15000.0f);
+        }
     }
 
     @Override
@@ -143,8 +153,8 @@ public class Porche extends Vehicle
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, porcheImg.getWidth(null));
         
         this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen, gameInstance);
-        //this.drawWheel(g, porcheWheelImg, leftWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
-        //this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
+        this.drawWheel(g, porcheWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
+        this.drawWheel(g, porcheWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
 
     }
     
