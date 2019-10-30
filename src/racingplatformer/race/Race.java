@@ -50,7 +50,7 @@ public class Race
     
     public Race(Game gameInst)
     {
-        world = new World(new Vec2(0.0f, 9.0f));  
+        world = new World(new Vec2(0.0f, 25.0f));  
         
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
@@ -73,9 +73,9 @@ public class Race
         FixtureDef fd1 = new FixtureDef();
         fd1.shape = pShape;
         fd1.density = 0.5f;
-        fd1.friction = 0.3f;
+        fd1.friction = 1.0f;
         fd1.restitution = 0.5f;
-        world.createBody(def).createFixture(fd1);
+        //world.createBody(def).createFixture(fd1);
         
         
         DebugDrawTV debugDraw = new DebugDrawTV(this.screen, gameInstance.getGraphics());

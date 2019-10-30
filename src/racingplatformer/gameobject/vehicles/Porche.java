@@ -42,12 +42,14 @@ public class Porche extends Vehicle
         if(race.isMappedKeyDown(1, Game.FORWARD))
         {
             this.rearWheelSpring.enableMotor(true);
-            this.rearWheelSpring.setMotorSpeed(1000.0f);
+            this.rearWheelSpring.setMotorSpeed(100000.0f);
+            this.frontWheelSpring.setMotorSpeed(100000.0f);
         }
         else if(race.isMappedKeyDown(1, Game.BACKWARD))
         {
             this.rearWheelSpring.enableMotor(true);
-            this.rearWheelSpring.setMotorSpeed(-1000.0f);
+            this.rearWheelSpring.setMotorSpeed(-100000.0f);
+            this.frontWheelSpring.setMotorSpeed(-100000.0f);
         }
         else
         {
@@ -75,8 +77,8 @@ public class Porche extends Vehicle
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, porcheImg.getWidth(null));
         
         this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen, gameInstance);
-        this.drawWheel(g, porcheWheelImg, leftWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
-        this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
+        //this.drawWheel(g, porcheWheelImg, leftWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
+        //this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
 
     }
     
@@ -106,12 +108,12 @@ public class Porche extends Vehicle
         bd.type = BodyType.DYNAMIC;
         bd.position.set(position);
         frame = world.createBody(bd);
-        frame.createFixture(chassis, 1.0f);
+        frame.createFixture(chassis, 5.0f);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = circle;
         fd.density = 1.0f;
-        fd.friction = 0.9f;
+        fd.friction = 1.0f;
 
         Vec2 rearWheelPos = new Vec2(-10f, 4.5f).add(position);
         bd.position.set(rearWheelPos);
@@ -128,18 +130,18 @@ public class Porche extends Vehicle
 
         jd.initialize(frame, rearWheel, rearWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10000.0f;
+        jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 4.0f;
-        jd.dampingRatio = 0.7f;
+        jd.dampingRatio = 1.0f;
         this.rearWheelSpring = (WheelJoint)world.createJoint(jd);
 
         jd.initialize(frame, frontWheel, frontWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10000.0f;
-        jd.enableMotor = false;
+        jd.maxMotorTorque = 50000.0f;
+        jd.enableMotor = true;
         jd.frequencyHz = 4.0f;
-        jd.dampingRatio = 0.7f;
+        jd.dampingRatio = 1.0f;
         this.frontWheelSpring = (WheelJoint)world.createJoint(jd);
     }
 }

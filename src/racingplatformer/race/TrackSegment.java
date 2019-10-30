@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import org.jbox2d.collision.shapes.ChainShape;
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -47,7 +46,7 @@ public class TrackSegment
         FixtureDef fd = new FixtureDef();
         fd.shape = cShape;
         fd.density = 0.5f;
-        fd.friction = 0.3f;
+        fd.friction = 1.0f;
         fd.restitution = 0.5f;
         physicsBody = world.createBody(bd);
         physicsBody.createFixture(fd);
@@ -56,10 +55,10 @@ public class TrackSegment
     private void generatePointList(int chunkID)
     {
         Random rand = new Random();
-        PerlinNoise pNoise = new PerlinNoise(8932937492483242575L);
+        PerlinNoise pNoise = new PerlinNoise(8932937492483242570L);
         for(int i = 0; i < 251; i+=10)
         {
-            float height = pNoise.getNoise(i+chunkID*250, 100);
+            float height = pNoise.getSmoothNoise(i+chunkID*250, 100);
             Vec2 point = new Vec2((chunkID * 250.f) + i,  -height + 150);
             pointList.add(point);
         }

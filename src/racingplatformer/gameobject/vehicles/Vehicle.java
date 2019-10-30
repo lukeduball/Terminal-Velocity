@@ -78,7 +78,8 @@ public class Vehicle extends GameObject
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
         
-        Vec2 screenPos = screen.worldToScreenCoordinate(this.getPosition());
+        Vec2 centeredImagePos = this.getPosition().sub(new Vec2(width / 2.f, height / 2.f));
+        Vec2 screenPos = screen.worldToScreenCoordinate(centeredImagePos);
         Vec2 rotationOffset = new Vec2(width, height).mul(screen.getScaleFactor() / 2.0f);
         
         AffineTransform at = new AffineTransform();
