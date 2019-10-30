@@ -13,13 +13,11 @@ import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import racingplatformer.Game;
-import racingplatformer.gameobject.GameObject;
 import racingplatformer.gameobject.vehicles.Porche;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
@@ -41,7 +39,7 @@ public class Race
     //Stores all the information about the track
     private Track track;
 
-    private Screen screen;
+    private List<Screen> screens;
     private World world;
     
     private static final float DT = 1.0f / 60.0f;
@@ -51,14 +49,27 @@ public class Race
     public Race(Game gameInst)
     {
         world = new World(new Vec2(0.0f, 9.81f));
+        this.screens = new ArrayList<>();
         
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
+        
+        //Porche porche3 = new Porche(world, 5.f, -100.f);
+        //Screen screen3 = new Screen(3, gameInst, porche3);
+        
+        //Porche porche2 = new Porche(world, 5.f, 0.f);
+        //Screen screen2 = new Screen(2, gameInst, porche2);
+        
         Porche porche = new Porche(world, 5.f, 75.f);
-        this.screen = new Screen(1, gameInst, porche);
+        Screen screen = new Screen(1, gameInst, porche);
+        this.screens.add(screen);
+        //this.screens.add(screen2);
+        //this.screens.add(screen3);
         Track.generateTrack(world, 10340340L, this.chunkList);
         this.chunkList.get(0).addGameObject(porche);
+        //this.chunkList.get(0).addGameObject(porche2);
+        //this.chunkList.get(0).addGameObject(porche3);
         
         for(int i = 0; i < 10; i++)
         {
@@ -78,7 +89,7 @@ public class Race
         //world.createBody(def).createFixture(fd1);
         
         
-        DebugDrawTV debugDraw = new DebugDrawTV(this.screen, gameInstance.getGraphics());
+        DebugDrawTV debugDraw = new DebugDrawTV(this.screens.get(0), gameInstance.getGraphics());
         debugDraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
         world.setDebugDraw(debugDraw);
     }
@@ -104,7 +115,10 @@ public class Race
     public void onUpdate()
     {
         world.step(DT, VEL_IT, POS_IT);
-        this.screen.updateScreen(1, this);
+        for(Screen screen : screens)
+        {
+            screen.updateScreen(screens.size(), this);
+        }
         
         for(Chunk chunk : this.loadedChunksList)
         {
@@ -124,7 +138,10 @@ public class Race
     {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, this.gameInstance.getWidth(), this.gameInstance.getHeight());
-        this.screen.renderScreen(g);
+        for(Screen screen : screens)
+        {
+            screen.renderScreen(g);
+        }
         
         //Draw the debug data last so that it is drawn over all images
         world.drawDebugData();

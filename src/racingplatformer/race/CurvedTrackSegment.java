@@ -62,6 +62,7 @@ public class CurvedTrackSegment extends TrackSegment
         }
     }
     
+    @Override
     public void render(Graphics2D g, Screen screen, Game gameInstance)
     {
         g.setColor(Color.green);
@@ -70,18 +71,18 @@ public class CurvedTrackSegment extends TrackSegment
         int[] yPoints = new int[pointList.size()+2];
         
         //Creates a point below the screen to draw a filled in track on the left boundary
-        xPoints[0] = (int)((pointList.get(0).x - screen.getWorldRenderX()) * screen.getScaleFactor());
-        yPoints[0] = (int)(screen.getHeight() + 10);
+        xPoints[0] = screen.getX() + (int)((pointList.get(0).x - screen.getWorldRenderX()) * screen.getScaleFactor());
+        yPoints[0] = screen.getY() + (int)(screen.getHeight() + 10);
         
         for(int i = 0; i < pointList.size(); i++)
         { 
-            xPoints[i+1] = (int)( (pointList.get(i).x - screen.getWorldRenderX()) * screen.getScaleFactor());
-            yPoints[i+1] = (int)( (pointList.get(i).y - screen.getWorldRenderY()) * screen.getScaleFactor());
+            xPoints[i+1] = screen.getX() + (int)( (pointList.get(i).x - screen.getWorldRenderX()) * screen.getScaleFactor());
+            yPoints[i+1] = screen.getY() + (int)( (pointList.get(i).y - screen.getWorldRenderY()) * screen.getScaleFactor());
         }
         
         //Creates a point below the screen to draw a filled in track on the right boundary
-        xPoints[pointList.size()+1] = (int)( (pointList.get(pointList.size()-1).x - screen.getWorldRenderX()) * screen.getScaleFactor());
-        yPoints[pointList.size()+1] = (int)(screen.getHeight() + 10);
+        xPoints[pointList.size()+1] = screen.getX() + (int)( (pointList.get(pointList.size()-1).x - screen.getWorldRenderX()) * screen.getScaleFactor());
+        yPoints[pointList.size()+1] = screen.getY() + (int)(screen.getHeight() + 10);
                 
         g.fillPolygon(xPoints, yPoints, pointList.size()+2);
         g.setStroke(new BasicStroke());
