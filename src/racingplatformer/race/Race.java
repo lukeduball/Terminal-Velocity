@@ -43,7 +43,7 @@ public class Race
 
     private Screen screen;
     private World world;
-    
+
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
     private static final int POS_IT = 8;
@@ -52,6 +52,7 @@ public class Race
     {
         world = new World(new Vec2(0.0f, 25f));
         
+        
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
@@ -59,6 +60,7 @@ public class Race
         this.screen = new Screen(1, gameInst, porche);
         Track.generateTrack(world, 10340340L, this.chunkList);
         this.chunkList.get(0).addGameObject(porche);
+
         
         for(int i = 0; i < 10; i++)
         {

@@ -63,7 +63,12 @@ public class Porche extends Vehicle
         bd.type = BodyType.DYNAMIC;
         bd.position.set(startingPos);
         this.frame = world.createBody(bd);
-        this.frame.createFixture(chassis, 1.0f);
+        FixtureDef fdf=new FixtureDef();
+        fdf.shape=chassis;
+        fdf.filter.groupIndex=-2;
+        fdf.density=1.0f;
+        fdf.friction=(0.0f);
+        this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
