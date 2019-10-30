@@ -6,8 +6,6 @@
 package racingplatformer.race;
 
 import java.awt.Graphics2D;
-import java.util.List;
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 import racingplatformer.Game;

@@ -24,7 +24,7 @@ public class MuscleCar extends Vehicle{
     private static Image mcBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/muscle_car_frame.png");
     private static Image mcWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/muscle_car_wheel.png");
 
-    public void constructMuscleCar(Vec2 startingPos, World world){
+    /*public void constructMuscleCar(Vec2 startingPos, World world){
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(-127,-1);
         vertices[1] = new Vec2(-3,-34);
@@ -84,5 +84,5 @@ public class MuscleCar extends Vehicle{
 
         //TODO set position of vehicle to startingPos
         //TODO flip vehicle along y-axis
-    }
+    }*/
 }

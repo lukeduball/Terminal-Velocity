@@ -11,6 +11,7 @@ import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.joints.Joint;
+import org.jbox2d.dynamics.joints.RevoluteJoint;
 import org.jbox2d.dynamics.joints.WheelJoint;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
@@ -42,8 +43,8 @@ public class Vehicle extends GameObject
     protected Body frame;
     protected Body rearWheel;
     protected Body frontWheel;
-    protected WheelJoint rearWheelSpring;
-    protected WheelJoint frontWheelSpring;
+    protected RevoluteJoint rearWheelSpring;
+    protected RevoluteJoint frontWheelSpring;
     
     
     @Override

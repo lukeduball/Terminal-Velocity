@@ -11,8 +11,7 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.joints.WheelJoint;
-import org.jbox2d.dynamics.joints.WheelJointDef;
+import org.jbox2d.dynamics.joints.*;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
@@ -30,7 +29,7 @@ import racingplatformer.renderengine.Screen;
  */
 public class Porche extends Vehicle
 {
-    private static float pixelFactor = 0.25f;
+    private static float pixelFactor = 1/64f;
     private static Image porcheImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_frame.png");
     private static Image porcheWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_wheel.png");
     
@@ -68,14 +67,16 @@ public class Porche extends Vehicle
         FixtureDef fdf=new FixtureDef();
         fdf.shape=chassis;
         fdf.filter.groupIndex=-2;
-        fdf.density=1.0f;
+        fdf.density=1f;
         fdf.friction=(0.0f);
+        fdf.restitution = 0;
         this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
-        fd.density = 1.0f;
-        fd.friction = 0.9f;
+        fd.density = 0.1f;
+        fd.friction = 2.5f;
+        fd.restitution = 0;
         fd.filter.groupIndex=-2;
 
         Vec2 pWheelFPos = new Vec2(-70f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
@@ -88,24 +89,24 @@ public class Porche extends Vehicle
         this.frontWheel = world.createBody(bd);
         this.frontWheel.createFixture(fd);
 
-        WheelJointDef jd = new WheelJointDef();
-        Vec2 axis = new Vec2(0.0f, 1.0f);
+        RevoluteJointDef jd = new RevoluteJointDef();
+        Vec2 axis = new Vec2(0.0f, 1f);
 
-        jd.initialize(this.frame, this.rearWheel, this.rearWheel.getPosition(), axis);
-        jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 50000.0f;
+        jd.initialize(this.frame, this.rearWheel, this.rearWheel.getPosition());
+        jd.motorSpeed = 10.0f;
+        jd.maxMotorTorque = 20.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 4.0f;
-        jd.dampingRatio = 1.0f;
-        this.rearWheelSpring = (WheelJoint)world.createJoint(jd);
+        //jd.frequencyHz = 10f;
+        //jd.dampingRatio = 1f;
+        this.rearWheelSpring = (RevoluteJoint)world.createJoint(jd);
 
-        jd.initialize(this.frame, this.frontWheel, this.frontWheel.getPosition(), axis);
-        jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 50000.0f;
+        jd.initialize(this.frame, this.frontWheel, this.frontWheel.getPosition());
+        jd.motorSpeed = 10.0f;
+        jd.maxMotorTorque = 20.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 4.0f;
-        jd.dampingRatio = 1.0f;
-        this.frontWheelSpring = (WheelJoint) world.createJoint(jd);
+        //jd.frequencyHz = 10f;
+        //jd.dampingRatio = 1f;
+        this.frontWheelSpring = (RevoluteJoint)world.createJoint(jd);
 
         //TODO flip vehicle along y-axis
     }
@@ -115,12 +116,14 @@ public class Porche extends Vehicle
     {
         if(race.isMappedKeyDown(1, Game.FORWARD))
         {
+            this.frontWheelSpring.enableMotor(true);
             this.rearWheelSpring.enableMotor(true);
             this.rearWheelSpring.setMotorSpeed(100000.0f);
             this.frontWheelSpring.setMotorSpeed(100000.0f);
         }
         else if(race.isMappedKeyDown(1, Game.BACKWARD))
         {
+            this.frontWheelSpring.enableMotor(true);
             this.rearWheelSpring.enableMotor(true);
             this.rearWheelSpring.setMotorSpeed(-100000.0f);
             this.frontWheelSpring.setMotorSpeed(-100000.0f);
@@ -128,6 +131,7 @@ public class Porche extends Vehicle
         else
         {
             this.rearWheelSpring.enableMotor(false);
+            this.frontWheelSpring.enableMotor(false);
         }
 
         if(race.isMappedKeyDown(1, Game.TILT_UP))
