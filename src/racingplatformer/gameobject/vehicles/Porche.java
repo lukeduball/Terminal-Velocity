@@ -68,7 +68,7 @@ public class Porche extends Vehicle
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
         fd.density = 1.0f;
-        fd.friction = 0.9f;
+        fd.friction = 1.5f;
 
         Vec2 pWheelFPos = new Vec2(-70f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
         bd.position.set(pWheelFPos);
@@ -87,7 +87,7 @@ public class Porche extends Vehicle
         jd.motorSpeed = 0.0f;
         jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 4.0f;
+        jd.frequencyHz = 100.0f;
         jd.dampingRatio = 1.0f;
         this.rearWheelSpring = (WheelJoint)world.createJoint(jd);
 
@@ -95,11 +95,10 @@ public class Porche extends Vehicle
         jd.motorSpeed = 0.0f;
         jd.maxMotorTorque = 50000.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 4.0f;
+        jd.frequencyHz = 100.0f;
         jd.dampingRatio = 1.0f;
         this.frontWheelSpring = (WheelJoint) world.createJoint(jd);
 
-        //TODO flip vehicle along y-axis
     }
 
     @Override
@@ -143,8 +142,8 @@ public class Porche extends Vehicle
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, porcheImg.getWidth(null));
         
         this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen, gameInstance);
-        //this.drawWheel(g, porcheWheelImg, leftWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
-        //this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
+        this.drawWheel(g, porcheWheelImg, leftWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
+        this.drawWheel(g, porcheWheelImg, rightWheelXOffset, wheelYOffset, wheelWidth, frameWidth, frameHeight, screen, gameInstance);
 
     }
     
@@ -153,61 +152,5 @@ public class Porche extends Vehicle
     {
         float result = offset * transformed / original;
         return result;
-    }
-
-    private void constructPorche2(World world, Vec2 position)
-    {
-        PolygonShape chassis = new PolygonShape();
-        Vec2 vertices[] = new Vec2[8];
-        vertices[0] = new Vec2(-15f, 5f);
-        vertices[1] = new Vec2(15f, 5f);
-        vertices[2] = new Vec2(15f, 0.0f);
-        vertices[3] = new Vec2(0.0f, -9f);
-        vertices[4] = new Vec2(-11.5f, -9f);
-        vertices[5] = new Vec2(-15f, -2f);
-        chassis.set(vertices, 6);
-
-        CircleShape circle = new CircleShape();
-        circle.m_radius = 4f;
-
-        BodyDef bd = new BodyDef();
-        bd.type = BodyType.DYNAMIC;
-        bd.position.set(position);
-        frame = world.createBody(bd);
-        frame.createFixture(chassis, 5.0f);
-
-        FixtureDef fd = new FixtureDef();
-        fd.shape = circle;
-        fd.density = 1.0f;
-        fd.friction = 1.0f;
-
-        Vec2 rearWheelPos = new Vec2(-10f, 4.5f).add(position);
-        bd.position.set(rearWheelPos);
-        rearWheel = world.createBody(bd);
-        rearWheel.createFixture(fd);
-
-        Vec2 frontWheelPos = new Vec2(10f, 4.5f).add(position);
-        bd.position.set(frontWheelPos);
-        frontWheel = world.createBody(bd);
-        frontWheel.createFixture(fd);
-
-        WheelJointDef jd = new WheelJointDef();
-        Vec2 axis = new Vec2(0.0f, 1.0f);
-
-        jd.initialize(frame, rearWheel, rearWheel.getPosition(), axis);
-        jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 50000.0f;
-        jd.enableMotor = true;
-        jd.frequencyHz = 4.0f;
-        jd.dampingRatio = 1.0f;
-        this.rearWheelSpring = (WheelJoint)world.createJoint(jd);
-
-        jd.initialize(frame, frontWheel, frontWheel.getPosition(), axis);
-        jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 50000.0f;
-        jd.enableMotor = true;
-        jd.frequencyHz = 4.0f;
-        jd.dampingRatio = 1.0f;
-        this.frontWheelSpring = (WheelJoint)world.createJoint(jd);
     }
 }
