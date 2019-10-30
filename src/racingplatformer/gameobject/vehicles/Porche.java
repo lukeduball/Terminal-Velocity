@@ -41,7 +41,7 @@ public class Porche extends Vehicle
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
     }
-    public Porche(Vec2 startingPos, World world){
+    public void constructPorche(World world, Vec2 startingPos){
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(269,0);
         vertices[1] = new Vec2(126,0);
@@ -63,7 +63,7 @@ public class Porche extends Vehicle
 
         BodyDef bd = new BodyDef();
         bd.type = BodyType.DYNAMIC;
-        bd.position.set(0.0f, 0.0f);
+        bd.position.set(startingPos);
         pBody = world.createBody(bd);
         pBody.createFixture(chassis, 1.0f);
 
@@ -72,16 +72,18 @@ public class Porche extends Vehicle
         fd.density = 1.0f;
         fd.friction = 0.9f;
 
-        bd.position.set(40*pixelFactor, 61*pixelFactor);
+        Vec2 pWheelFPos = new Vec2(40*pixelFactor, 61*pixelFactor).add(startingPos);
+        bd.position.set(pWheelFPos);
         pWheelF = world.createBody(bd);
         pWheelF.createFixture(fd);
 
-        bd.position.set(205*pixelFactor, 61*pixelFactor);
+        Vec2 pWheelRPos = new Vec2(205*pixelFactor, 61*pixelFactor).add(startingPos);
+        bd.position.set(pWheelRPos);
         pWheelR = world.createBody(bd);
         pWheelR.createFixture(fd);
 
         WheelJointDef jd = new WheelJointDef();
-        Vec2 axis = new Vec2(0.0f, 0.0f);
+        Vec2 axis = new Vec2(0.0f, 1.0f);
 
         jd.initialize(pBody, pWheelF, pWheelF.getPosition(), axis);
         jd.motorSpeed = 0.0f;
@@ -99,7 +101,6 @@ public class Porche extends Vehicle
         jd.dampingRatio = 0f;
         pSpringR = (WheelJoint) world.createJoint(jd);
 
-        //TODO set position of vehicle to startingPos
         //TODO flip vehicle along y-axis
     }
 
@@ -156,7 +157,7 @@ public class Porche extends Vehicle
         return result;
     }
 
-    private void constructPorche(World world, Vec2 position)
+    private void constructPorche2(World world, Vec2 position)
     {
         PolygonShape chassis = new PolygonShape();
         Vec2 vertices[] = new Vec2[8];
