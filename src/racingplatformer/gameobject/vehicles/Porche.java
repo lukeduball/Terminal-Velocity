@@ -39,7 +39,9 @@ public class Porche extends Vehicle
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
     }
-    public void constructPorche(World world, Vec2 startingPos){
+       
+    public void constructPorche(World world, Vec2 startingPos)
+    {
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(-134.5f, -38.5f);
         vertices[1] = new Vec2(8.5f, -38.5f);
@@ -63,12 +65,18 @@ public class Porche extends Vehicle
         bd.type = BodyType.DYNAMIC;
         bd.position.set(startingPos);
         this.frame = world.createBody(bd);
-        this.frame.createFixture(chassis, 1.0f);
+        FixtureDef fdf=new FixtureDef();
+        fdf.shape=chassis;
+        fdf.filter.groupIndex=-2;
+        fdf.density=1.0f;
+        fdf.friction=(0.0f);
+        this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
         fd.density = 1.0f;
         fd.friction = 0.9f;
+        fd.filter.groupIndex=-2;
 
         Vec2 pWheelFPos = new Vec2(-70f*pixelFactor, 22.5f*pixelFactor).add(startingPos);
         bd.position.set(pWheelFPos);
