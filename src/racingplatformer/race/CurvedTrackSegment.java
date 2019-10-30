@@ -56,8 +56,8 @@ public class CurvedTrackSegment extends TrackSegment
         Random rand = new Random();
         for(int i = 0; i < 251; i+=10)
         {
-            float height = pNoise.getSmoothNoise(i+chunkID*250, 100);
-            Vec2 point = new Vec2((chunkID * 250.f) + i,  -height + 150);
+            float height = pNoise.getSmoothNoise(i+chunkID*Chunk.CHUNK_WIDTH, 100);
+            Vec2 point = new Vec2((chunkID * Chunk.CHUNK_WIDTH) + i,  -height + 150);
             pointList.add(point);
         }
     }

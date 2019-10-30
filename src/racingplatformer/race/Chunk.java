@@ -22,7 +22,8 @@ public class Chunk
     private final List<TrackSegment> boundaryList;
     private final List<GameObject> gameObjectList;
     
-    public static int CHUNK_SIZE = 250;
+    public static int CHUNK_WIDTH = 250;
+    public static int CHUNK_HEIGHT = 186;
     
     public Chunk(int cnkID)
     {
@@ -36,7 +37,7 @@ public class Chunk
         List<GameObject> removeList = new ArrayList<>();
         for(GameObject o : gameObjectList)
         {
-            int chunkPos = (int)(o.getPosition().x / (float)CHUNK_SIZE);
+            int chunkPos = (int)(o.getPosition().x / (float)CHUNK_WIDTH);
             if(chunkPos != this.chunkID)
             {
                 //Remove game object from list

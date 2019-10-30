@@ -164,9 +164,8 @@ public class Screen
             this.x = 0;
         }
         
-        //TODO Replace 500.f with a constant and update width by using the screen size
         //TODO Decide if the width or height change is greater to decide which one to use to set the scaleFactor
-        this.scaleFactor = width / 500.f;
+        this.scaleFactor = width / (float)(Chunk.CHUNK_WIDTH*2);
     }
     
     public float getScaleFactor()
@@ -196,12 +195,12 @@ public class Screen
     
     public float getWorldRenderX()
     {
-        return this.focusVehicle.getPosition().x - 250.f;
+        return this.focusVehicle.getPosition().x - (float)Chunk.CHUNK_WIDTH;
     }
     
     public float getWorldRenderY()
     {
-        return this.focusVehicle.getPosition().y - 186.f;
+        return this.focusVehicle.getPosition().y - (float)Chunk.CHUNK_HEIGHT;
     }
     
     public Vec2 worldToScreenCoordinate(Vec2 worldSpace)

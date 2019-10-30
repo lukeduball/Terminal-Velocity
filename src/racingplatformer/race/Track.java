@@ -40,9 +40,9 @@ public class Track
         PerlinNoise pNoise = new PerlinNoise(8932937492483242570L);
         
         Chunk firstChunk = new Chunk(0);
-        float yCoordinate = -pNoise.getSmoothNoise(Chunk.CHUNK_SIZE, 100) + 150;
+        float yCoordinate = -pNoise.getSmoothNoise(Chunk.CHUNK_WIDTH, 100) + 150;
         Vec2 point1 = new Vec2(-10, yCoordinate);
-        Vec2 point2 = new Vec2(Chunk.CHUNK_SIZE, yCoordinate);
+        Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
         firstChunk.addBoundary(new FlatTrackSegment(world, point1, point2));
         
         Vec2 wallPoint1 = new Vec2(0, yCoordinate);
