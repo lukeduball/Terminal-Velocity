@@ -50,7 +50,7 @@ public class Race
     
     public Race(Game gameInst)
     {
-        world = new World(new Vec2(0.0f, 25f));
+        world = new World(new Vec2(0.0f, 9.81f));
         
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();

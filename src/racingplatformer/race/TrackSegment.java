@@ -47,8 +47,8 @@ public class TrackSegment
         fd.shape = cShape;
         fd.density = 0.5f;
         fd.friction = 1.0f;
-        fd.restitution = 0.5f;
-        fd.filter.groupIndex=-2;
+        fd.restitution = 0f;
+        fd.filter.groupIndex=2;
         physicsBody = world.createBody(bd);
         physicsBody.createFixture(fd);
     }
@@ -56,7 +56,7 @@ public class TrackSegment
     private void generatePointList(int chunkID)
     {
         Random rand = new Random();
-        PerlinNoise pNoise = new PerlinNoise(8932937492483242570L);
+        PerlinNoise pNoise = new PerlinNoise(7932937492483242571L);
         for(int i = 0; i < 251; i+=10)
         {
             float height = pNoise.getSmoothNoise(i+chunkID*250, 100);
