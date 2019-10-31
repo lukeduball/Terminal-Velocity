@@ -200,7 +200,7 @@ public class Screen
     
     public float getWorldRenderY()
     {
-        return this.focusVehicle.getPosition().y - (float)Chunk.CHUNK_HEIGHT;
+        return this.focusVehicle.getPosition().y - (float)Chunk.CHUNK_HEIGHT / 1.50f;
     }
     
     public Vec2 worldToScreenCoordinate(Vec2 worldSpace)

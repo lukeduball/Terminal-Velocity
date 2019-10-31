@@ -41,13 +41,13 @@ public class Track
         
         Chunk firstChunk = new Chunk(0);
         float yCoordinate = -pNoise.getSmoothNoise(Chunk.CHUNK_WIDTH, 100) + 150;
-        Vec2 point1 = new Vec2(-10, yCoordinate);
+        Vec2 point1 = new Vec2(-5, yCoordinate);
         Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
         firstChunk.addBoundary(new FlatTrackSegment(world, point1, point2));
         
         Vec2 wallPoint1 = new Vec2(0, yCoordinate);
-        Vec2 wallPoint2 = new Vec2(0, yCoordinate - 100);
-        firstChunk.addBoundary(new WallTrackSegment(world, wallPoint1, wallPoint2, 10));
+        Vec2 wallPoint2 = new Vec2(0, yCoordinate - 20);
+        firstChunk.addBoundary(new WallTrackSegment(world, wallPoint1, wallPoint2, 5));
         chunkList.add(firstChunk);
         
         int totalChunks = rand.nextInt(75) + 200;

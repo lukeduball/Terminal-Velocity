@@ -56,18 +56,18 @@ public class WallTrackSegment extends TrackSegment
         int[] yPoints = new int[points.length+2];
         
         //Creates a point below the screen to draw a filled in track on the left boundary
-        xPoints[0] = (int)((points[0].x - leftWidth - screen.getWorldRenderX()) * screen.getScaleFactor());
-        yPoints[0] = (int)((points[0].y - screen.getWorldRenderY()) * screen.getScaleFactor());
+        xPoints[0] = screen.getX() + (int)((points[0].x - leftWidth - screen.getWorldRenderX()) * screen.getScaleFactor());
+        yPoints[0] = screen.getY() + (int)((points[0].y - screen.getWorldRenderY()) * screen.getScaleFactor());
         
         for(int i = 0; i < points.length; i++)
         { 
-            xPoints[i+1] = (int)( (points[i].x - screen.getWorldRenderX()) * screen.getScaleFactor());
-            yPoints[i+1] = (int)( (points[i].y - screen.getWorldRenderY()) * screen.getScaleFactor());
+            xPoints[i+1] = screen.getX() + (int)( (points[i].x - screen.getWorldRenderX()) * screen.getScaleFactor());
+            yPoints[i+1] = screen.getY() + (int)( (points[i].y - screen.getWorldRenderY()) * screen.getScaleFactor());
         }
         
         //Creates a point below the screen to draw a filled in track on the right boundary
-        xPoints[points.length+1] = (int)( (points[points.length-1].x - leftWidth - screen.getWorldRenderX()) * screen.getScaleFactor());
-        yPoints[points.length+1] = (int)( (points[points.length-1].y - screen.getWorldRenderY()) * screen.getScaleFactor());
+        xPoints[points.length+1] = screen.getX() + (int)( (points[points.length-1].x - leftWidth - screen.getWorldRenderX()) * screen.getScaleFactor());
+        yPoints[points.length+1] = screen.getY() + (int)( (points[points.length-1].y - screen.getWorldRenderY()) * screen.getScaleFactor());
                 
         g.fillPolygon(xPoints, yPoints, points.length+2);
         g.setStroke(new BasicStroke());
