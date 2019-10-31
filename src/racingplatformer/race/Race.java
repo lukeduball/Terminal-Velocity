@@ -20,7 +20,10 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
+import racingplatformer.gameobject.vehicles.MonsterTruck;
+import racingplatformer.gameobject.vehicles.MuscleCar;
 import racingplatformer.gameobject.vehicles.Porche;
+import racingplatformer.gameobject.vehicles.RallyRacer;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
 
@@ -55,10 +58,10 @@ public class Race
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
-        Porche porche = new Porche(world, 5.f, 75.f);
-        this.screen = new Screen(1, gameInst, porche);
+        Porche mt = new Porche(world, 5.f, 75.f);
+        this.screen = new Screen(1, gameInst, mt);
         Track.generateTrack(world, 10340340L, this.chunkList);
-        this.chunkList.get(0).addGameObject(porche);
+        this.chunkList.get(0).addGameObject(mt);
         
         for(int i = 0; i < 10; i++)
         {

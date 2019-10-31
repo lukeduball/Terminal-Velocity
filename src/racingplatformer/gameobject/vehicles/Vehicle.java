@@ -43,8 +43,8 @@ public class Vehicle extends GameObject
     protected Body frame;
     protected Body rearWheel;
     protected Body frontWheel;
-    protected RevoluteJoint rearWheelSpring;
-    protected RevoluteJoint frontWheelSpring;
+    protected WheelJoint rearWheelSpring;
+    protected WheelJoint frontWheelSpring;
     
     
     @Override

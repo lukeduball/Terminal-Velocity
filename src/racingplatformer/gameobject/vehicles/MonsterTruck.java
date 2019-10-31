@@ -11,7 +11,10 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.joints.WheelJoint;
 import org.jbox2d.dynamics.joints.WheelJointDef;
+import racingplatformer.Game;
+import racingplatformer.race.Race;
 import racingplatformer.renderengine.ResourceManager;
+import racingplatformer.renderengine.Screen;
 
 import java.awt.*;
 
@@ -20,11 +23,17 @@ import java.awt.*;
  * @author Luke
  */
 public class MonsterTruck extends Vehicle{
-    private static float pixelFactor = 0.25f;
-    private static Image mcBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_frame.png");
-    private static Image mcWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_wheel.png");
+    private static float pixelFactor = 1/64f;
+    private static Image mtBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_frame.png");
+    private static Image mtWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_wheel.png");
 
-    /*public void constructMonsterTruck(Vec2 startingPos, World world){
+    public MonsterTruck(World world, float x, float y)
+    {
+        this.constructMonsterTruck(new Vec2(x, y), world);
+        this.position = new Vec2(x, y);
+    }
+
+    public void constructMonsterTruck(Vec2 startingPos, World world){
         Vec2[] vertices = new Vec2[8];
         vertices[0] = new Vec2(-130,-29.5f);
         vertices[1] = new Vec2(22,-56.5f);
@@ -46,43 +55,117 @@ public class MonsterTruck extends Vehicle{
 
         BodyDef bd = new BodyDef();
         bd.type = BodyType.DYNAMIC;
-        bd.position.set(0.0f, 0.0f);
-        frame = world.createBody(bd);
-        frame.createFixture(chassis, 1.0f);
+        bd.position.set(startingPos);
+        this.frame = world.createBody(bd);
+        FixtureDef fdf=new FixtureDef();
+        fdf.shape=chassis;
+        fdf.filter.groupIndex=-2;
+        fdf.density=2f;
+        fdf.friction=(0.0f);
+        fdf.restitution = 0;
+        this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
-        fd.density = 1.0f;
-        fd.friction = 0.9f;
+        fd.density = 2.0f;
+        fd.friction = 100f;
+        fd.filter.groupIndex=-2;
 
-        bd.position.set(89*pixelFactor, 48.5f*pixelFactor);
-        frontWheel = world.createBody(bd);
-        frontWheel.createFixture(fd);
+        Vec2 frontWheelPos = bd.position.set(89*pixelFactor, 48.5f*pixelFactor).add(startingPos);
+        bd.position.set(frontWheelPos);
+        this.frontWheel = world.createBody(bd);
+        this.frontWheel.createFixture(fd);
 
-        bd.position.set(-77*pixelFactor, 48.5f*pixelFactor);
-        rearWheel = world.createBody(bd);
-        rearWheel.createFixture(fd);
+        Vec2 rearWheelPos = bd.position.set(-77*pixelFactor, 48.5f*pixelFactor).add(startingPos);
+        bd.position.set(rearWheelPos);
+        this.rearWheel = world.createBody(bd);
+        this.rearWheel.createFixture(fd);
 
         WheelJointDef jd = new WheelJointDef();
-        Vec2 axis = new Vec2(0.0f, 0.0f);
+        Vec2 axis = new Vec2(0.0f, 1.0f);
 
         jd.initialize(frame, frontWheel, frontWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f;
+        jd.maxMotorTorque = 25.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 4f;
-        jd.dampingRatio = 1f;
+        jd.frequencyHz = 8f;
+        jd.dampingRatio = 0.6f;
         frontWheelSpring = (WheelJoint) world.createJoint(jd);
 
         jd.initialize(frame, rearWheel, rearWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 20.0f;
+        jd.maxMotorTorque = 25.0f;
         jd.enableMotor = true;
-        jd.frequencyHz = 4f;
-        jd.dampingRatio = 1f;
+        jd.frequencyHz = 8f;
+        jd.dampingRatio = 0.6f;
         rearWheelSpring = (WheelJoint) world.createJoint(jd);
 
         //TODO set position of vehicle to startingPos
         //TODO flip vehicle along y-axis
-    }*/
+    }
+
+    @Override
+    public void onUpdate(Race race)
+    {
+        if(race.isMappedKeyDown(1, Game.FORWARD))
+        {
+            this.frontWheelSpring.enableMotor(true);
+            this.rearWheelSpring.enableMotor(true);
+            this.rearWheelSpring.setMotorSpeed(3000.0f);
+            this.frontWheelSpring.setMotorSpeed(3000.0f);
+        }
+        else if(race.isMappedKeyDown(1, Game.BACKWARD))
+        {
+            this.frontWheelSpring.enableMotor(true);
+            this.rearWheelSpring.enableMotor(true);
+            this.rearWheelSpring.setMotorSpeed(-3000.0f);
+            this.frontWheelSpring.setMotorSpeed(-3000.0f);
+        }
+        else
+        {
+            this.rearWheelSpring.enableMotor(false);
+            this.frontWheelSpring.enableMotor(false);
+        }
+
+        if(race.isMappedKeyDown(1, Game.TILT_UP))
+        {
+            this.frame.applyAngularImpulse(-.5f);
+        }
+
+        if(race.isMappedKeyDown(1, Game.TILT_DOWN))
+        {
+            this.frame.applyAngularImpulse(.5f);
+        }
+    }
+    @Override
+    public void render(Graphics2D g, Screen screen, Game gameInstance)
+    {
+        //Need to rework rendering system so that the same aspect ratio is always maintained in Screen Rendering
+
+        this.wheelRotation += 0.01;
+        this.rotation += 0.00;
+        this.position = this.position.add(new Vec2(0.0f, 0.0f));
+
+        float frameWidth = (270.0f/64.0f);
+        float factor = frameWidth / mtBodyImg.getWidth(null);
+        float frameHeight = (float)mtBodyImg.getHeight(null) * factor;
+
+        float wheelWidth = (45.0f/64.0f);
+
+        float leftWheelXOffset = translateToGameSpace(42, frameWidth, mtBodyImg.getWidth(null));
+        float wheelYOffset = translateToGameSpace(39, frameHeight, mtBodyImg.getHeight(null));
+        float rightWheelXOffset = translateToGameSpace(207, frameWidth, mtBodyImg.getWidth(null));
+
+        this.drawFrame(g, mtBodyImg, frameWidth, frameHeight, screen, gameInstance);
+        this.drawWheel(g, mtWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
+        this.drawWheel(g, mtWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
+
+    }
+
+    //TODO move this into a static function in a helper class
+    private float translateToGameSpace(float offset, float transformed, float original)
+    {
+        float result = offset * transformed / original;
+        return result;
+    }
 }
