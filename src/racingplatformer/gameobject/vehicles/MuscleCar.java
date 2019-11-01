@@ -129,9 +129,10 @@ public class MuscleCar extends Vehicle{
         float wheelYOffset = translateToGameSpace(39, frameHeight, mcBodyImg.getHeight(null));
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, mcBodyImg.getWidth(null));
 
+        this.drawWheel(g, mcWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
         this.drawFrame(g, mcBodyImg, frameWidth, frameHeight, screen, gameInstance);
         this.drawWheel(g, mcWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
-        this.drawWheel(g, mcWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
+
 
     }
 

@@ -38,7 +38,7 @@ public class FlatTrackSegment extends TrackSegment
         FixtureDef fd = new FixtureDef();
         fd.shape = cShape;
         fd.density = 0.5f;
-        fd.friction = 1.0f;
+        fd.friction = 5.0f;
         fd.restitution = 0.0f;
         fd.filter.groupIndex=2;
         physicsBody = world.createBody(bd);
