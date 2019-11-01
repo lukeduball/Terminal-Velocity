@@ -23,10 +23,10 @@ public class VehicleSelector extends Component
     private int racerID;
     
     private static final Image[] vehicleImage = {
-    ResourceManager.loadImage("src/resources/images/vehicles/porche_frame.png"),
-    ResourceManager.loadImage("src/resources/images/vehicles/muscle_car_frame.png"),
-    ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_frame.png"),
-    ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_frame.png")
+    ResourceManager.loadImage("src/resources/images/vehicles/porche.png"),
+    ResourceManager.loadImage("src/resources/images/vehicles/muscle_car.png"),
+    ResourceManager.loadImage("src/resources/images/vehicles/rally_racer.png"),
+    ResourceManager.loadImage("src/resources/images/vehicles/monster_truck.png")
     };
     
     private static final Image lArrowButtonImg = ResourceManager.loadImage("src/resources/images/gui/left_arrow.png");
