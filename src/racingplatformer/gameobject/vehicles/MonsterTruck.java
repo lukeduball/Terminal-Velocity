@@ -31,7 +31,7 @@ public class MonsterTruck extends Vehicle{
     {
         this.constructMonsterTruck(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
-        this.speed = 3000.f;
+        this.speed = 54.1f;
     }
 
     public void constructMonsterTruck(Vec2 startingPos, World world){
@@ -61,15 +61,15 @@ public class MonsterTruck extends Vehicle{
         FixtureDef fdf=new FixtureDef();
         fdf.shape=chassis;
         fdf.filter.groupIndex=-2;
-        fdf.density=2f;
+        fdf.density=3f;
         fdf.friction=(2.0f);
         fdf.restitution = 0;
         this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
-        fd.density = 2.0f;
-        fd.friction = 100f;
+        fd.density = 3.0f;
+        fd.friction = 5f;
         fd.filter.groupIndex=-2;
 
         Vec2 frontWheelPos = bd.position.set(89*pixelFactor, 48.5f*pixelFactor).add(startingPos);
@@ -87,7 +87,7 @@ public class MonsterTruck extends Vehicle{
 
         jd.initialize(frame, frontWheel, frontWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 25.0f;
+        jd.maxMotorTorque = 80.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 8f;
         jd.dampingRatio = 0.6f;
@@ -95,7 +95,7 @@ public class MonsterTruck extends Vehicle{
 
         jd.initialize(frame, rearWheel, rearWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 25.0f;
+        jd.maxMotorTorque = 80.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 8f;
         jd.dampingRatio = 0.6f;

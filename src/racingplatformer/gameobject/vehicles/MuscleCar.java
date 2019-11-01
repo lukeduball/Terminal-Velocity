@@ -31,7 +31,7 @@ public class MuscleCar extends Vehicle{
     {
         this.constructMuscleCar(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
-        this.speed = 9000.0f;
+        this.speed = 220.0f;
     }
 
     public void constructMuscleCar(Vec2 startingPos, World world){
@@ -68,8 +68,8 @@ public class MuscleCar extends Vehicle{
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
-        fd.density = 1.0f;
-        fd.friction = 300f;
+        fd.density = 2.0f;
+        fd.friction = 1.5f;
         fd.filter.groupIndex=-2;
 
         Vec2 frontWheelPos = bd.position.set(90*pixelFactor, 27*pixelFactor).add(startingPos);
@@ -87,18 +87,18 @@ public class MuscleCar extends Vehicle{
 
         jd.initialize(frame, frontWheel, frontWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 15.0f;
+        jd.maxMotorTorque = 29.5f;
         jd.enableMotor = true;
-        jd.frequencyHz = 15f;
-        jd.dampingRatio = 0.9f;
+        jd.frequencyHz = 9f;
+        jd.dampingRatio = 0.7f;
         frontWheelSpring = (WheelJoint) world.createJoint(jd);
 
         jd.initialize(frame, rearWheel, rearWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 15.0f;
+        jd.maxMotorTorque = 29.5f;
         jd.enableMotor = true;
-        jd.frequencyHz = 15f;
-        jd.dampingRatio = 0.9f;
+        jd.frequencyHz = 9f;
+        jd.dampingRatio = 0.7f;
         rearWheelSpring = (WheelJoint) world.createJoint(jd);
 
         //TODO set position of vehicle to startingPos

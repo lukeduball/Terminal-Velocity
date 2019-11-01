@@ -18,9 +18,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import racingplatformer.Game;
-import racingplatformer.gameobject.vehicles.PlayerController;
-import racingplatformer.gameobject.vehicles.Porche;
-import racingplatformer.gameobject.vehicles.RallyRacer;
+import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
 
@@ -57,25 +55,31 @@ public class Race
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
 
-        Porche porche3 = new Porche(world, 5.f, -100.f);
+        MonsterTruck mt = new MonsterTruck(world,5, 97);
+        mt.setMovementController(new PlayerController(mt, 4));
+        Screen screen4 = new Screen(4, gameInst, mt);
+
+        Porche porche3 = new Porche(world, 5.f, 97.f);
         porche3.setMovementController(new PlayerController(porche3, 3));
         Screen screen3 = new Screen(3, gameInst, porche3);
 
-        Porche porche2 = new Porche(world, 5.f, 0.f);
+        RallyRacer porche2 = new RallyRacer(world, 5.f, 97.f);
         porche2.setMovementController(new PlayerController(porche2, 2));
         Screen screen2 = new Screen(2, gameInst, porche2);
 
-        Porche porche = new Porche(world, 5.f, 75.f);
+        MuscleCar porche = new MuscleCar(world, 5.f, 97.f);
         porche.setMovementController(new PlayerController(porche, 1));
         Screen screen = new Screen(1, gameInst, porche);
         this.screens.add(screen);
         this.screens.add(screen2);
         this.screens.add(screen3);
+        this.screens.add(screen4);
         //Track.generateTrack(world, 10340340L, this.chunkList);
         Track.generateFlatTrack(world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
         this.chunkList.get(0).addGameObject(porche2);
         this.chunkList.get(0).addGameObject(porche3);
+        this.chunkList.get(0).addGameObject(mt);
         
         for(int i = 0; i < 10; i++)
         {

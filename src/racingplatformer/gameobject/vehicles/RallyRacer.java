@@ -31,7 +31,7 @@ public class RallyRacer extends Vehicle{
     {
         this.constructRallyRacer(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
-        this.speed = 10000.0f;
+        this.speed = 190.0f;
     }
 
     public void constructRallyRacer(Vec2 startingPos, World world){
@@ -61,15 +61,15 @@ public class RallyRacer extends Vehicle{
         FixtureDef fdf=new FixtureDef();
         fdf.shape=chassis;
         fdf.filter.groupIndex=-2;
-        fdf.density=1f;
+        fdf.density=1.5f;
         fdf.friction=(2.0f);
         fdf.restitution = 0;
         this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
-        fd.density = 1.0f;
-        fd.friction = 200f;
+        fd.density = 1.5f;
+        fd.friction = 2f;
         fd.filter.groupIndex=-2;
 
         Vec2 frontWheelPos = bd.position.set(83*pixelFactor, 26*pixelFactor).add(startingPos);
@@ -87,7 +87,7 @@ public class RallyRacer extends Vehicle{
 
         jd.initialize(frame, frontWheel, frontWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10.0f;
+        jd.maxMotorTorque = 27.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 15f;
         jd.dampingRatio = 0.9f;
@@ -95,7 +95,7 @@ public class RallyRacer extends Vehicle{
 
         jd.initialize(frame, rearWheel, rearWheel.getPosition(), axis);
         jd.motorSpeed = 0.0f;
-        jd.maxMotorTorque = 10.0f;
+        jd.maxMotorTorque = 27.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 15f;
         jd.dampingRatio = 0.9f;

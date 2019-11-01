@@ -37,7 +37,7 @@ public class Porche extends Vehicle
     {
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
-        this.speed = 12000.0f;
+        this.speed = 250.0f;
     }
 
     public void constructPorche(World world, Vec2 startingPos)
@@ -68,15 +68,15 @@ public class Porche extends Vehicle
         FixtureDef fdf=new FixtureDef();
         fdf.shape=chassis;
         fdf.filter.groupIndex=-2;
-        fdf.density=1f;
+        fdf.density=0.5f;
         fdf.friction=(2.0f);
         fdf.restitution = 0;
         this.frame.createFixture(fdf);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = wheel;
-        fd.density = 1f;
-        fd.friction = 500f;
+        fd.density = 0.5f;
+        fd.friction = 0.2f;
         fd.restitution = 0;
         fd.filter.groupIndex=-2;
 
@@ -95,7 +95,7 @@ public class Porche extends Vehicle
 
         jd.initialize(this.frame, this.rearWheel, this.rearWheel.getPosition(), axis);
         jd.motorSpeed = 0f;
-        jd.maxMotorTorque = 15.0f;
+        jd.maxMotorTorque = 10.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 20f;
         jd.dampingRatio = 0.9f;
@@ -103,7 +103,7 @@ public class Porche extends Vehicle
 
         jd.initialize(this.frame, this.frontWheel, this.frontWheel.getPosition(), axis);
         jd.motorSpeed = 0f;
-        jd.maxMotorTorque = 15.0f;
+        jd.maxMotorTorque = 10.0f;
         jd.enableMotor = true;
         jd.frequencyHz = 20f;
         jd.dampingRatio = 0.9f;
