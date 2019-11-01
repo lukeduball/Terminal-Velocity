@@ -141,6 +141,7 @@ public class Porche extends Vehicle
         this.drawWheel(g, porcheWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
         this.drawWheel(g, porcheWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
 
+        super.render(g, screen, gameInstance);
     }
     
     //TODO move this into a static function in a helper class

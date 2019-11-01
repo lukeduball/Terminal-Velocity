@@ -133,6 +133,7 @@ public class RallyRacer extends Vehicle{
         this.drawWheel(g, rrWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
         this.drawWheel(g, rrWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
 
+        super.render(g, screen, gameInstance);
     }
 
     //TODO move this into a static function in a helper class

@@ -5,6 +5,7 @@
  */
 package racingplatformer.gameobject.vehicles;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -15,6 +16,7 @@ import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;
+import racingplatformer.renderengine.StringRenderer;
 
 /**
  *
@@ -59,7 +61,10 @@ public class Vehicle extends GameObject
     @Override
     public void render(Graphics2D g, Screen screen, Game gameInstance) 
     {
-        //Render the vehicle
+        if(this.movementController != null)
+        {
+            this.drawPlayerLabel(g, screen);
+        }
     }
     
     @Override
@@ -107,6 +112,13 @@ public class Vehicle extends GameObject
         at.rotate(wheelBody.getAngle() * 0.1, wheelCenterOffset.x, wheelCenterOffset.y);
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
+    }
+    
+    private void drawPlayerLabel(Graphics2D g, Screen screen)
+    {
+        StringRenderer.drawCenteredString(g, this.movementController.getControllerLabel(), 
+        this.frame.getPosition(),
+        Color.black, screen, 0.5f);
     }
     
     public Body getFrame()

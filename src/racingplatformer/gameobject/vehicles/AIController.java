@@ -23,4 +23,10 @@ public class AIController extends Controller
     {
         //Use the AI system to get information about the surrowndings
     }
+    
+    @Override
+    public String getControllerLabel()
+    {
+        return "CPU";
+    }
 }

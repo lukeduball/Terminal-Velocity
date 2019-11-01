@@ -21,4 +21,5 @@ public abstract class Controller
     }
     
     public abstract void moveVehicle(Race race);
+    public abstract String getControllerLabel();
 }
