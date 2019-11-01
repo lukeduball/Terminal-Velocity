@@ -10,8 +10,6 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.joints.Joint;
-import org.jbox2d.dynamics.joints.RevoluteJoint;
 import org.jbox2d.dynamics.joints.WheelJoint;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
@@ -24,14 +22,11 @@ import racingplatformer.renderengine.Screen;
  */
 public class Vehicle extends GameObject
 {    
-    //Controller which chooses how to decide how to move this vehicle
-    Controller controller;
-    
     //Mass of the vehicle in Kg
     private float mass;
     
     //Speed of the vehicle
-    private float speed;
+    protected float speed;
     
     //Acceleration of the vehicle
     private float acceleration;
@@ -39,6 +34,8 @@ public class Vehicle extends GameObject
     private Vec2 velocity;
     
     protected float wheelRotation;
+    
+    protected Controller movementController;
     
     protected Body frame;
     protected Body rearWheel;
@@ -53,7 +50,10 @@ public class Vehicle extends GameObject
         //Update the location of the vehicle
         
         //Depending on the controller it will move the vehicle based on those conditions
-        //controller.moveVehicle();
+        if(this.movementController != null)
+        {
+            this.movementController.moveVehicle(race);
+        }
     }
 
     @Override
@@ -107,6 +107,31 @@ public class Vehicle extends GameObject
         at.rotate(wheelBody.getAngle() * 0.1, wheelCenterOffset.x, wheelCenterOffset.y);
         at.scale(scaleX, scaleY);
         g.drawImage(img, at, gameInstance);
+    }
+    
+    public Body getFrame()
+    {
+        return this.frame;
+    }
+    
+    public WheelJoint getRearWheelSpring()
+    {
+        return this.rearWheelSpring;
+    }
+    
+    public WheelJoint getFrontWheelSpring()
+    {
+        return this.frontWheelSpring;
+    }
+    
+    public void setMovementController(Controller controller)
+    {
+        this.movementController = controller;
+    }
+    
+    public float getSpeed()
+    {
+        return this.speed;
     }
     
 }

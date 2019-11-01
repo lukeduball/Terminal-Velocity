@@ -31,6 +31,7 @@ public class MonsterTruck extends Vehicle{
     {
         this.constructMonsterTruck(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
+        this.speed = 3000.f;
     }
 
     public void constructMonsterTruck(Vec2 startingPos, World world){
@@ -107,35 +108,7 @@ public class MonsterTruck extends Vehicle{
     @Override
     public void onUpdate(Race race)
     {
-        if(race.isMappedKeyDown(1, Game.FORWARD))
-        {
-            this.frontWheelSpring.enableMotor(true);
-            this.rearWheelSpring.enableMotor(true);
-            this.rearWheelSpring.setMotorSpeed(3000.0f);
-            this.frontWheelSpring.setMotorSpeed(3000.0f);
-        }
-        else if(race.isMappedKeyDown(1, Game.BACKWARD))
-        {
-            this.frontWheelSpring.enableMotor(true);
-            this.rearWheelSpring.enableMotor(true);
-            this.rearWheelSpring.setMotorSpeed(-3000.0f);
-            this.frontWheelSpring.setMotorSpeed(-3000.0f);
-        }
-        else
-        {
-            this.rearWheelSpring.enableMotor(false);
-            this.frontWheelSpring.enableMotor(false);
-        }
-
-        if(race.isMappedKeyDown(1, Game.TILT_UP))
-        {
-            this.frame.applyAngularImpulse(-.5f);
-        }
-
-        if(race.isMappedKeyDown(1, Game.TILT_DOWN))
-        {
-            this.frame.applyAngularImpulse(.5f);
-        }
+        super.onUpdate(race);
     }
     @Override
     public void render(Graphics2D g, Screen screen, Game gameInstance)

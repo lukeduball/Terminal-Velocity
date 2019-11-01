@@ -5,6 +5,8 @@
  */
 package racingplatformer.gameobject.vehicles;
 
+import racingplatformer.race.Race;
+
 /**
  *
  * @author Luke
@@ -17,7 +19,7 @@ public class AIController extends Controller
     }
 
     @Override
-    public void moveVehicle()
+    public void moveVehicle(Race race)
     {
         //Use the AI system to get information about the surrowndings
     }
