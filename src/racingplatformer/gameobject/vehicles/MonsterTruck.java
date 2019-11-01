@@ -133,6 +133,7 @@ public class MonsterTruck extends Vehicle{
         this.drawWheel(g, mtWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
         this.drawWheel(g, mtWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
 
+        super.render(g, screen, gameInstance);
     }
 
     //TODO move this into a static function in a helper class

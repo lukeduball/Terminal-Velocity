@@ -133,7 +133,7 @@ public class MuscleCar extends Vehicle{
         this.drawFrame(g, mcBodyImg, frameWidth, frameHeight, screen, gameInstance);
         this.drawWheel(g, mcWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
 
-
+        super.render(g, screen, gameInstance);
     }
 
     //TODO move this into a static function in a helper class

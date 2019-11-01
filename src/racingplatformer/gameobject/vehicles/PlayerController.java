@@ -56,4 +56,10 @@ public class PlayerController extends Controller
             this.parentVehicle.getFrame().applyAngularImpulse(.5f);
         }
     }
+    
+    @Override
+    public String getControllerLabel()
+    {
+        return "Player "+playerID;
+    }
 }
