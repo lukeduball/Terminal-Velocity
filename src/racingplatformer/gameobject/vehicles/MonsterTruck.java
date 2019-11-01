@@ -61,7 +61,7 @@ public class MonsterTruck extends Vehicle{
         fdf.shape=chassis;
         fdf.filter.groupIndex=-2;
         fdf.density=2f;
-        fdf.friction=(0.0f);
+        fdf.friction=(2.0f);
         fdf.restitution = 0;
         this.frame.createFixture(fdf);
 

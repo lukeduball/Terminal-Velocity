@@ -18,6 +18,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import racingplatformer.Game;
+import racingplatformer.gameobject.vehicles.MonsterTruck;
+import racingplatformer.gameobject.vehicles.MuscleCar;
 import racingplatformer.gameobject.vehicles.Porche;
 import racingplatformer.gameobject.vehicles.RallyRacer;
 import racingplatformer.renderengine.DebugDrawTV;
@@ -55,22 +57,27 @@ public class Race
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
+//
+        RallyRacer rr = new RallyRacer(world, 5.f, 75f);
+        Screen screen4 = new Screen(4, gameInst, rr);
 
-        //Porche porche3 = new Porche(world, 5.f, -100.f);
-        //Screen screen3 = new Screen(3, gameInst, porche3);
+        MonsterTruck porche3 = new MonsterTruck(world, 5.f, 75.f);
+        Screen screen3 = new Screen(3, gameInst, porche3);
 
-        //Porche porche2 = new Porche(world, 5.f, 0.f);
-        //Screen screen2 = new Screen(2, gameInst, porche2);
-
+        MuscleCar porche2 = new MuscleCar(world, 5.f, 75.f);
+        Screen screen2 = new Screen(2, gameInst, porche2);
+//
         Porche porche = new Porche(world, 5.f, 75.f);
         Screen screen = new Screen(1, gameInst, porche);
         this.screens.add(screen);
-        //this.screens.add(screen2);
-        //this.screens.add(screen3);
+        this.screens.add(screen2);
+        this.screens.add(screen3);
+        this.screens.add(screen4);
         Track.generateTrack(world, 10340340L, this.chunkList);
         this.chunkList.get(0).addGameObject(porche);
-        //this.chunkList.get(0).addGameObject(porche2);
-        //this.chunkList.get(0).addGameObject(porche3);
+        this.chunkList.get(0).addGameObject(porche2);
+        this.chunkList.get(0).addGameObject(porche3);
+        this.chunkList.get(0).addGameObject(rr);
         
         for(int i = 0; i < 10; i++)
         {
