@@ -37,6 +37,7 @@ public class Porche extends Vehicle
     {
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
+        this.speed = 12000.0f;
     }
 
     public void constructPorche(World world, Vec2 startingPos)
@@ -114,35 +115,7 @@ public class Porche extends Vehicle
     @Override
     public void onUpdate(Race race)
     {
-        if(race.isMappedKeyDown(1, Game.FORWARD))
-        {
-            this.frontWheelSpring.enableMotor(true);
-            this.rearWheelSpring.enableMotor(true);
-            this.rearWheelSpring.setMotorSpeed(12000.0f);
-            this.frontWheelSpring.setMotorSpeed(12000.0f);
-        }
-        else if(race.isMappedKeyDown(1, Game.BACKWARD))
-        {
-            this.frontWheelSpring.enableMotor(true);
-            this.rearWheelSpring.enableMotor(true);
-            this.rearWheelSpring.setMotorSpeed(-12000.0f);
-            this.frontWheelSpring.setMotorSpeed(-12000.0f);
-        }
-        else
-        {
-            this.rearWheelSpring.enableMotor(false);
-            this.frontWheelSpring.enableMotor(false);
-        }
-
-        if(race.isMappedKeyDown(1, Game.TILT_UP))
-        {
-            this.frame.applyAngularImpulse(-.5f);
-        }
-
-        if(race.isMappedKeyDown(1, Game.TILT_DOWN))
-        {
-            this.frame.applyAngularImpulse(.5f);
-        }
+        super.onUpdate(race);
     }
 
     @Override

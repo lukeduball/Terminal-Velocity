@@ -5,18 +5,20 @@
  */
 package racingplatformer.gameobject.vehicles;
 
+import racingplatformer.race.Race;
+
 /**
  *
  * @author Luke
  */
 public abstract class Controller 
 {
-    private Vehicle parentVehicle;
+    protected Vehicle parentVehicle;
     
     public Controller(Vehicle vehicle)
     {
         this.parentVehicle = vehicle;
     }
     
-    public abstract void moveVehicle();
+    public abstract void moveVehicle(Race race);
 }
