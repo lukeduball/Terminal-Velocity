@@ -71,7 +71,8 @@ public class Race
         this.screens.add(screen);
         this.screens.add(screen2);
         this.screens.add(screen3);
-        Track.generateTrack(world, 10340340L, this.chunkList);
+        //Track.generateTrack(world, 10340340L, this.chunkList);
+        Track.generateFlatTrack(world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
         this.chunkList.get(0).addGameObject(porche2);
         this.chunkList.get(0).addGameObject(porche3);

@@ -58,4 +58,27 @@ public class Track
             chunkList.add(chunk);
         }
     }
+    
+    public static void generateFlatTrack(World world, List<Chunk> chunkList)
+    {
+        Chunk firstChunk = new Chunk(0);
+        float yCoordinate = 100.0f;
+        Vec2 point1 = new Vec2(-5, yCoordinate);
+        Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
+        firstChunk.addBoundary(new FlatTrackSegment(world, point1, point2));
+        
+        Vec2 wallPoint1 = new Vec2(0, yCoordinate);
+        Vec2 wallPoint2 = new Vec2(0, yCoordinate - 20);
+        firstChunk.addBoundary(new WallTrackSegment(world, wallPoint1, wallPoint2, 5));
+        chunkList.add(firstChunk);
+        
+        for(int  i = 1; i < 100; i++)
+        {
+            Vec2 p1 = new Vec2(i * Chunk.CHUNK_WIDTH, yCoordinate);
+            Vec2 p2 = new Vec2((i+1) * Chunk.CHUNK_WIDTH, yCoordinate);
+            Chunk chunk = new Chunk(i);
+            chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
+            chunkList.add(chunk);
+        }
+    }
 }
