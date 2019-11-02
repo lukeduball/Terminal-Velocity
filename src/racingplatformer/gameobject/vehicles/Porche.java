@@ -38,6 +38,7 @@ public class Porche extends Vehicle
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
         this.speed = 250.0f;
+        this.halfWidth = 134.5f * pixelFactor;
     }
 
     public void constructPorche(World world, Vec2 startingPos)

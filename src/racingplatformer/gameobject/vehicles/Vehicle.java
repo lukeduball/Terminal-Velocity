@@ -45,6 +45,7 @@ public class Vehicle extends GameObject
     protected WheelJoint rearWheelSpring;
     protected WheelJoint frontWheelSpring;
     
+    protected float halfWidth;
     
     @Override
     public void onUpdate(Race race) 
@@ -144,6 +145,11 @@ public class Vehicle extends GameObject
     public float getSpeed()
     {
         return this.speed;
+    }
+    
+    public Vec2 getFrontOfVehiclePosition()
+    {
+        return this.frame.getPosition().add(new Vec2(this.halfWidth, 0.0f));
     }
     
 }

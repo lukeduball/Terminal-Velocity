@@ -32,6 +32,7 @@ public class MuscleCar extends Vehicle{
         this.constructMuscleCar(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 220.0f;
+        this.halfWidth = 127.0f * pixelFactor;
     }
 
     public void constructMuscleCar(Vec2 startingPos, World world){

@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
+import racingplatformer.gameobject.vehicles.Vehicle;
 import racingplatformer.race.Chunk;
 import racingplatformer.race.Race;
 import racingplatformer.race.Track;
@@ -22,7 +23,7 @@ import racingplatformer.race.Track;
 public class Screen 
 {
     private Track track;
-    private GameObject focusVehicle;
+    private Vehicle focusVehicle;
     private int position;
     private int x, y;
     private int width, height;
@@ -40,13 +41,13 @@ public class Screen
         this.loadedChunks = new Chunk[3];
     }
     
-    public Screen(int pos, Game g, GameObject fv)
+    public Screen(int pos, Game g, Vehicle fv)
     {
         this(pos, g);
         this.focusVehicle = fv;
     }
     
-    public void renderScreen(Graphics2D g)
+    public void renderScreen(Graphics2D g, Race race)
     {
         g.setColor(Color.red);
         
@@ -75,6 +76,13 @@ public class Screen
                 chunk.renderGameObjects(g, this, gameInstance);
             }
         }
+        
+        Vec2 placePosition = new Vec2(this.focusVehicle.getPosition());
+        placePosition.x += Chunk.CHUNK_WIDTH - 2;
+        placePosition.y -= ((float)Chunk.CHUNK_HEIGHT * .5) - 2;
+        int racePosition = race.getCurrentPosition(this.focusVehicle);
+        StringRenderer.drawCenteredString(g, ""+racePosition,
+                placePosition, Color.black, this);
     }
     
     public void updateScreen(int numScreens, Race race)

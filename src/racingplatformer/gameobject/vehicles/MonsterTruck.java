@@ -32,6 +32,7 @@ public class MonsterTruck extends Vehicle{
         this.constructMonsterTruck(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 54.1f;
+        this.halfWidth = 130.0f * pixelFactor;
     }
 
     public void constructMonsterTruck(Vec2 startingPos, World world){

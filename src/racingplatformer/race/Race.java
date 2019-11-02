@@ -36,6 +36,8 @@ public class Race
     //Stores all the currently loaded chunks to do logical updates on
     private final List<Chunk> loadedChunksList;
     
+    private List<Vehicle> vehicleList;
+    
     //Stores all the information about the track
     private Track track;
 
@@ -54,6 +56,8 @@ public class Race
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
+        
+        this.vehicleList = new ArrayList<>();
 
         MonsterTruck mt = new MonsterTruck(world,5, 97);
         mt.setMovementController(new PlayerController(mt, 4));
@@ -81,42 +85,14 @@ public class Race
         this.chunkList.get(0).addGameObject(porche3);
         this.chunkList.get(0).addGameObject(mt);
         
-        for(int i = 0; i < 10; i++)
-        {
-            //this.createCircleShape(0.0f + 25*i, 50.0f, world);
-        }
-        
-        BodyDef def = new BodyDef();
-        def.type = BodyType.STATIC;
-        def.position.set(100.f, 100.f);
-        PolygonShape pShape = new PolygonShape();
-        pShape.setAsBox(1000, 10);
-        FixtureDef fd1 = new FixtureDef();
-        fd1.shape = pShape;
-        fd1.density = 0.5f;
-        fd1.friction = 1.0f;
-        fd1.restitution = 0.5f;
-        //world.createBody(def).createFixture(fd1);
-        
+        this.vehicleList.add(porche);
+        this.vehicleList.add(porche2);
+        this.vehicleList.add(porche3);
+        this.vehicleList.add(mt);
         
         DebugDrawTV debugDraw = new DebugDrawTV(this.screens.get(0), gameInstance.getGraphics());
         debugDraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
         world.setDebugDraw(debugDraw);
-    }
-    
-    private void createCircleShape(float x, float y, World world)
-    {
-        BodyDef bd = new BodyDef();
-        bd.type = BodyType.DYNAMIC;
-        bd.position.set(x, y);
-        CircleShape cs = new CircleShape();
-        cs.m_radius = 10f;
-        FixtureDef fd = new FixtureDef();
-        fd.shape = cs;
-        fd.density = 0.5f;
-        fd.friction = 0.3f;
-        fd.restitution = 0.5f;
-        world.createBody(bd).createFixture(fd);
     }
     
     /***
@@ -150,7 +126,7 @@ public class Race
         g.fillRect(0, 0, this.gameInstance.getWidth(), this.gameInstance.getHeight());
         for(Screen screen : screens)
         {
-            screen.renderScreen(g);
+            screen.renderScreen(g, this);
         }
         
         //Draw the debug data last so that it is drawn over all images
@@ -194,5 +170,22 @@ public class Race
     public boolean isMappedKeyDown(int playerID, int keyIdentifier)
     {
         return this.gameInstance.isKeyDown(this.gameInstance.getPlayerControlKeys(playerID-1)[keyIdentifier]);
+    }
+    
+    public int getCurrentPosition(Vehicle vehicle)
+    {
+        int position = 1;
+        for(Vehicle v : this.vehicleList)
+        {
+            if(v == vehicle)
+                continue;
+            
+            float comparePosition = vehicle.getFrontOfVehiclePosition().x - v.getFrontOfVehiclePosition().x;
+            if(comparePosition < 0)
+            {
+                position++;
+            }
+        }
+        return position;
     }
 }

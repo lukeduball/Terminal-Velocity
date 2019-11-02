@@ -32,6 +32,7 @@ public class RallyRacer extends Vehicle{
         this.constructRallyRacer(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 190.0f;
+        this.halfWidth = 130.0f * pixelFactor;
     }
 
     public void constructRallyRacer(Vec2 startingPos, World world){
