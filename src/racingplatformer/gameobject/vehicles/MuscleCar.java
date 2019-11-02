@@ -116,10 +116,6 @@ public class MuscleCar extends Vehicle{
     {
         //Need to rework rendering system so that the same aspect ratio is always maintained in Screen Rendering
 
-        this.wheelRotation += 0.01;
-        this.rotation += 0.00;
-        this.position = this.position.add(new Vec2(0.0f, 0.0f));
-
         float frameWidth = (270.0f/64.0f);
         float factor = frameWidth / mcBodyImg.getWidth(null);
         float frameHeight = (float)mcBodyImg.getHeight(null) * factor;

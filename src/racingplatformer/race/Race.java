@@ -44,6 +44,8 @@ public class Race
     private List<Screen> screens;
     private World world;
     
+    private FinishLine finishLine;
+    
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
     private static final int POS_IT = 8;
@@ -78,8 +80,8 @@ public class Race
         this.screens.add(screen2);
         this.screens.add(screen3);
         this.screens.add(screen4);
-        //Track.generateTrack(world, 10340340L, this.chunkList);
-        Track.generateFlatTrack(world, chunkList);
+        Track.generateTrack(this, world, 10340340L, this.chunkList);
+        //Track.generateFlatTrack(this, world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
         this.chunkList.get(0).addGameObject(porche2);
         this.chunkList.get(0).addGameObject(porche3);
@@ -187,5 +189,15 @@ public class Race
             }
         }
         return position;
+    }
+    
+    public FinishLine getFinishLine()
+    {
+        return this.finishLine;
+    }
+    
+    public void setFinishLine(FinishLine fl)
+    {
+        this.finishLine = fl;
     }
 }

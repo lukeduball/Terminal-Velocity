@@ -149,7 +149,7 @@ public class Vehicle extends GameObject
     
     public Vec2 getFrontOfVehiclePosition()
     {
-        return this.frame.getPosition().add(new Vec2(this.halfWidth, 0.0f));
+        return this.getPosition().add(new Vec2(this.halfWidth, 0.0f));
     }
     
 }

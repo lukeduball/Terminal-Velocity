@@ -66,6 +66,7 @@ public class Screen
             if(chunk != null)
             {
                 chunk.renderTrack(g, this, gameInstance);
+                race.getFinishLine().render(g, this, gameInstance);
             }
         }
         
