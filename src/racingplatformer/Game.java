@@ -114,6 +114,7 @@ public class Game extends Canvas
     
     private void gameLoop()
     {
+        PlayMusic.music("src/resources/music/TVRaceTheme1.wav");
         final int TARGET_FPS = 60;
         final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
         long lastFpsTime = 0L;

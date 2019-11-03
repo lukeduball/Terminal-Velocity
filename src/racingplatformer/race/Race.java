@@ -45,6 +45,7 @@ public class Race
     private World world;
     
     private FinishLine finishLine;
+    private int finishedVehicles = 0;
     
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
@@ -115,7 +116,26 @@ public class Race
                 chunk.onUpdate(this);   
             }
         }
+        this.checkForFinishedVehicles();
+    }
+    
+    private void checkForFinishedVehicles()
+    {
+        List<Vehicle> removeList = new ArrayList<>();
+        for(Vehicle vehicle : this.vehicleList)
+        {
+            if(this.finishLine.hasVehicleFinishedRace(vehicle))
+            {
+                this.finishedVehicles++;
+                vehicle.setRacing(false);
+                removeList.add(vehicle);
+            }
+        }
         
+        for(Vehicle vehicle : removeList)
+        {
+            this.vehicleList.remove(vehicle);
+        }
     }
     
     /***
@@ -176,7 +196,7 @@ public class Race
     
     public int getCurrentPosition(Vehicle vehicle)
     {
-        int position = 1;
+        int position = finishedVehicles+1;
         for(Vehicle v : this.vehicleList)
         {
             if(v == vehicle)

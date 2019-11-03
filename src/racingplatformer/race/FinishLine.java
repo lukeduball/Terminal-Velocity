@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
 import racingplatformer.Game;
+import racingplatformer.gameobject.vehicles.Vehicle;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.Screen;
 
@@ -44,6 +45,11 @@ public class FinishLine
         at.translate(screenPos.x, screenPos.y);
         at.scale(scaleX, scaleY);
         g.drawImage(finishLineImg, at, gameInstance);
+    }
+    
+    public boolean hasVehicleFinishedRace(Vehicle vehicle)
+    {
+        return vehicle.getPosition().x > this.position.x;
     }
     
 }

@@ -37,6 +37,8 @@ public class Vehicle extends GameObject
     
     protected float wheelRotation;
     
+    protected boolean isRacing;
+    
     protected Controller movementController;
     
     protected Body frame;
@@ -47,15 +49,25 @@ public class Vehicle extends GameObject
     
     protected float halfWidth;
     
+    public Vehicle()
+    {
+        this.isRacing = true;
+    }
+    
     @Override
     public void onUpdate(Race race) 
     {
         //Update the location of the vehicle
         
         //Depending on the controller it will move the vehicle based on those conditions
-        if(this.movementController != null)
+        if(this.movementController != null && isRacing)
         {
             this.movementController.moveVehicle(race);
+        }
+        else
+        {
+            this.frontWheelSpring.setMotorSpeed(0.0f);
+            this.rearWheelSpring.setMotorSpeed(0.0f);
         }
     }
 
@@ -150,6 +162,11 @@ public class Vehicle extends GameObject
     public Vec2 getFrontOfVehiclePosition()
     {
         return this.getPosition().add(new Vec2(this.halfWidth, 0.0f));
+    }
+    
+    public void setRacing(boolean flag)
+    {
+        this.isRacing = flag;
     }
     
 }
