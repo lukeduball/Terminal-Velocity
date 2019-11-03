@@ -121,8 +121,8 @@ public class Game extends Canvas
         int fps = 0;
         
         MainMenuGui mainMenu = new MainMenuGui(this);
-        //this.activeGui = mainMenu;
-        this.setActiveRace(new Race(this));
+        this.activeGui = mainMenu;
+        //this.setActiveRace(new Race(this));
         
         while(gameRunning)
         {
