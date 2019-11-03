@@ -67,10 +67,12 @@ public class PlayerControlsPopupGui extends PopupGui
         
         super.draw(g);
         //Draw text strings below
+        RenderHelper.drawCenteredString(g, "Customize your controls below!", 333, 72, Color.white, gameInstance, 0.5f);
         RenderHelper.drawString(g, "Accelerate", 315, 92, Color.white, gameInstance, 0.4f);
         RenderHelper.drawString(g, "Tilt Left", 286, 169, Color.white, gameInstance, 0.4f);
         RenderHelper.drawString(g, "Tilt Right", 352, 169, Color.white, gameInstance, 0.4f);
         RenderHelper.drawString(g, "Reverse", 320, 169, Color.white, gameInstance, 0.4f);
+        RenderHelper.drawCenteredString(g, "One key mapped to multiple controls isn't a good idea!", 333, 190, Color.white, gameInstance, 0.5f);
     }
     
     //Add button methods here -- to close the popup call the close method
