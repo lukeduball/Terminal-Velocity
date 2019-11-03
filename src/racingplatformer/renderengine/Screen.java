@@ -81,7 +81,7 @@ public class Screen
         Vec2 placePosition = new Vec2(this.focusVehicle.getPosition());
         placePosition.x += Chunk.CHUNK_WIDTH - 2;
         placePosition.y -= ((float)Chunk.CHUNK_HEIGHT * .5) - 2;
-        int racePosition = race.getCurrentPosition(this.focusVehicle);
+        int racePosition = this.focusVehicle.getCurrentPosition(race);
         StringRenderer.drawCenteredString(g, ""+racePosition,
                 placePosition, Color.black, this);
     }

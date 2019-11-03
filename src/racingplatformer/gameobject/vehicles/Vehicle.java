@@ -38,6 +38,9 @@ public class Vehicle extends GameObject
     protected float wheelRotation;
     
     protected boolean isRacing;
+    private int finishPosition;
+    
+    private int racerID;
     
     protected Controller movementController;
     
@@ -49,8 +52,9 @@ public class Vehicle extends GameObject
     
     protected float halfWidth;
     
-    public Vehicle()
+    public Vehicle(int rid)
     {
+        this.racerID = rid;
         this.isRacing = true;
     }
     
@@ -167,6 +171,25 @@ public class Vehicle extends GameObject
     public void setRacing(boolean flag)
     {
         this.isRacing = flag;
+    }
+    
+    public void setFinishPosition(int i)
+    {
+        this.finishPosition = i;
+    }
+    
+    public int getCurrentPosition(Race race)
+    {
+        if(this.isRacing)
+        {
+            return race.getCurrentPosition(this);
+        }
+        return this.finishPosition;
+    }
+    
+    public int getRacerID()
+    {
+        return this.racerID;
     }
     
 }

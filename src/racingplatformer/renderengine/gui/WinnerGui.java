@@ -1,15 +1,20 @@
 package racingplatformer.renderengine.gui;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.util.List;
 import racingplatformer.Game;
 import racingplatformer.PlayMusic;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.components.Button;
 
-import java.awt.*;
-
 public class WinnerGui extends Gui{
-    public WinnerGui(Game game, int[] placements){
+    private List finishList;
+    
+    public WinnerGui(Game game, List<Integer> fnList)
+    {
         super(game);
+        this.finishList = fnList;
         this.componentList.add(new Button("MainMenu",152 - 500/5, 222, 186, 36, "Main Menu"));
         this.componentList.add(new Button("RaceAgain",  152 + 500/5, 222, 186, 36, "Race Again"));
     }
@@ -22,19 +27,18 @@ public class WinnerGui extends Gui{
         Color bronze = new Color(205, 127, 50);
         String player = "Player ";
         String AI = "AI ";
+        
+        Color[] colors = new Color[]{new Color(255, 215, 0), new Color(192, 192, 192), new Color(205, 127, 50), Color.black};
+        String[] place = new String[]{"1st Place", "2nd Place", "3rd Place", "4th Place"};
 
 
         super.draw(g);
         RenderHelper.drawCenteredString(g, "Race Results", 500/2, 20, Color.white, this.gameInstance, 1.5f);
-        RenderHelper.drawString(g, "1st Place:", 500/3, 70, gold, gameInstance);
-        RenderHelper.drawString(g, "2nd Place:", 500/3, 110, silver, gameInstance);
-        RenderHelper.drawString(g, "3rd Place:", 500/3, 150, bronze, gameInstance);
-        RenderHelper.drawString(g, "4th Place:", 500/3, 190, Color.black, gameInstance);
-        RenderHelper.drawRightAlignedString(g, player, 1000/3, 70, gold, gameInstance);
-        RenderHelper.drawRightAlignedString(g, player, 1000/3, 110, silver, gameInstance);
-        RenderHelper.drawRightAlignedString(g, player, 1000/3, 150, bronze, gameInstance);
-        RenderHelper.drawRightAlignedString(g, player, 1000/3, 190, Color.black, gameInstance);
-
+        for(int i = 0; i < this.finishList.size(); i++)
+        {
+            RenderHelper.drawString(g, place[i], 500/3, 70 + 40*i, colors[i], gameInstance);
+            RenderHelper.drawRightAlignedString(g, player+this.finishList.get(i), 1000/3, 70 + 40*i, colors[i], gameInstance);
+        }
     }
 
     public void onMainMenuButtonClicked(){

@@ -27,8 +27,9 @@ public class MuscleCar extends Vehicle{
     private static Image mcBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/muscle_car_frame.png");
     private static Image mcWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/muscle_car_wheel.png");
 
-    public MuscleCar(World world, float x, float y)
+    public MuscleCar(World world, float x, float y, int rid)
     {
+        super(rid);
         this.constructMuscleCar(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 220.0f;
