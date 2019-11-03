@@ -167,7 +167,7 @@ public class VehicleSelector extends Component
         if(this.currentIndex < vehicleImage.length - 1)
         {
             if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+                PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
             }
             this.currentIndex ++;
             this.leftArrow.setDisabled(false);
