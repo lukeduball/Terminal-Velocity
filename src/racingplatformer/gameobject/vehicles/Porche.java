@@ -38,6 +38,7 @@ public class Porche extends Vehicle
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
         this.speed = 250.0f;
+        this.halfWidth = 134.5f * pixelFactor;
     }
 
     public void constructPorche(World world, Vec2 startingPos)
@@ -122,10 +123,6 @@ public class Porche extends Vehicle
     public void render(Graphics2D g, Screen screen, Game gameInstance)
     {
         //Need to rework rendering system so that the same aspect ratio is always maintained in Screen Rendering
-        
-        this.wheelRotation += 0.01;
-        this.rotation += 0.00;
-        this.position = this.position.add(new Vec2(0.0f, 0.0f));
         
         float frameWidth = (270.0f/64.0f);
         float factor = frameWidth / porcheImg.getWidth(null);

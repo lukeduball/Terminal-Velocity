@@ -27,7 +27,6 @@ public class PlayerController extends Controller
     {
         if(race.isMappedKeyDown(this.playerID, Game.FORWARD))
         {
-            System.out.println(playerID);
             this.parentVehicle.getFrontWheelSpring().enableMotor(true);
             this.parentVehicle.getRearWheelSpring().enableMotor(true);
             this.parentVehicle.getRearWheelSpring().setMotorSpeed(this.parentVehicle.getSpeed());

@@ -32,6 +32,7 @@ public class MonsterTruck extends Vehicle{
         this.constructMonsterTruck(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 54.1f;
+        this.halfWidth = 130.0f * pixelFactor;
     }
 
     public void constructMonsterTruck(Vec2 startingPos, World world){
@@ -123,7 +124,7 @@ public class MonsterTruck extends Vehicle{
         float factor = frameWidth / mtBodyImg.getWidth(null);
         float frameHeight = (float)mtBodyImg.getHeight(null) * factor;
 
-        float wheelWidth = (80.0f/64.0f);
+        float wheelWidth = (84.0f/64.0f);
 
         float leftWheelXOffset = translateToGameSpace(42, frameWidth, mtBodyImg.getWidth(null));
         float wheelYOffset = translateToGameSpace(39, frameHeight, mtBodyImg.getHeight(null));

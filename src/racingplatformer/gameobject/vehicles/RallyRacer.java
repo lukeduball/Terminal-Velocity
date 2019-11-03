@@ -32,6 +32,7 @@ public class RallyRacer extends Vehicle{
         this.constructRallyRacer(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 190.0f;
+        this.halfWidth = 130.0f * pixelFactor;
     }
 
     public void constructRallyRacer(Vec2 startingPos, World world){
@@ -114,10 +115,6 @@ public class RallyRacer extends Vehicle{
     public void render(Graphics2D g, Screen screen, Game gameInstance)
     {
         //Need to rework rendering system so that the same aspect ratio is always maintained in Screen Rendering
-
-        this.wheelRotation += 0.01;
-        this.rotation += 0.00;
-        this.position = this.position.add(new Vec2(0.0f, 0.0f));
 
         float frameWidth = (270.0f/64.0f);
         float factor = frameWidth / rrBodyImg.getWidth(null);
