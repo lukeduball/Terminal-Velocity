@@ -144,8 +144,9 @@ public class Race
             this.vehicleList.remove(vehicle);
         }
         
-        if(this.vehicleList.isEmpty())
+        if(this.vehicleList.size() == 1)
         {
+            this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList));
         }
