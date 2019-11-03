@@ -110,9 +110,26 @@ public class VehicleSelector extends Component
         RenderHelper.drawString(g, "Racer "+this.racerID, this.getX() + 10, this.getY() + 15, Color.white, gameInstance);
    
         RenderHelper.drawCenteredString(g, "Stats", this.getX() + 160, this.getY() + 30, Color.white, gameInstance, 0.5f);
-        RenderHelper.drawString(g, "Speed:", this.getX() + 125, this.getY() + 45, Color.white, gameInstance, 0.5f);
-        RenderHelper.drawString(g, "Acceleration:", this.getX() + 125, this.getY() + 60, Color.white, gameInstance, 0.5f);
-        RenderHelper.drawString(g, "Weight:", this.getX() + 125, this.getY() + 75, Color.white, gameInstance, 0.5f);
+        if(currentIndex == 0){
+            RenderHelper.drawString(g, "Speed: 5", this.getX() + 125, this.getY() + 45, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Acceleration: 5", this.getX() + 125, this.getY() + 60, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Weight: 1", this.getX() + 125, this.getY() + 75, Color.white, gameInstance, 0.5f);
+        }
+        else if(currentIndex == 1){
+            RenderHelper.drawString(g, "Speed: 5", this.getX() + 125, this.getY() + 45, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Acceleration: 4", this.getX() + 125, this.getY() + 60, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Weight: 2", this.getX() + 125, this.getY() + 75, Color.white, gameInstance, 0.5f);
+        }
+        else if(currentIndex == 2){
+            RenderHelper.drawString(g, "Speed: 4", this.getX() + 125, this.getY() + 45, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Acceleration: 5", this.getX() + 125, this.getY() + 60, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Weight: 2", this.getX() + 125, this.getY() + 75, Color.white, gameInstance, 0.5f);
+        }
+        else {
+            RenderHelper.drawString(g, "Speed: 4", this.getX() + 125, this.getY() + 45, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Acceleration: 3", this.getX() + 125, this.getY() + 60, Color.white, gameInstance, 0.5f);
+            RenderHelper.drawString(g, "Weight: 4", this.getX() + 125, this.getY() + 75, Color.white, gameInstance, 0.5f);
+        }
 
         
         for(Component c : this.componentList)
