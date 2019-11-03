@@ -26,7 +26,7 @@ public class PlayMusic
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(x));
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
-            clip.loop(0);
+            clip.start();
         }
         catch(LineUnavailableException | UnsupportedAudioFileException | IOException e){}
     }
