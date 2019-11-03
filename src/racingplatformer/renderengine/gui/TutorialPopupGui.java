@@ -44,9 +44,8 @@ public class TutorialPopupGui extends PopupGui
     }
     
     //Add button call methods below -- To close the popup just call its close method
-    public void onNoButtonClicked(){
-        close();
-    }
+    public void onNoButtonClicked(){ close();}
+
     public void onYesButtonClicked(){
         System.out.println("Go to Tutorial!");
     }
