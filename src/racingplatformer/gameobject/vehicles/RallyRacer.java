@@ -27,8 +27,9 @@ public class RallyRacer extends Vehicle{
     private static Image rrBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_frame.png");
     private static Image rrWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_wheel.png");
 
-    public RallyRacer(World world, float x, float y)
+    public RallyRacer(World world, float x, float y, int rid)
     {
+        super(rid);
         this.constructRallyRacer(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 190.0f;

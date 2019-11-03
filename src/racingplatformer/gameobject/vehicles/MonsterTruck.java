@@ -27,8 +27,9 @@ public class MonsterTruck extends Vehicle{
     private static Image mtBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_frame.png");
     private static Image mtWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/monster_truck_wheel.png");
 
-    public MonsterTruck(World world, float x, float y)
+    public MonsterTruck(World world, float x, float y, int rid)
     {
+        super(rid);
         this.constructMonsterTruck(new Vec2(x, y), world);
         this.position = new Vec2(x, y);
         this.speed = 54.1f;

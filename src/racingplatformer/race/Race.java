@@ -48,6 +48,8 @@ public class Race
     private FinishLine finishLine;
     private int finishedVehicles = 0;
     
+    private List<Integer> finishOrderList;
+    
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
     private static final int POS_IT = 8;
@@ -56,6 +58,8 @@ public class Race
     {
         world = new World(new Vec2(0.0f, 9.81f));
         this.screens = new ArrayList<>();
+        
+        this.finishOrderList = new ArrayList<>();
 
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
@@ -63,19 +67,19 @@ public class Race
         
         this.vehicleList = new ArrayList<>();
 
-        MonsterTruck mt = new MonsterTruck(world,5, 97);
+        MonsterTruck mt = new MonsterTruck(world,5, 97, 4);
         mt.setMovementController(new PlayerController(mt, 4));
         Screen screen4 = new Screen(4, gameInst, mt);
 
-        Porche porche3 = new Porche(world, 5.f, 97.f);
+        Porche porche3 = new Porche(world, 5.f, 97.f, 3);
         porche3.setMovementController(new PlayerController(porche3, 3));
         Screen screen3 = new Screen(3, gameInst, porche3);
 
-        RallyRacer porche2 = new RallyRacer(world, 5.f, 97.f);
+        RallyRacer porche2 = new RallyRacer(world, 5.f, 97.f, 2);
         porche2.setMovementController(new PlayerController(porche2, 2));
         Screen screen2 = new Screen(2, gameInst, porche2);
 
-        MuscleCar porche = new MuscleCar(world, 5.f, 97.f);
+        MuscleCar porche = new MuscleCar(world, 5.f, 97.f, 1);
         porche.setMovementController(new PlayerController(porche, 1));
         Screen screen = new Screen(1, gameInst, porche);
         this.screens.add(screen);
@@ -131,6 +135,7 @@ public class Race
                 vehicle.setRacing(false);
                 this.finishedVehicles++;
                 removeList.add(vehicle);
+                this.finishOrderList.add(vehicle.getRacerID());
             }
         }
         
@@ -142,7 +147,7 @@ public class Race
         if(this.vehicleList.isEmpty())
         {
             this.gameInstance.setActiveRace(null);
-            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, new int[]{1,2,3,4}));
+            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList));
         }
     }
     

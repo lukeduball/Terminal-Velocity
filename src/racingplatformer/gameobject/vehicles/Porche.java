@@ -33,8 +33,9 @@ public class Porche extends Vehicle
     private static Image porcheImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_frame.png");
     private static Image porcheWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_wheel.png");
     
-    public Porche(World world, float x, float y)
+    public Porche(World world, float x, float y, int rid)
     {
+        super(rid);
         this.constructPorche(world, new Vec2(x, y));
         this.position = new Vec2(x, y);
         this.speed = 250.0f;
