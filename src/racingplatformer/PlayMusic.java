@@ -18,5 +18,16 @@ public class PlayMusic
             clip.loop(Clip.LOOP_CONTINUOUSLY); 
         }
         catch(LineUnavailableException | UnsupportedAudioFileException | IOException e){}
-    } 
+    }
+
+    public static void soundFX(String x){
+        try
+        {
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(x));
+            Clip clip = AudioSystem.getClip();
+            clip.open(inputStream);
+            clip.loop(0);
+        }
+        catch(LineUnavailableException | UnsupportedAudioFileException | IOException e){}
+    }
 } 

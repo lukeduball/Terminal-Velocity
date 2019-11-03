@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.gui.components.Button;
 import racingplatformer.renderengine.gui.components.ToggleButton;
@@ -35,6 +36,9 @@ public class OptionsMenuGui extends Gui
     
     public void onMainMenuButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+        }
         MainMenuGui mainMenuGUI = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenuGUI);
     }
@@ -66,15 +70,27 @@ public class OptionsMenuGui extends Gui
     public void onPlayerControlsButtonClicked()
     {
         this.setCurrentPopup(new PlayerControlsPopupGui(this.gameInstance, this));
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
     }
     
     public void onMusicToggleButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated() && gameInstance.getIsMusicActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+        }
+        else if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.gameInstance.toggleMusic();
     }
     
     public void onSoundToggleButtonClicked()
     {
+        if(!gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.gameInstance.toggleSoundEffects();
     }
     

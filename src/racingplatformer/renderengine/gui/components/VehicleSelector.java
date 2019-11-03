@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.RenderHelper;
@@ -43,10 +44,15 @@ public class VehicleSelector extends Component
     private Button rightArrow;
     
     private int currentIndex;
+
+    private Game gameInstance;
     
-    public VehicleSelector(int rID, float x, float y, float w, float h)
+    public VehicleSelector(Game game, int rID, float x, float y, float w, float h)
     {
         super(x, y, w, h);
+
+        this.gameInstance = game;
+
         this.componentList = new ArrayList<>();
         this.racerID = rID;
         this.currentIndex = 0;
@@ -142,12 +148,16 @@ public class VehicleSelector extends Component
     {
         if(this.currentIndex > 0)
         {
+            if(gameInstance.getAreSoundEffectsActivated()) {
+                PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+            }
             this.currentIndex--;
             this.rightArrow.setDisabled(false);
         }
+
+
         
-        if(this.currentIndex == 0)
-        {
+        if(this.currentIndex == 0){
             this.leftArrow.setDisabled(true);
         }
     }
@@ -156,6 +166,9 @@ public class VehicleSelector extends Component
     {
         if(this.currentIndex < vehicleImage.length - 1)
         {
+            if(gameInstance.getAreSoundEffectsActivated()) {
+                PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+            }
             this.currentIndex ++;
             this.leftArrow.setDisabled(false);
         }
@@ -168,6 +181,9 @@ public class VehicleSelector extends Component
     
     public void onActivatedToggleButtonClicked()
     {
+//        if(gameInstance.getAreSoundEffectsActivated() && ) {
+//            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+//        }
         
     }
     

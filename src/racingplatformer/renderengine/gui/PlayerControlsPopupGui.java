@@ -8,6 +8,7 @@ package racingplatformer.renderengine.gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.renderengine.gui.components.Button;
 import racingplatformer.renderengine.gui.components.CharField;
 
@@ -76,28 +77,42 @@ public class PlayerControlsPopupGui extends PopupGui
     }
     
     //Add button methods here -- to close the popup call the close method
-    public void onExitButtonClicked()
-    {
+    public void onExitButtonClicked() {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+        }
         close();
     }
     
     public void onP1ButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.changePlayerInput(0);
     }
     
     public void onP2ButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.changePlayerInput(1);
     }
         
     public void onP3ButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.changePlayerInput(2);
     }
             
     public void onP4ButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.changePlayerInput(3);
     }
     
@@ -114,21 +129,33 @@ public class PlayerControlsPopupGui extends PopupGui
     
     public void onForwardKeyFieldTyped()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.FORWARD] = this.inputFields[Game.FORWARD].getKeyCode();
     }
     
     public void onTiltLKeyFieldTyped()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.TILT_UP] = this.inputFields[Game.TILT_UP].getKeyCode();
     }
         
     public void onTiltRKeyFieldTyped()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.TILT_DOWN] = this.inputFields[Game.TILT_DOWN].getKeyCode();
     }
     
     public void onBackKeyFieldTyped()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.BACKWARD] = this.inputFields[Game.BACKWARD].getKeyCode();
     }
     

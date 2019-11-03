@@ -8,6 +8,7 @@ package racingplatformer.renderengine.gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.renderengine.gui.components.Button;
 
 /**
@@ -44,9 +45,17 @@ public class TutorialPopupGui extends PopupGui
     }
     
     //Add button call methods below -- To close the popup just call its close method
-    public void onNoButtonClicked(){ close();}
+    public void onNoButtonClicked(){
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+        }
+        close();
+    }
 
     public void onYesButtonClicked(){
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+        }
         System.out.println("Go to Tutorial!");
     }
 }

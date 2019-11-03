@@ -1,6 +1,7 @@
 package racingplatformer.renderengine.gui;
 
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.components.Button;
 
@@ -37,12 +38,18 @@ public class WinnerGui extends Gui{
     }
 
     public void onMainMenuButtonClicked(){
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+        }
         MainMenuGui mainMenuGui = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenuGui);
     }
 
     public void onRaceAgainButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
+        }
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance));

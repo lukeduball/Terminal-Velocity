@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.HashSet;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.components.Button;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
@@ -23,10 +24,10 @@ public class SetupRaceMenuGui extends Gui
     public SetupRaceMenuGui(Game game) 
     {
         super(game);
-        this.componentList.add(new VehicleSelector(1, 32, 40, 200, 95));
-        this.componentList.add(new VehicleSelector(2, 262, 40, 200, 95));
-        this.componentList.add(new VehicleSelector(3, 32, 145, 200, 95));
-        this.componentList.add(new VehicleSelector(4, 262, 145, 200, 95));
+        this.componentList.add(new VehicleSelector(game,1, 32, 40, 200, 95));
+        this.componentList.add(new VehicleSelector(game, 2, 262, 40, 200, 95));
+        this.componentList.add(new VehicleSelector(game,3, 32, 145, 200, 95));
+        this.componentList.add(new VehicleSelector(game,4, 262, 145, 200, 95));
         this.componentList.add(new Button("Race", 160, 244, 185, 35, "RACE!"));
         this.componentList.add(new Button("MainMenu", 30, 244, 100, 35, "Main Menu"));
     }
@@ -41,6 +42,9 @@ public class SetupRaceMenuGui extends Gui
     
     public void onRaceButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
+        }
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance));
@@ -48,6 +52,9 @@ public class SetupRaceMenuGui extends Gui
     
     public void onMainMenuButtonClicked()
     {
+        if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+        }
         MainMenuGui mainMenu = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenu);
     }
