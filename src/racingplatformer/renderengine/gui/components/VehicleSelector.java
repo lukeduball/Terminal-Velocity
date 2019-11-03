@@ -181,14 +181,11 @@ public class VehicleSelector extends Component
     
     public void onActivatedToggleButtonClicked()
     {
-//        if(gameInstance.getAreSoundEffectsActivated() && ) {
-//            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-//        }
-        
+
     }
     
     public void onPlayerToggleButtonClicked()
     {
-        
+
     }
 }
