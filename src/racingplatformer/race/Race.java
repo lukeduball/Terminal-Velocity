@@ -18,6 +18,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
@@ -156,6 +157,9 @@ public class Race
         if(this.vehicleList.size() == 1)
         {
             this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
+            if(gameInstance.getAreSoundEffectsActivated()) {
+                PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
+            }
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList));
         }

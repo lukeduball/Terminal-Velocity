@@ -30,8 +30,8 @@ public class OptionsMenuGui extends Gui
         backgroundImg = optionsMenu;
         this.componentList.add(new Button("PlayerControls", 152, 164, 186, 36, "Player Controls"));
         this.componentList.add(new Button("MainMenu", 152, 222, 186, 36, "Main Menu"));
-        this.componentList.add(new ToggleButton("MusicToggle", 245, 55, 70, 35, gameInstance.getIsMusicActivated()));
-        this.componentList.add(new ToggleButton("SoundToggle", 245, 103, 70, 35, gameInstance.getAreSoundEffectsActivated()));
+        this.componentList.add(new ToggleButton(game,"MusicToggle", 245, 55, 70, 35, gameInstance.getIsMusicActivated()));
+        this.componentList.add(new ToggleButton(game,"SoundToggle", 245, 103, 70, 35, gameInstance.getAreSoundEffectsActivated()));
     }
     
     public void onMainMenuButtonClicked()
@@ -77,12 +77,12 @@ public class OptionsMenuGui extends Gui
     
     public void onMusicToggleButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated() && gameInstance.getIsMusicActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
-        else if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-        }
+//        if(gameInstance.getAreSoundEffectsActivated() && gameInstance.getIsMusicActivated()) {
+//            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+//        }
+//        else if(gameInstance.getAreSoundEffectsActivated()) {
+//            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+//        }
         this.gameInstance.toggleMusic();
     }
     

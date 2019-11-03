@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import racingplatformer.Game;
+import racingplatformer.PlayMusic;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.RenderHelper;
@@ -27,18 +28,21 @@ public class ToggleButton extends Button
     
     private String onText;
     private String offText;
-    
-    public ToggleButton(String n, float x1, float y1, float w, float h, boolean initialState) 
+    private Game gameInstance;
+
+    public ToggleButton(Game game, String n, float x1, float y1, float w, float h, boolean initialState)
     {
         super(n, x1, y1, w, h);
+        this.gameInstance = game;
         this.isOn = initialState;
         this.onText = "on";
         this.offText = "off";
     }
     
-    public ToggleButton(String n, float x1, float y1, float w, float h, boolean initialState, String onT, String offT)
+    public ToggleButton(Game game, String n, float x1, float y1, float w, float h, boolean initialState, String onT, String offT)
     {
-        this(n, x1, y1, w, h, initialState);
+        this(game, n, x1, y1, w, h, initialState);
+        this.gameInstance = game;
         this.onText = onT;
         this.offText = offT;
     }
@@ -79,10 +83,16 @@ public class ToggleButton extends Button
     {
         if(this.getIsOn())
         {
+            if(gameInstance.getAreSoundEffectsActivated()) {
+                PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
+            }
             this.isOn = false;
         }
         else
         {
+            if(gameInstance.getAreSoundEffectsActivated()) {
+                PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+            }
             this.isOn = true;
         }
     }

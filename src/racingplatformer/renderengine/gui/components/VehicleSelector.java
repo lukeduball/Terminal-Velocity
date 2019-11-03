@@ -59,12 +59,12 @@ public class VehicleSelector extends Component
         
         if(this.racerID > 2)
         {
-            this.componentList.add(new ToggleButton("ActivatedToggle", this.getX() + 70, this.getY() + 2, 30, 15, false));
+            this.componentList.add(new ToggleButton(game, "ActivatedToggle", this.getX() + 70, this.getY() + 2, 30, 15, false));
         }
         
         if(this.racerID > 1)
         {
-            this.componentList.add(new ToggleButton("PlayerToggle", this.getX() + 165, this.getY() + 2, 30, 15, false, "AI", "Player"));
+            this.componentList.add(new ToggleButton(game,"PlayerToggle", this.getX() + 165, this.getY() + 2, 30, 15, false, "AI", "Player"));
         }
         
         this.componentList.add(leftArrow = new Button("LeftArrow", this.getX() + 10, this.getY() + 25, 10, 60, lArrowButtonImg, lArrowButtonHoveredImg, lArrowButtonDisabledImg));
@@ -181,14 +181,11 @@ public class VehicleSelector extends Component
     
     public void onActivatedToggleButtonClicked()
     {
-//        if(gameInstance.getAreSoundEffectsActivated() && ) {
-//            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-//        }
-        
+
     }
     
     public void onPlayerToggleButtonClicked()
     {
-        
+
     }
 }
