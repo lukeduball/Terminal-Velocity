@@ -13,11 +13,6 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.MainMenuGui;
@@ -39,6 +34,8 @@ public class Game extends Canvas
     //Factors that can convert the Pseudo width and height to the real screen value
     private static float widthFactor;
     private static float heightFactor;
+    
+    private int lastFpsMeasurement;
     
     
     //The current active gui which is drawn on the screen
@@ -174,6 +171,7 @@ public class Game extends Canvas
             
             if(lastFpsTime >= 1000000000)
             {
+                this.lastFpsMeasurement = fps;
                 System.out.println("FPS: "+fps);
                 lastFpsTime = 0L;
                 fps = 0;
@@ -314,5 +312,10 @@ public class Game extends Canvas
     public boolean isKeyDown(int keyCode)
     {
         return this.keys[keyCode];
+    }
+    
+    public int getCurrentFPS()
+    {
+        return this.lastFpsMeasurement;
     }
 }

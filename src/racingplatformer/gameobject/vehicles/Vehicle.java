@@ -42,6 +42,8 @@ public class Vehicle extends GameObject
     
     private int racerID;
     
+    private float flippedVehicleTimer;
+    
     protected Controller movementController;
     
     protected Body frame;
@@ -72,6 +74,17 @@ public class Vehicle extends GameObject
         {
             this.frontWheelSpring.setMotorSpeed(0.0f);
             this.rearWheelSpring.setMotorSpeed(0.0f);
+        }
+        
+        if(Math.abs(this.frame.getAngle() % (Math.PI * 2)) > Math.PI-(1/3)*Math.PI)
+        {
+            this.flippedVehicleTimer += 1.0f/race.getCurrentFPS();
+            System.out.println(this.flippedVehicleTimer);
+        }
+        
+        if(this.flippedVehicleTimer >= 10)
+        {
+            System.out.println("ON BACK FOR 10 Sec");
         }
     }
 

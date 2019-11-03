@@ -86,8 +86,8 @@ public class Race
         this.screens.add(screen2);
         this.screens.add(screen3);
         this.screens.add(screen4);
-        //Track.generateTrack(this, world, 10340340L, this.chunkList);
-        Track.generateFlatTrack(this, world, chunkList);
+        Track.generateTrack(this, world, 10340340L, this.chunkList);
+        //Track.generateFlatTrack(this, world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
         this.chunkList.get(0).addGameObject(porche2);
         this.chunkList.get(0).addGameObject(porche3);
@@ -143,7 +143,16 @@ public class Race
         {
             this.vehicleList.remove(vehicle);
         }
+        this.checkForEndOfRace();
+    }
+    
+    private void checkForFlippedVehicles()
+    {
         
+    }
+    
+    private void checkForEndOfRace()
+    {
         if(this.vehicleList.size() == 1)
         {
             this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
@@ -233,5 +242,10 @@ public class Race
     public void setFinishLine(FinishLine fl)
     {
         this.finishLine = fl;
+    }
+    
+    public int getCurrentFPS()
+    {
+        return this.gameInstance.getCurrentFPS();
     }
 }
