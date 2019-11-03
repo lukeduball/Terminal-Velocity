@@ -37,7 +37,7 @@ public class FinishLine
         float scaleX = (width * screen.getScaleFactor()) / finishLineImg.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / finishLineImg.getHeight(null);
         
-        Vec2 imagePosition = this.position.sub(new Vec2(0.0f, height-1.0f));
+        Vec2 imagePosition = this.position.sub(new Vec2(0.0f, height-0.5f));
         Vec2 screenPos = screen.worldToScreenCoordinate(imagePosition);
         
         AffineTransform at = new AffineTransform();
