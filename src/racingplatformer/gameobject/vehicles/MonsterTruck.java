@@ -123,7 +123,7 @@ public class MonsterTruck extends Vehicle{
         float factor = frameWidth / mtBodyImg.getWidth(null);
         float frameHeight = (float)mtBodyImg.getHeight(null) * factor;
 
-        float wheelWidth = (45.0f/64.0f);
+        float wheelWidth = (80.0f/64.0f);
 
         float leftWheelXOffset = translateToGameSpace(42, frameWidth, mtBodyImg.getWidth(null));
         float wheelYOffset = translateToGameSpace(39, frameHeight, mtBodyImg.getHeight(null));
