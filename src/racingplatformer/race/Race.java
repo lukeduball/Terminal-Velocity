@@ -21,6 +21,7 @@ import racingplatformer.Game;
 import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
+import racingplatformer.renderengine.gui.WinnerGui;
 
 /**
  *
@@ -81,8 +82,8 @@ public class Race
         this.screens.add(screen2);
         this.screens.add(screen3);
         this.screens.add(screen4);
-        Track.generateTrack(this, world, 10340340L, this.chunkList);
-        //Track.generateFlatTrack(this, world, chunkList);
+        //Track.generateTrack(this, world, 10340340L, this.chunkList);
+        Track.generateFlatTrack(this, world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
         this.chunkList.get(0).addGameObject(porche2);
         this.chunkList.get(0).addGameObject(porche3);
@@ -126,8 +127,9 @@ public class Race
         {
             if(this.finishLine.hasVehicleFinishedRace(vehicle))
             {
-                this.finishedVehicles++;
+                vehicle.setFinishPosition(this.getCurrentPosition(vehicle));
                 vehicle.setRacing(false);
+                this.finishedVehicles++;
                 removeList.add(vehicle);
             }
         }
@@ -135,6 +137,12 @@ public class Race
         for(Vehicle vehicle : removeList)
         {
             this.vehicleList.remove(vehicle);
+        }
+        
+        if(this.vehicleList.isEmpty())
+        {
+            this.gameInstance.setActiveRace(null);
+            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, new int[]{1,2,3,4}));
         }
     }
     
