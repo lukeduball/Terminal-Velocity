@@ -219,4 +219,16 @@ public class Screen
         return vec;
     }
     
+    public boolean isActiveChunk(Chunk chunk)
+    {
+        for(int i = 0; i < this.loadedChunks.length; i++)
+        {
+            if(this.loadedChunks[i] == chunk)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

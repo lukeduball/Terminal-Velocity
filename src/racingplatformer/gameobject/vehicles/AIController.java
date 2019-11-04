@@ -39,7 +39,6 @@ public class AIController extends Controller
         else
         {
             double modularAngle = this.parentVehicle.getFrame().getAngle() % (Math.PI * 2);
-            System.out.println(modularAngle);
             double equalibriumDifference = 0.0f - modularAngle;
             if(equalibriumDifference > 0)
             {

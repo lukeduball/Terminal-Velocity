@@ -87,8 +87,8 @@ public class Race implements ContactListener
         this.screens.add(screen2);
         this.screens.add(screen3);
         this.screens.add(screen4);
-        Track.generateTrack(this, world, 10340340L, this.chunkList);
-        //Track.generateFlatTrack(this, world, chunkList);
+        //Track.generateTrack(this, world, 10340340L, this.chunkList);
+        Track.generateFlatTrack(this, world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
         this.chunkList.get(0).addGameObject(porche2);
         this.chunkList.get(0).addGameObject(porche3);
@@ -208,6 +208,13 @@ public class Race implements ContactListener
     
     public void unloadChunk(Chunk chunk)
     {
+        for(Screen screen : this.screens)
+        {
+            if(screen.isActiveChunk(chunk))
+            {
+                return;
+            }
+        }
         this.loadedChunksList.remove(chunk);
     }
     
