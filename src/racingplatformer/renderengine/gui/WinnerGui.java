@@ -7,13 +7,16 @@ import racingplatformer.Game;
 import racingplatformer.PlayMusic;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.components.Button;
+import racingplatformer.renderengine.gui.components.VehicleSelector;
 
 public class WinnerGui extends Gui{
     private List finishList;
+    private VehicleSelector[] selectorData;
     
-    public WinnerGui(Game game, List<Integer> fnList)
+    public WinnerGui(Game game, List<Integer> fnList, VehicleSelector[] data)
     {
         super(game);
+        this.selectorData = data;
         this.finishList = fnList;
         this.componentList.add(new Button("MainMenu",152 - 500/5, 222, 186, 36, "Main Menu"));
         this.componentList.add(new Button("RaceAgain",  152 + 500/5, 222, 186, 36, "Race Again"));
@@ -56,6 +59,6 @@ public class WinnerGui extends Gui{
         }
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
-        this.gameInstance.setActiveRace(new Race(this.gameInstance));
+        this.gameInstance.setActiveRace(new Race(this.gameInstance, this.selectorData));
     }
 }

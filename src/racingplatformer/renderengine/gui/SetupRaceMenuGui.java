@@ -21,13 +21,20 @@ import racingplatformer.renderengine.gui.components.VehicleSelector;
 public class SetupRaceMenuGui extends Gui
 {
     
+    private VehicleSelector[] vehicleData;
+    
     public SetupRaceMenuGui(Game game) 
     {
         super(game);
-        this.componentList.add(new VehicleSelector(game,1, 32, 40, 200, 95));
-        this.componentList.add(new VehicleSelector(game, 2, 262, 40, 200, 95));
-        this.componentList.add(new VehicleSelector(game,3, 32, 145, 200, 95));
-        this.componentList.add(new VehicleSelector(game,4, 262, 145, 200, 95));
+        vehicleData = new VehicleSelector[4];
+        vehicleData[0] = new VehicleSelector(game,1, 32, 40, 200, 95);
+        vehicleData[1] = new VehicleSelector(game, 2, 262, 40, 200, 95);
+        vehicleData[2] = new VehicleSelector(game,3, 32, 145, 200, 95);
+        vehicleData[3] = new VehicleSelector(game,4, 262, 145, 200, 95);
+        for(int i = 0; i < vehicleData.length; i++)
+        {
+            this.componentList.add(vehicleData[i]);
+        }
         this.componentList.add(new Button("Race", 160, 244, 185, 35, "RACE!"));
         this.componentList.add(new Button("MainMenu", 30, 244, 100, 35, "Main Menu"));
     }
@@ -47,7 +54,7 @@ public class SetupRaceMenuGui extends Gui
         }
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
-        this.gameInstance.setActiveRace(new Race(this.gameInstance));
+        this.gameInstance.setActiveRace(new Race(this.gameInstance, this.vehicleData));
     }
     
     public void onMainMenuButtonClicked()

@@ -22,6 +22,7 @@ import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
 import racingplatformer.renderengine.gui.WinnerGui;
+import racingplatformer.renderengine.gui.components.VehicleSelector;
 
 /**
  *
@@ -50,9 +51,56 @@ public class Race implements ContactListener
     
     private List<Integer> finishOrderList;
     
+    private VehicleSelector[] selectorData;
+    
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
     private static final int POS_IT = 8;
+    
+    public Race(Game gameInst, VehicleSelector[] selectors)
+    {
+        this.selectorData = selectors;
+        this.gameInstance = gameInst;
+        
+        this.world = new World(new Vec2(0.0f, 9.81f));
+        this.world.setContactListener(this);
+        this.screens = new ArrayList<>();
+        
+        this.finishOrderList = new ArrayList<>();
+        this.vehicleList = new ArrayList<>();
+        
+        this.chunkList = new ArrayList<>();
+        this.loadedChunksList = new ArrayList<>();
+        
+        Vec2 vehicleStart = Track.generateFlatTrack(this, world, chunkList);
+        for(int i = 0; i < selectors.length; i++)
+        {
+            VehicleSelector selector = selectors[i];
+            if(!selector.isRacerActive())
+            {
+                continue;
+            }
+            Vehicle vehicle = this.getVehicleForIndex(selector.getVehicleChoiceID(), i+1, vehicleStart);
+            Controller movementController;
+            if(selector.isRacerAI())
+            {
+                movementController = new AIController(vehicle);
+            }
+            else
+            {
+                movementController = new PlayerController(vehicle, i+1);
+                Screen screen = new Screen(i+1, gameInst, vehicle);
+                this.screens.add(screen);
+            }
+            vehicle.setMovementController(movementController);
+            this.vehicleList.add(vehicle);
+            this.chunkList.get(0).addGameObject(vehicle);
+        }
+        
+        DebugDrawTV debugDraw = new DebugDrawTV(this.screens.get(0), gameInstance.getGraphics());
+        debugDraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
+        world.setDebugDraw(debugDraw);
+    }
     
     public Race(Game gameInst)
     {
@@ -161,7 +209,7 @@ public class Race implements ContactListener
                 PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
             }
             this.gameInstance.setActiveRace(null);
-            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList));
+            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.selectorData));
         }
     }
     
@@ -258,6 +306,23 @@ public class Race implements ContactListener
     public int getCurrentFPS()
     {
         return this.gameInstance.getCurrentFPS();
+    }
+    
+    public Vehicle getVehicleForIndex(int i, int racerID, Vec2 startPos)
+    {
+        switch(i)
+        {
+            case 0:
+                return new Porche(this.world, startPos.x, startPos.y, racerID);
+            case 1:
+                return new MuscleCar(this.world, startPos.x, startPos.y, racerID);
+            case 2:
+                return new RallyRacer(this.world, startPos.x, startPos.y, racerID);
+            case 3:
+                return new MonsterTruck(this.world, startPos.x, startPos.y, racerID);
+            default:
+                return null;
+        }
     }
 
     @Override

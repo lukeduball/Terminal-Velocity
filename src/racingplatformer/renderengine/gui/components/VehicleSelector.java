@@ -22,6 +22,8 @@ import racingplatformer.renderengine.gui.RenderHelper;
 public class VehicleSelector extends Component
 {
     private int racerID;
+    private boolean isActive;
+    private boolean isAI;
     
     private static final Image[] vehicleImage = {
     ResourceManager.loadImage("src/resources/images/vehicles/porche.png"),
@@ -52,6 +54,8 @@ public class VehicleSelector extends Component
         super(x, y, w, h);
 
         this.gameInstance = game;
+        this.isAI = false;
+        this.isActive = true;
 
         this.componentList = new ArrayList<>();
         this.racerID = rID;
@@ -59,12 +63,12 @@ public class VehicleSelector extends Component
         
         if(this.racerID > 2)
         {
-            this.componentList.add(new ToggleButton(game, "ActivatedToggle", this.getX() + 70, this.getY() + 2, 30, 15, false));
+            this.componentList.add(new ToggleButton(game, "ActivatedToggle", this.getX() + 70, this.getY() + 2, 30, 15, this.isActive));
         }
         
         if(this.racerID > 1)
         {
-            this.componentList.add(new ToggleButton(game,"PlayerToggle", this.getX() + 165, this.getY() + 2, 30, 15, false, "AI", "Player"));
+            this.componentList.add(new ToggleButton(game,"PlayerToggle", this.getX() + 165, this.getY() + 2, 30, 15, this.isAI, "AI", "Player"));
         }
         
         this.componentList.add(leftArrow = new Button("LeftArrow", this.getX() + 10, this.getY() + 25, 10, 60, lArrowButtonImg, lArrowButtonHoveredImg, lArrowButtonDisabledImg));
@@ -181,11 +185,40 @@ public class VehicleSelector extends Component
     
     public void onActivatedToggleButtonClicked()
     {
-
+        if(this.isActive)
+        {
+            this.isActive = false;
+        }
+        else
+        {
+            this.isActive = true;
+        }
     }
     
     public void onPlayerToggleButtonClicked()
     {
-
+        if(this.isAI)
+        {
+            this.isAI = false;
+        }
+        else
+        {
+            this.isAI = true;
+        }
+    }
+    
+    public boolean isRacerActive()
+    {
+        return this.isActive;
+    }
+    
+    public boolean isRacerAI()
+    {
+        return this.isAI;
+    }
+    
+    public int getVehicleChoiceID()
+    {
+        return this.currentIndex;
     }
 }

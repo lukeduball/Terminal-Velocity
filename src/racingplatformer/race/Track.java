@@ -34,7 +34,7 @@ public class Track
         return null;
     }
     
-    public static void generateTrack(Race race, World world, long seed, List<Chunk> chunkList)
+    public static Vec2 generateTrack(Race race, World world, long seed, List<Chunk> chunkList)
     {
         Random rand = new Random();
         PerlinNoise pNoise = new PerlinNoise(8932937492483242560L);
@@ -50,6 +50,8 @@ public class Track
         firstChunk.addBoundary(new WallTrackSegment(world, wallPoint1, wallPoint2, 5));
         chunkList.add(firstChunk);
         
+        Vec2 startPosition = new Vec2(0, yCoordinate);
+        
         int totalChunks = rand.nextInt(75) + 50;
         for(int i = 1; i < totalChunks; i++)
         {
@@ -60,9 +62,11 @@ public class Track
         
         float finalChunkHeight = -pNoise.getSmoothNoise(Chunk.CHUNK_WIDTH*totalChunks, 100) + 150;
         generateFinishLineArea(race, world, chunkList, totalChunks, finalChunkHeight);
+        
+        return startPosition.add(new Vec2(2, -1));
     }
     
-    public static void generateFlatTrack(Race race, World world, List<Chunk> chunkList)
+    public static Vec2 generateFlatTrack(Race race, World world, List<Chunk> chunkList)
     {
         Chunk firstChunk = new Chunk(0);
         float yCoordinate = 100.0f;
@@ -75,6 +79,8 @@ public class Track
         firstChunk.addBoundary(new WallTrackSegment(world, wallPoint1, wallPoint2, 5.0f));
         chunkList.add(firstChunk);
         
+        Vec2 startPosition = new Vec2(0, yCoordinate);
+        
         int  i = 1;
         for(i = 1; i < 100; i++)
         {
@@ -85,6 +91,8 @@ public class Track
             chunkList.add(chunk);
         }
         generateFinishLineArea(race, world, chunkList, i++, yCoordinate);
+        
+        return startPosition.add(new Vec2(2, -1));
     }
     
     private static void generateFinishLineArea(Race race, World world, List<Chunk> chunkList, int nextChunkID, float height)
