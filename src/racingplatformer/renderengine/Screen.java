@@ -48,14 +48,16 @@ public class Screen
     }
     
     public void renderScreen(Graphics2D g, Race race)
-    {
-        g.setColor(Color.red);
-        
+    {   
         //Clear the clipping rectangle
         g.setClip(null);
         
         Rectangle clippingRect = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        g.setColor(new Color(228, 224, 255));
+        g.fill(clippingRect);
+        
         //TODO:: Remove this is a drawing line for debug purposes
+        g.setColor(Color.red);
         g.draw(clippingRect);
         //Sets the clipping rectangle
         g.clip(clippingRect);

@@ -195,7 +195,7 @@ public class Race implements ContactListener
         }
         else if(this.isTutorialRace && this.vehicleList.isEmpty())
         {
-            this.gameInstance.setActiveGui(null);
+            this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new MainMenuGui(this.gameInstance));
         }
     }

@@ -85,7 +85,7 @@ public class CurvedTrackSegment extends TrackSegment
         xPoints[pointList.size()+1] = screen.getX() + (int)( (pointList.get(pointList.size()-1).x - screen.getWorldRenderX()) * screen.getScaleFactor());
         yPoints[pointList.size()+1] = screen.getY() + (int)(screen.getHeight() + 10);
                 
-        g.fillPolygon(xPoints, yPoints, pointList.size()+2);
+        g.fillPolygon(xPoints, yPoints, pointList.size()+2);       
         g.setStroke(new BasicStroke());
     }
 }
