@@ -55,7 +55,7 @@ public class TutorialPopupGui extends PopupGui
 
     public void onYesButtonClicked(){
         if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
+            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
         }
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance));
