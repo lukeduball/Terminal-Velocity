@@ -48,6 +48,7 @@ public class CurvedTrackSegment extends TrackSegment
         fd.restitution = 0.0f;
         fd.filter.groupIndex=2;
         physicsBody = world.createBody(bd);
+        physicsBody.setUserData(new TrackUserData());
         physicsBody.createFixture(fd);
     }
     

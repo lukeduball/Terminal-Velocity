@@ -9,14 +9,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.DebugDraw;
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 import racingplatformer.Game;
 import racingplatformer.PlayMusic;
 import racingplatformer.gameobject.vehicles.*;
@@ -28,7 +27,7 @@ import racingplatformer.renderengine.gui.WinnerGui;
  *
  * @author Luke
  */
-public class Race 
+public class Race implements ContactListener
 {
     private Game gameInstance;
     
@@ -58,6 +57,7 @@ public class Race
     public Race(Game gameInst)
     {
         world = new World(new Vec2(0.0f, 9.81f));
+        world.setContactListener(this);
         this.screens = new ArrayList<>();
         
         this.finishOrderList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Race
         Screen screen3 = new Screen(3, gameInst, porche3);
 
         RallyRacer porche2 = new RallyRacer(world, 5.f, 97.f, 2);
-        porche2.setMovementController(new PlayerController(porche2, 2));
+        porche2.setMovementController(new AIController(porche2));
         Screen screen2 = new Screen(2, gameInst, porche2);
 
         MuscleCar porche = new MuscleCar(world, 5.f, 97.f, 1);
@@ -251,5 +251,59 @@ public class Race
     public int getCurrentFPS()
     {
         return this.gameInstance.getCurrentFPS();
+    }
+
+    @Override
+    public void beginContact(Contact contact) 
+    {
+        for(Vehicle vehicle : this.vehicleList)
+        {
+            if(contact.getFixtureA().getBody().getUserData() instanceof TrackUserData || contact.getFixtureB().getBody().getUserData() instanceof TrackUserData)
+            {
+                if(contact.getFixtureA().getBody() == vehicle.getFrontWheel() || contact.getFixtureB().getBody() == vehicle.getFrontWheel())
+                {
+                    vehicle.setFrontWheelOnGround(true);
+                }
+                
+                if(contact.getFixtureA().getBody() == vehicle.getRearWheel() || contact.getFixtureB().getBody() == vehicle.getRearWheel())
+                {
+                    vehicle.setRearWheelOnGround(true);
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) 
+    {
+        for(Vehicle vehicle : this.vehicleList)
+        {
+            if(contact.getFixtureA().getBody().getUserData() instanceof TrackUserData || contact.getFixtureB().getBody().getUserData() instanceof TrackUserData)
+            {
+                if(contact.getFixtureA().getBody() == vehicle.getFrontWheel() || contact.getFixtureB().getBody() == vehicle.getFrontWheel())
+                {
+                    vehicle.setFrontWheelOnGround(false);
+                }
+                
+                if(contact.getFixtureA().getBody() == vehicle.getRearWheel() || contact.getFixtureB().getBody() == vehicle.getRearWheel())
+                {
+                    vehicle.setRearWheelOnGround(false);
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold mnfld) 
+    {
+    
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse ci) 
+    {
+    
     }
 }

@@ -48,7 +48,9 @@ public class Vehicle extends GameObject
     
     protected Body frame;
     protected Body rearWheel;
+    protected boolean isRearWheelOnGround;
     protected Body frontWheel;
+    protected boolean isFrontWheelOnGround;
     protected WheelJoint rearWheelSpring;
     protected WheelJoint frontWheelSpring;
     
@@ -74,17 +76,6 @@ public class Vehicle extends GameObject
         {
             this.frontWheelSpring.setMotorSpeed(0.0f);
             this.rearWheelSpring.setMotorSpeed(0.0f);
-        }
-        
-        if(Math.abs(this.frame.getAngle() % (Math.PI * 2)) > Math.PI-(1/3)*Math.PI)
-        {
-            this.flippedVehicleTimer += 1.0f/race.getCurrentFPS();
-            System.out.println(this.flippedVehicleTimer);
-        }
-        
-        if(this.flippedVehicleTimer >= 10)
-        {
-            System.out.println("ON BACK FOR 10 Sec");
         }
     }
 
@@ -156,6 +147,16 @@ public class Vehicle extends GameObject
         return this.frame;
     }
     
+    public Body getFrontWheel()
+    {
+        return this.frontWheel;
+    }
+    
+    public Body getRearWheel()
+    {
+        return this.rearWheel;
+    }
+    
     public WheelJoint getRearWheelSpring()
     {
         return this.rearWheelSpring;
@@ -203,6 +204,26 @@ public class Vehicle extends GameObject
     public int getRacerID()
     {
         return this.racerID;
+    }
+    
+    public void setRearWheelOnGround(boolean flag)
+    {
+        this.isRearWheelOnGround = flag;
+    }
+    
+    public boolean getRearWheelOnGround()
+    {
+        return this.isRearWheelOnGround;
+    }
+    
+    public void setFrontWheelOnGround(boolean flag)
+    {
+        this.isFrontWheelOnGround = flag;
+    }
+    
+    public boolean getFrontWheelOnGround()
+    {
+        return this.isFrontWheelOnGround;
     }
     
 }

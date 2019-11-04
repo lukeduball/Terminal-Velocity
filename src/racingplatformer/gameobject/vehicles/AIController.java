@@ -21,7 +21,35 @@ public class AIController extends Controller
     @Override
     public void moveVehicle(Race race)
     {
-        //Use the AI system to get information about the surrowndings
+        if(this.parentVehicle.getRearWheelOnGround() && this.parentVehicle.getFrontWheelOnGround())
+        {
+            this.parentVehicle.getFrontWheelSpring().enableMotor(true);
+            this.parentVehicle.getRearWheelSpring().enableMotor(true);
+            this.parentVehicle.getFrontWheelSpring().setMotorSpeed(this.parentVehicle.getSpeed());
+            this.parentVehicle.getRearWheelSpring().setMotorSpeed(this.parentVehicle.getSpeed());
+        }
+        else if(this.parentVehicle.getRearWheelOnGround())
+        {
+            this.parentVehicle.getFrame().applyAngularImpulse(0.5f);
+        }
+        else if(this.parentVehicle.getFrontWheelOnGround())
+        {
+            this.parentVehicle.getFrame().applyAngularImpulse(-0.5f);
+        }
+        else
+        {
+            double modularAngle = this.parentVehicle.getFrame().getAngle() % (Math.PI * 2);
+            System.out.println(modularAngle);
+            double equalibriumDifference = 0.0f - modularAngle;
+            if(equalibriumDifference > 0)
+            {
+                this.parentVehicle.getFrame().applyAngularImpulse(0.5f);
+            }
+            else
+            {
+                this.parentVehicle.getFrame().applyAngularImpulse(-0.5f);
+            }
+        }
     }
     
     @Override
