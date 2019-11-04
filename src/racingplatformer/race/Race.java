@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.DebugDraw;
@@ -21,6 +22,7 @@ import racingplatformer.PlayMusic;
 import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
+import racingplatformer.renderengine.gui.MainMenuGui;
 import racingplatformer.renderengine.gui.WinnerGui;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
 
@@ -31,6 +33,8 @@ import racingplatformer.renderengine.gui.components.VehicleSelector;
 public class Race implements ContactListener
 {
     private Game gameInstance;
+    
+    private boolean isTutorialRace;
     
     //Stores all of the chunks which contain track data and game objects located in the chunk
     private final List<Chunk> chunkList;
@@ -72,7 +76,8 @@ public class Race implements ContactListener
         this.chunkList = new ArrayList<>();
         this.loadedChunksList = new ArrayList<>();
         
-        Vec2 vehicleStart = Track.generateFlatTrack(this, world, chunkList);
+        Random random = new Random();
+        Vec2 vehicleStart = Track.generateTrack(this, world, random.nextLong(), chunkList);
         for(int i = 0; i < selectors.length; i++)
         {
             VehicleSelector selector = selectors[i];
@@ -96,10 +101,6 @@ public class Race implements ContactListener
             this.vehicleList.add(vehicle);
             this.chunkList.get(0).addGameObject(vehicle);
         }
-        
-        DebugDrawTV debugDraw = new DebugDrawTV(this.screens.get(0), gameInstance.getGraphics());
-        debugDraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
-        world.setDebugDraw(debugDraw);
     }
     
     public Race(Game gameInst)
@@ -115,38 +116,24 @@ public class Race implements ContactListener
         this.loadedChunksList = new ArrayList<>();
         
         this.vehicleList = new ArrayList<>();
+        
+        this.isTutorialRace = true;
+        
+        Vec2 startPosition = Track.generateTutorialTrack(this, world, chunkList);
 
-        MonsterTruck mt = new MonsterTruck(world,5, 97, 4);
-        mt.setMovementController(new PlayerController(mt, 4));
-        Screen screen4 = new Screen(4, gameInst, mt);
 
-        Porche porche3 = new Porche(world, 5.f, 97.f, 3);
-        porche3.setMovementController(new PlayerController(porche3, 3));
-        Screen screen3 = new Screen(3, gameInst, porche3);
-
-        RallyRacer porche2 = new RallyRacer(world, 5.f, 97.f, 2);
-        porche2.setMovementController(new AIController(porche2));
-        Screen screen2 = new Screen(2, gameInst, porche2);
-
-        MuscleCar porche = new MuscleCar(world, 5.f, 97.f, 1);
+        Porche porche = new Porche(world, startPosition.x, startPosition.y, 1);
         porche.setMovementController(new PlayerController(porche, 1));
         Screen screen = new Screen(1, gameInst, porche);
+
         this.screens.add(screen);
-        this.screens.add(screen2);
-        this.screens.add(screen3);
-        this.screens.add(screen4);
-        //Track.generateTrack(this, world, 10340340L, this.chunkList);
-        Track.generateFlatTrack(this, world, chunkList);
         this.chunkList.get(0).addGameObject(porche);
-        this.chunkList.get(0).addGameObject(porche2);
-        this.chunkList.get(0).addGameObject(porche3);
-        this.chunkList.get(0).addGameObject(mt);
         
         this.vehicleList.add(porche);
-        this.vehicleList.add(porche2);
-        this.vehicleList.add(porche3);
-        this.vehicleList.add(mt);
-        
+    }
+    
+    private void initializeDebugDrawData()
+    {
         DebugDrawTV debugDraw = new DebugDrawTV(this.screens.get(0), gameInstance.getGraphics());
         debugDraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
         world.setDebugDraw(debugDraw);
@@ -195,14 +182,9 @@ public class Race implements ContactListener
         this.checkForEndOfRace();
     }
     
-    private void checkForFlippedVehicles()
-    {
-        
-    }
-    
     private void checkForEndOfRace()
     {
-        if(this.vehicleList.size() == 1)
+        if(this.vehicleList.size() == 1 && !this.isTutorialRace)
         {
             this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
             if(gameInstance.getAreSoundEffectsActivated()) {
@@ -210,6 +192,11 @@ public class Race implements ContactListener
             }
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.selectorData));
+        }
+        else if(this.isTutorialRace && this.vehicleList.isEmpty())
+        {
+            this.gameInstance.setActiveGui(null);
+            this.gameInstance.setActiveGui(new MainMenuGui(this.gameInstance));
         }
     }
     

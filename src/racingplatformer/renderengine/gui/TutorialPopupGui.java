@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import racingplatformer.Game;
 import racingplatformer.PlayMusic;
+import racingplatformer.race.Race;
 import racingplatformer.renderengine.gui.components.Button;
 
 /**
@@ -56,6 +57,7 @@ public class TutorialPopupGui extends PopupGui
         if(gameInstance.getAreSoundEffectsActivated()) {
             PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
         }
-        System.out.println("Go to Tutorial!");
+        this.gameInstance.setActiveGui(null);
+        this.gameInstance.setActiveRace(new Race(this.gameInstance));
     }
 }
