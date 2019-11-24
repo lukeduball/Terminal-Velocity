@@ -103,6 +103,7 @@ public class Race implements ContactListener
         }
     }
     
+    //This constructor is used to setup a tutorial race
     public Race(Game gameInst)
     {
         world = new World(new Vec2(0.0f, 9.81f));
@@ -197,6 +198,14 @@ public class Race implements ContactListener
         {
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new MainMenuGui(this.gameInstance));
+        }
+    }
+    
+    private void checkForInactiveVehicles()
+    {
+        for(Vehicle vehicle: vehicleList)
+        {
+            
         }
     }
     

@@ -56,10 +56,15 @@ public class Vehicle extends GameObject
     
     protected float halfWidth;
     
+    private Vec2 lastPosition;
+    private boolean inactive;
+    private int timer;
+    
     public Vehicle(int rid)
     {
         this.racerID = rid;
         this.isRacing = true;
+        this.lastPosition = new Vec2(0,0);
     }
     
     @Override
@@ -77,6 +82,19 @@ public class Vehicle extends GameObject
             this.frontWheelSpring.setMotorSpeed(0.0f);
             this.rearWheelSpring.setMotorSpeed(0.0f);
         }
+        
+        System.out.println("Last Position: "+this.lastPosition);
+        System.out.println("Current Position "+this.frame.getPosition());
+        Vec2 deltaPosition = this.frame.getPosition().sub(this.lastPosition);
+        System.out.println(deltaPosition);
+        if(deltaPosition.lengthSquared() < 0.01)
+        {
+            timer++;
+            System.out.println("Inactive "+timer);
+            this.inactive = true;
+        }
+        this.lastPosition = this.frame.getPosition();
+
     }
 
     @Override
