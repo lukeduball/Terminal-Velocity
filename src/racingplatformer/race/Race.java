@@ -23,6 +23,7 @@ import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
 import racingplatformer.renderengine.gui.MainMenuGui;
+import racingplatformer.renderengine.gui.TutorialWinnerGui;
 import racingplatformer.renderengine.gui.WinnerGui;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
 
@@ -196,8 +197,11 @@ public class Race implements ContactListener
         }
         else if(this.isTutorialRace && this.vehicleList.isEmpty())
         {
+            if(gameInstance.getAreSoundEffectsActivated()) {
+                PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
+            }
             this.gameInstance.setActiveRace(null);
-            this.gameInstance.setActiveGui(new MainMenuGui(this.gameInstance));
+            this.gameInstance.setActiveGui(new TutorialWinnerGui(this.gameInstance));
         }
     }
     
