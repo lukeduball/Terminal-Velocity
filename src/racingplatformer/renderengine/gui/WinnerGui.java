@@ -10,9 +10,9 @@ import racingplatformer.renderengine.gui.components.Button;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
 
 public class WinnerGui extends Gui{
-    private List finishList;
-    private List disqualificationList;
-    private VehicleSelector[] selectorData;
+    private final List finishList;
+    private final List disqualificationList;
+    private final VehicleSelector[] selectorData;
     
     public WinnerGui(Game game, List<Integer> fnList, List<Integer> dqList, VehicleSelector[] data)
     {
