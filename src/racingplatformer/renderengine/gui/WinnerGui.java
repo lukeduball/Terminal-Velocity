@@ -11,13 +11,15 @@ import racingplatformer.renderengine.gui.components.VehicleSelector;
 
 public class WinnerGui extends Gui{
     private List finishList;
+    private List disqualificationList;
     private VehicleSelector[] selectorData;
     
-    public WinnerGui(Game game, List<Integer> fnList, VehicleSelector[] data)
+    public WinnerGui(Game game, List<Integer> fnList, List<Integer> dqList, VehicleSelector[] data)
     {
         super(game);
         this.selectorData = data;
         this.finishList = fnList;
+        this.disqualificationList = dqList;
         this.componentList.add(new Button("MainMenu",152 - 500/5, 222, 186, 36, "Main Menu"));
         this.componentList.add(new Button("RaceAgain",  152 + 500/5, 222, 186, 36, "Race Again"));
     }
@@ -36,10 +38,18 @@ public class WinnerGui extends Gui{
 
         super.draw(g);
         RenderHelper.drawCenteredString(g, "Race Results", 500/2, 20, Color.white, this.gameInstance, 1.5f);
-        for(int i = 0; i < this.finishList.size(); i++)
+        int i = 0;
+        for(i = 0; i < this.finishList.size(); i++)
         {
             RenderHelper.drawString(g, place[i], 500/3, 70 + 40*i, colors[i], gameInstance);
             RenderHelper.drawRightAlignedString(g, player+this.finishList.get(i), 1000/3, 70 + 40*i, colors[i], gameInstance);
+        }
+        
+        for(int j = 0; j < this.disqualificationList.size(); j++)
+        {
+            RenderHelper.drawString(g, "Disqualified", 500/3, 70 + 40*i, Color.gray, gameInstance);
+            RenderHelper.drawRightAlignedString(g, player+this.disqualificationList.get(j), 1000/3, 70 + 40*i, Color.gray, gameInstance);
+            i++;
         }
     }
 

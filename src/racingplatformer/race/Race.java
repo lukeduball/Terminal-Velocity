@@ -54,6 +54,7 @@ public class Race implements ContactListener
     private int finishedVehicles = 0;
     
     private List<Integer> finishOrderList;
+    private List<Integer> disqualificationList;
     
     private VehicleSelector[] selectorData;
     
@@ -74,6 +75,7 @@ public class Race implements ContactListener
         this.screens = new ArrayList<>();
         
         this.finishOrderList = new ArrayList<>();
+        this.disqualificationList = new ArrayList<>();
         this.vehicleList = new ArrayList<>();
         
         this.chunkList = new ArrayList<>();
@@ -115,6 +117,7 @@ public class Race implements ContactListener
         this.screens = new ArrayList<>();
         
         this.finishOrderList = new ArrayList<>();
+        this.disqualificationList = new ArrayList<>();
 
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
@@ -208,7 +211,7 @@ public class Race implements ContactListener
             {
                 vehicle.setFinishPosition("DQ");
                 vehicle.setRacing(false);
-                //Remove the vehicle from the race
+                this.disqualificationList.add(vehicle.getRacerID());
                 removeList.add(vehicle);
             }
         }
@@ -229,7 +232,7 @@ public class Race implements ContactListener
                 PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
             }
             this.gameInstance.setActiveRace(null);
-            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.selectorData));
+            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.disqualificationList, this.selectorData));
         }
         else if(this.isTutorialRace && this.vehicleList.isEmpty())
         {
