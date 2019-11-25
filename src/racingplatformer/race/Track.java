@@ -36,7 +36,7 @@ public class Track
     
     public static Vec2 generateTutorialTrack(Race race, World world, List<Chunk> chunkList)
     {
-        Chunk firstChunk = new Chunk(0);
+        Chunk firstChunk = new Chunk(race, 0);
         float yCoordinate = 0.0f;
         Vec2 point1 = new Vec2(-5, yCoordinate);
         Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
@@ -54,7 +54,7 @@ public class Track
         {
             Vec2 p1 = new Vec2(i * Chunk.CHUNK_WIDTH, yCoordinate);
             Vec2 p2 = new Vec2((i+1) * Chunk.CHUNK_WIDTH, yCoordinate);
-            Chunk chunk = new Chunk(i);
+            Chunk chunk = new Chunk(race, i);
             chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
             chunkList.add(chunk);
         }
@@ -63,7 +63,7 @@ public class Track
         {
             Vec2 p1 = new Vec2(i * Chunk.CHUNK_WIDTH, yCoordinate - 5*(i-10));
             Vec2 p2 = new Vec2((i+1) * Chunk.CHUNK_WIDTH, yCoordinate - 5*(i-9));
-            Chunk chunk = new Chunk(i);
+            Chunk chunk = new Chunk(race, i);
             chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
             chunkList.add(chunk);
             
@@ -78,7 +78,7 @@ public class Track
         {
             Vec2 p1 = new Vec2(i * Chunk.CHUNK_WIDTH, yCoordinate);
             Vec2 p2 = new Vec2((i+1) * Chunk.CHUNK_WIDTH, yCoordinate);
-            Chunk chunk = new Chunk(i);
+            Chunk chunk = new Chunk(race, i);
             chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
             chunkList.add(chunk);
         }
@@ -92,7 +92,7 @@ public class Track
         Random rand = new Random();
         PerlinNoise pNoise = new PerlinNoise(seed);
         
-        Chunk firstChunk = new Chunk(0);
+        Chunk firstChunk = new Chunk(race, 0);
         float yCoordinate = -pNoise.getSmoothNoise(Chunk.CHUNK_WIDTH, 100) + 150;
         Vec2 point1 = new Vec2(-5, yCoordinate);
         Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
@@ -108,7 +108,7 @@ public class Track
         int totalChunks = rand.nextInt(75) + 50;
         for(int i = 1; i < totalChunks; i++)
         {
-            Chunk chunk = new Chunk(i);
+            Chunk chunk = new Chunk(race, i);
             chunk.addBoundary(new CurvedTrackSegment(i, pNoise, world));
             chunkList.add(chunk);
         }
@@ -121,7 +121,7 @@ public class Track
     
     public static Vec2 generateFlatTrack(Race race, World world, List<Chunk> chunkList)
     {
-        Chunk firstChunk = new Chunk(0);
+        Chunk firstChunk = new Chunk(race, 0);
         float yCoordinate = 100.0f;
         Vec2 point1 = new Vec2(-5, yCoordinate);
         Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
@@ -139,7 +139,7 @@ public class Track
         {
             Vec2 p1 = new Vec2(i * Chunk.CHUNK_WIDTH, yCoordinate);
             Vec2 p2 = new Vec2((i+1) * Chunk.CHUNK_WIDTH, yCoordinate);
-            Chunk chunk = new Chunk(i);
+            Chunk chunk = new Chunk(race, i);
             chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
             chunkList.add(chunk);
         }
@@ -154,14 +154,14 @@ public class Track
         {
             Vec2 p1 = new Vec2((i+nextChunkID) * Chunk.CHUNK_WIDTH, height);
             Vec2 p2 = new Vec2((i+nextChunkID+1)* Chunk.CHUNK_WIDTH, height);
-            Chunk chunk = new Chunk(nextChunkID + i);
+            Chunk chunk = new Chunk(race, nextChunkID + i);
             chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
             chunkList.add(chunk);
             
             //Add the finish line flag into the race
             if(i == 0)
             {
-                FinishLine fnLine = new FinishLine(p1);
+                FinishLine fnLine = new FinishLine(race, p1);
                 race.setFinishLine(fnLine);
             }
             

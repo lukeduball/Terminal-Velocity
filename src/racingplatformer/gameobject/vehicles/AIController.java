@@ -19,7 +19,7 @@ public class AIController extends Controller
     }
 
     @Override
-    public void moveVehicle(Race race)
+    public void moveVehicle()
     {
         if(this.parentVehicle.getRearWheelOnGround() && this.parentVehicle.getFrontWheelOnGround())
         {

@@ -23,8 +23,9 @@ public class PlayerController extends Controller
     }
 
     @Override
-    public void moveVehicle(Race race)
+    public void moveVehicle()
     {
+        Race race = this.parentVehicle.getRace();
         if(race.isMappedKeyDown(this.playerID, Game.FORWARD))
         {
             this.parentVehicle.getFrontWheelSpring().enableMotor(true);

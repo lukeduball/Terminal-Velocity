@@ -19,10 +19,11 @@ public abstract class GameObject
 {
     protected float rotation = 0.0f;
     protected Vec2 position;
+    protected Race race;
     
-    public GameObject()
+    public GameObject(Race r)
     {
-        
+        this.race = r;
     }
     
     public float getRotation()
@@ -35,6 +36,6 @@ public abstract class GameObject
         return position;
     }
     
-    public abstract void onUpdate(Race race, long delta);
-    public abstract void render(Graphics2D g, Screen screen, Game gameInstance);
+    public abstract void onUpdate(long delta);
+    public abstract void render(Graphics2D g, Screen screen);
 }

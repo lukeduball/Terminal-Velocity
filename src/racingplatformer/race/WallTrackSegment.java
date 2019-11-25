@@ -48,7 +48,7 @@ public class WallTrackSegment extends TrackSegment
     }
 
     @Override
-    public void render(Graphics2D g, Screen screen, Game gameInstance)
+    public void render(Graphics2D g, Screen screen)
     {
         g.setColor(Color.green);
         g.setStroke(new BasicStroke(10));

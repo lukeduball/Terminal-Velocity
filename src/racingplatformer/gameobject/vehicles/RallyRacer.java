@@ -27,10 +27,10 @@ public class RallyRacer extends Vehicle{
     private static Image rrBodyImg = ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_frame.png");
     private static Image rrWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/rally_racer_wheel.png");
 
-    public RallyRacer(World world, float x, float y, int rid)
+    public RallyRacer(Race race, float x, float y, int rid)
     {
-        super(rid);
-        this.constructRallyRacer(new Vec2(x, y), world);
+        super(race, rid);
+        this.constructRallyRacer(new Vec2(x, y), race.getWorld());
         this.position = new Vec2(x, y);
         this.speed = 190.0f;
         this.halfWidth = 130.0f * pixelFactor;
@@ -108,15 +108,13 @@ public class RallyRacer extends Vehicle{
     }
 
     @Override
-    public void onUpdate(Race race, long delta)
+    public void onUpdate(long delta)
     {
-        super.onUpdate(race, delta);
+        super.onUpdate(delta);
     }
     @Override
-    public void render(Graphics2D g, Screen screen, Game gameInstance)
+    public void render(Graphics2D g, Screen screen)
     {
-        //Need to rework rendering system so that the same aspect ratio is always maintained in Screen Rendering
-
         float frameWidth = (270.0f/64.0f);
         float factor = frameWidth / rrBodyImg.getWidth(null);
         float frameHeight = (float)rrBodyImg.getHeight(null) * factor;
@@ -127,11 +125,11 @@ public class RallyRacer extends Vehicle{
         float wheelYOffset = translateToGameSpace(39, frameHeight, rrBodyImg.getHeight(null));
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, rrBodyImg.getWidth(null));
 
-        this.drawFrame(g, rrBodyImg, frameWidth, frameHeight, screen, gameInstance);
-        this.drawWheel(g, rrWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
-        this.drawWheel(g, rrWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
+        this.drawFrame(g, rrBodyImg, frameWidth, frameHeight, screen);
+        this.drawWheel(g, rrWheelImg, this.frontWheel, wheelWidth, screen);
+        this.drawWheel(g, rrWheelImg, this.rearWheel, wheelWidth, screen);
 
-        super.render(g, screen, gameInstance);
+        super.render(g, screen);
     }
 
     //TODO move this into a static function in a helper class

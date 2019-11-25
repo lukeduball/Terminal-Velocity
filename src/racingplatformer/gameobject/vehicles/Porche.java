@@ -33,10 +33,10 @@ public class Porche extends Vehicle
     private static Image porcheImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_frame.png");
     private static Image porcheWheelImg = ResourceManager.loadImage("src/resources/images/vehicles/porche_wheel.png");
     
-    public Porche(World world, float x, float y, int rid)
+    public Porche(Race race, float x, float y, int rid)
     {
-        super(rid);
-        this.constructPorche(world, new Vec2(x, y));
+        super(race, rid);
+        this.constructPorche(race.getWorld(), new Vec2(x, y));
         this.position = new Vec2(x, y);
         this.speed = 250.0f;
         this.halfWidth = 134.5f * pixelFactor;
@@ -115,16 +115,14 @@ public class Porche extends Vehicle
     }
 
     @Override
-    public void onUpdate(Race race, long delta)
+    public void onUpdate(long delta)
     {
-        super.onUpdate(race, delta);
+        super.onUpdate(delta);
     }
 
     @Override
-    public void render(Graphics2D g, Screen screen, Game gameInstance)
+    public void render(Graphics2D g, Screen screen)
     {
-        //Need to rework rendering system so that the same aspect ratio is always maintained in Screen Rendering
-        
         float frameWidth = (270.0f/64.0f);
         float factor = frameWidth / porcheImg.getWidth(null);
         float frameHeight = (float)porcheImg.getHeight(null) * factor;
@@ -135,11 +133,11 @@ public class Porche extends Vehicle
         float wheelYOffset = translateToGameSpace(39, frameHeight, porcheImg.getHeight(null));
         float rightWheelXOffset = translateToGameSpace(207, frameWidth, porcheImg.getWidth(null));
         
-        this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen, gameInstance);
-        this.drawWheel(g, porcheWheelImg, this.frontWheel, wheelWidth, screen, gameInstance);
-        this.drawWheel(g, porcheWheelImg, this.rearWheel, wheelWidth, screen, gameInstance);
+        this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen);
+        this.drawWheel(g, porcheWheelImg, this.frontWheel, wheelWidth, screen);
+        this.drawWheel(g, porcheWheelImg, this.rearWheel, wheelWidth, screen);
 
-        super.render(g, screen, gameInstance);
+        super.render(g, screen);
     }
     
     //TODO move this into a static function in a helper class

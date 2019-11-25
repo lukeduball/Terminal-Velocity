@@ -99,7 +99,7 @@ public class Race implements ContactListener
             else
             {
                 movementController = new PlayerController(vehicle, i+1);
-                Screen screen = new Screen(i+1, gameInst, vehicle);
+                Screen screen = new Screen(i+1, this, vehicle);
                 this.screens.add(screen);
             }
             vehicle.setMovementController(movementController);
@@ -130,9 +130,9 @@ public class Race implements ContactListener
         Vec2 startPosition = Track.generateTutorialTrack(this, world, chunkList);
 
 
-        Porche porche = new Porche(world, startPosition.x, startPosition.y, 1);
+        Porche porche = new Porche(this, startPosition.x, startPosition.y, 1);
         porche.setMovementController(new PlayerController(porche, 1));
-        Screen screen = new Screen(1, gameInst, porche);
+        Screen screen = new Screen(1, this, porche);
 
         this.screens.add(screen);
         this.chunkList.get(0).addGameObject(porche);
@@ -155,7 +155,7 @@ public class Race implements ContactListener
         world.step(DT, VEL_IT, POS_IT);
         for(Screen screen : screens)
         {
-            screen.updateScreen(screens.size(), this);
+            screen.updateScreen(screens.size());
         }
         
         updateTimers(delta);
@@ -164,7 +164,7 @@ public class Race implements ContactListener
         {
             if(chunk != null)
             {
-                chunk.onUpdate(this, delta);   
+                chunk.onUpdate(delta);   
             }
         }
         this.checkForFinishedVehicles();
@@ -254,7 +254,7 @@ public class Race implements ContactListener
         g.fillRect(0, 0, this.gameInstance.getWidth(), this.gameInstance.getHeight());
         for(Screen screen : screens)
         {
-            screen.renderScreen(g, this);
+            screen.renderScreen(g);
         }
         
         //Draw the debug data last so that it is drawn over all images
@@ -334,26 +334,31 @@ public class Race implements ContactListener
         this.finishLine = fl;
     }
     
-    public int getCurrentFPS()
-    {
-        return this.gameInstance.getCurrentFPS();
-    }
-    
     public Vehicle getVehicleForIndex(int i, int racerID, Vec2 startPos)
     {
         switch(i)
         {
             case 0:
-                return new Porche(this.world, startPos.x, startPos.y, racerID);
+                return new Porche(this, startPos.x, startPos.y, racerID);
             case 1:
-                return new MuscleCar(this.world, startPos.x, startPos.y, racerID);
+                return new MuscleCar(this, startPos.x, startPos.y, racerID);
             case 2:
-                return new RallyRacer(this.world, startPos.x, startPos.y, racerID);
+                return new RallyRacer(this, startPos.x, startPos.y, racerID);
             case 3:
-                return new MonsterTruck(this.world, startPos.x, startPos.y, racerID);
+                return new MonsterTruck(this, startPos.x, startPos.y, racerID);
             default:
                 return null;
         }
+    }
+    
+    public Game getGameInstance()
+    {
+        return this.gameInstance;
+    }
+    
+    public World getWorld()
+    {
+        return this.world;
     }
 
     @Override

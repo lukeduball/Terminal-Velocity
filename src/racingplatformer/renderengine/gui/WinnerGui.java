@@ -29,6 +29,7 @@ public class WinnerGui extends Gui{
         Color gold = new Color(255, 215, 0);
         Color silver = new Color(192, 192, 192);
         Color bronze = new Color(205, 127, 50);
+        //TODO:: Add a way to determine if the winner is an AI or a player
         String player = "Player ";
         String AI = "AI ";
         

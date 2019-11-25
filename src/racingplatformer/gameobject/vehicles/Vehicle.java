@@ -61,25 +61,26 @@ public class Vehicle extends GameObject
     private Vec2 lastPosition;
     private boolean active;
     
-    public Vehicle(int rid)
+    public Vehicle(Race race, int rid)
     {
+        super(race);
         this.racerID = rid;
         this.isRacing = true;
         this.lastPosition = new Vec2(0,0);
         this.idleTimer = new Timer(5);
+        race.registerTimer(idleTimer);
         this.active = true;
     }
     
     @Override
-    public void onUpdate(Race race, long delta) 
+    public void onUpdate(long delta) 
     {
-        race.registerTimer(this.idleTimer);
         //Update the location of the vehicle
         
         //Depending on the controller it will move the vehicle based on those conditions
         if(this.movementController != null && isRacing)
         {
-            this.movementController.moveVehicle(race);
+            this.movementController.moveVehicle();
         }
         else
         {
@@ -108,7 +109,7 @@ public class Vehicle extends GameObject
     }
 
     @Override
-    public void render(Graphics2D g, Screen screen, Game gameInstance) 
+    public void render(Graphics2D g, Screen screen) 
     {
         if(this.movementController != null)
         {
@@ -128,7 +129,7 @@ public class Vehicle extends GameObject
         return this.frame.getAngle();
     }
     
-    protected void drawFrame(Graphics2D g, Image img, float width, float height, Screen screen, Game gameInstance)
+    protected void drawFrame(Graphics2D g, Image img, float width, float height, Screen screen)
     {
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
@@ -141,10 +142,10 @@ public class Vehicle extends GameObject
         at.translate(screenPos.x, screenPos.y);
         at.rotate(this.getRotation(), rotationOffset.x, rotationOffset.y);
         at.scale(scaleX, scaleY);
-        g.drawImage(img, at, gameInstance);
+        g.drawImage(img, at, race.getGameInstance());
     }
     
-    protected void drawWheel(Graphics2D g, Image img, Body wheelBody, float width, Screen screen, Game gameInstance)
+    protected void drawWheel(Graphics2D g, Image img, Body wheelBody, float width, Screen screen)
     {
         float factor = width / img.getWidth(null);
         float height = (float)img.getHeight(null) * factor;
@@ -160,7 +161,7 @@ public class Vehicle extends GameObject
         at.translate(screenPos.x, screenPos.y);
         at.rotate(wheelBody.getAngle() * 0.1, wheelCenterOffset.x, wheelCenterOffset.y);
         at.scale(scaleX, scaleY);
-        g.drawImage(img, at, gameInstance);
+        g.drawImage(img, at, race.getGameInstance());
     }
     
     private void drawPlayerLabel(Graphics2D g, Screen screen)
@@ -220,7 +221,7 @@ public class Vehicle extends GameObject
         this.finishPosition = s;
     }
     
-    public String getCurrentPosition(Race race)
+    public String getCurrentPosition()
     {
         if(this.isRacing)
         {
@@ -257,6 +258,11 @@ public class Vehicle extends GameObject
     public boolean isActive()
     {
         return this.active;
+    }
+    
+    public Race getRace()
+    {
+        return this.race;
     }
     
 }

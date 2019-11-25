@@ -24,5 +24,5 @@ public abstract class TrackSegment
         
     }
     
-    public abstract void render(Graphics2D g, Screen screen, Game gameInstance);
+    public abstract void render(Graphics2D g, Screen screen);
 }

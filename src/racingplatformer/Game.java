@@ -35,9 +35,6 @@ public class Game extends Canvas
     private static float widthFactor;
     private static float heightFactor;
     
-    private int lastFpsMeasurement;
-    
-    
     //The current active gui which is drawn on the screen
     private Gui activeGui;
     
@@ -175,7 +172,6 @@ public class Game extends Canvas
             
             if(lastFpsTime >= 1000000000)
             {
-                this.lastFpsMeasurement = fps;
                 System.out.println("FPS: "+fps);
                 lastFpsTime = 0L;
                 fps = 0;
@@ -316,10 +312,5 @@ public class Game extends Canvas
     public boolean isKeyDown(int keyCode)
     {
         return this.keys[keyCode];
-    }
-    
-    public int getCurrentFPS()
-    {
-        return this.lastFpsMeasurement;
     }
 }

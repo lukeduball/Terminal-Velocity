@@ -30,24 +30,24 @@ public class Screen
     
     private float scaleFactor;
     
-    private Game gameInstance;
+    private Race race;
     
     private Chunk[] loadedChunks;
     
-    public Screen(int pos, Game g)
+    public Screen(int pos, Race r)
     {
         this.position = pos;
-        this.gameInstance = g;
+        this.race = r;
         this.loadedChunks = new Chunk[3];
     }
     
-    public Screen(int pos, Game g, Vehicle fv)
+    public Screen(int pos, Race r, Vehicle fv)
     {
-        this(pos, g);
+        this(pos, r);
         this.focusVehicle = fv;
     }
     
-    public void renderScreen(Graphics2D g, Race race)
+    public void renderScreen(Graphics2D g)
     {   
         //Clear the clipping rectangle
         g.setClip(null);
@@ -67,8 +67,8 @@ public class Screen
             //Safeguard against attempting to draw a null chunk
             if(chunk != null)
             {
-                chunk.renderTrack(g, this, gameInstance);
-                race.getFinishLine().render(g, this, gameInstance);
+                chunk.renderTrack(g, this);
+                race.getFinishLine().render(g, this);
             }
         }
         
@@ -76,25 +76,25 @@ public class Screen
         {
             if(chunk != null)
             {
-                chunk.renderGameObjects(g, this, gameInstance);
+                chunk.renderGameObjects(g, this);
             }
         }
         
         Vec2 placePosition = new Vec2(this.focusVehicle.getPosition());
         placePosition.x += Chunk.CHUNK_WIDTH - 2;
         placePosition.y -= ((float)Chunk.CHUNK_HEIGHT * .5) - 2;
-        String racePosition = this.focusVehicle.getCurrentPosition(race);
+        String racePosition = this.focusVehicle.getCurrentPosition();
         StringRenderer.drawCenteredString(g, racePosition,
                 placePosition, Color.black, this);
     }
     
-    public void updateScreen(int numScreens, Race race)
+    public void updateScreen(int numScreens)
     {
-        this.updateLoadedChunks(race);
+        this.updateLoadedChunks();
         this.updateScreenPositionAndDimensions(numScreens);
     }
     
-    public void updateLoadedChunks(Race race)
+    public void updateLoadedChunks()
     {
         if(this.focusVehicle != null)
         {
@@ -141,20 +141,20 @@ public class Screen
     {
         if(numScreens > 1)
         {
-            height = gameInstance.getParent().getHeight() / 2;
+            height = race.getGameInstance().getParent().getHeight() / 2;
         }
         else
         {
-            height = gameInstance.getParent().getHeight();
+            height = race.getGameInstance().getParent().getHeight();
         }
         
         if(numScreens > 2)
         {
-            width = gameInstance.getParent().getWidth() / 2;
+            width = race.getGameInstance().getParent().getWidth() / 2;
         }
         else
         {
-            width = gameInstance.getParent().getWidth();
+            width = race.getGameInstance().getParent().getWidth();
         }
         
         if(this.position % 2 == 0)
