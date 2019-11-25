@@ -32,7 +32,7 @@ public class Chunk
         this.gameObjectList = new ArrayList<>();
     }
     
-    public void onUpdate(Race race)
+    public void onUpdate(Race race, long delta)
     {
         List<GameObject> removeList = new ArrayList<>();
         for(GameObject o : gameObjectList)
@@ -49,7 +49,7 @@ public class Chunk
                     chunk.addGameObject(o);
                 }
             }
-            o.onUpdate(race);
+            o.onUpdate(race, delta);
         }
         
         for(GameObject o : removeList)

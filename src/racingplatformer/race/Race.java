@@ -22,11 +22,10 @@ import racingplatformer.PlayMusic;
 import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
-import racingplatformer.renderengine.gui.MainMenuGui;
 import racingplatformer.renderengine.gui.TutorialWinnerGui;
 import racingplatformer.renderengine.gui.WinnerGui;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
-
+import racingplatformer.utilities.Timer;
 /**
  *
  * @author Luke
@@ -58,12 +57,15 @@ public class Race implements ContactListener
     
     private VehicleSelector[] selectorData;
     
+    private List<Timer> timerList;
+        
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
     private static final int POS_IT = 8;
     
     public Race(Game gameInst, VehicleSelector[] selectors)
     {
+        this.timerList = new ArrayList<>();
         this.selectorData = selectors;
         this.gameInstance = gameInst;
         
@@ -107,6 +109,7 @@ public class Race implements ContactListener
     //This constructor is used to setup a tutorial race
     public Race(Game gameInst)
     {
+        this.timerList = new ArrayList<>();
         world = new World(new Vec2(0.0f, 9.81f));
         world.setContactListener(this);
         this.screens = new ArrayList<>();
@@ -144,7 +147,7 @@ public class Race implements ContactListener
     /***
      * Called to update the logic of the race each frame
      */
-    public void onUpdate()
+    public void onUpdate(long delta)
     {
         world.step(DT, VEL_IT, POS_IT);
         for(Screen screen : screens)
@@ -152,14 +155,40 @@ public class Race implements ContactListener
             screen.updateScreen(screens.size(), this);
         }
         
+        updateTimers(delta);
+        
         for(Chunk chunk : this.loadedChunksList)
         {
             if(chunk != null)
             {
-                chunk.onUpdate(this);   
+                chunk.onUpdate(this, delta);   
             }
         }
         this.checkForFinishedVehicles();
+    }
+    
+    private void updateTimers(long delta)
+    {
+        for(Timer timer : this.timerList)
+        {
+            if(!timer.hasTimerExpired())
+            {
+                timer.decreaseCounter(delta);
+            }
+        }
+    }
+    
+    public void registerTimer(Timer t)
+    {
+        if(!this.timerList.contains(t))
+        {
+            this.timerList.add(t);
+        }
+    }
+    
+    public void removeTimer(Timer t)
+    {
+        this.timerList.remove(t);
     }
     
     private void checkForFinishedVehicles()
@@ -175,6 +204,13 @@ public class Race implements ContactListener
                 removeList.add(vehicle);
                 this.finishOrderList.add(vehicle.getRacerID());
             }
+            else if(!vehicle.isActive())
+            {
+                vehicle.setFinishPosition("DQ");
+                vehicle.setRacing(false);
+                //Remove the vehicle from the race
+                removeList.add(vehicle);
+            }
         }
         
         for(Vehicle vehicle : removeList)
@@ -186,7 +222,7 @@ public class Race implements ContactListener
     
     private void checkForEndOfRace()
     {
-        if(this.vehicleList.size() == 1 && !this.isTutorialRace)
+        if(this.vehicleList.size() <= 1 && !this.isTutorialRace)
         {
             this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
             if(gameInstance.getAreSoundEffectsActivated()) {
@@ -202,14 +238,6 @@ public class Race implements ContactListener
             }
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new TutorialWinnerGui(this.gameInstance));
-        }
-    }
-    
-    private void checkForInactiveVehicles()
-    {
-        for(Vehicle vehicle: vehicleList)
-        {
-            
         }
     }
     
@@ -276,7 +304,7 @@ public class Race implements ContactListener
         return this.gameInstance.isKeyDown(this.gameInstance.getPlayerControlKeys(playerID-1)[keyIdentifier]);
     }
     
-    public int getCurrentPosition(Vehicle vehicle)
+    public String getCurrentPosition(Vehicle vehicle)
     {
         int position = finishedVehicles+1;
         for(Vehicle v : this.vehicleList)
@@ -290,7 +318,7 @@ public class Race implements ContactListener
                 position++;
             }
         }
-        return position;
+        return ""+position;
     }
     
     public FinishLine getFinishLine()

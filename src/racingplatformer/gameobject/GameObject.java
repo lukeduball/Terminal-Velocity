@@ -35,6 +35,6 @@ public abstract class GameObject
         return position;
     }
     
-    public abstract void onUpdate(Race race);
+    public abstract void onUpdate(Race race, long delta);
     public abstract void render(Graphics2D g, Screen screen, Game gameInstance);
 }

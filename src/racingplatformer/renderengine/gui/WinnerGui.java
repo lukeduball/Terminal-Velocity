@@ -24,7 +24,6 @@ public class WinnerGui extends Gui{
 
     @Override
     public void draw(Graphics2D g){
-        //TODO read in placements[] to draw who won, and whether they were an AI or player "AI or Player" + " ID"
         Color gold = new Color(255, 215, 0);
         Color silver = new Color(192, 192, 192);
         Color bronze = new Color(205, 127, 50);

@@ -115,9 +115,9 @@ public class Porche extends Vehicle
     }
 
     @Override
-    public void onUpdate(Race race)
+    public void onUpdate(Race race, long delta)
     {
-        super.onUpdate(race);
+        super.onUpdate(race, delta);
     }
 
     @Override

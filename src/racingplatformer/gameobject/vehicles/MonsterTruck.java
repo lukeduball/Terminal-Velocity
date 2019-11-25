@@ -108,9 +108,9 @@ public class MonsterTruck extends Vehicle{
     }
 
     @Override
-    public void onUpdate(Race race)
+    public void onUpdate(Race race, long delta)
     {
-        super.onUpdate(race);
+        super.onUpdate(race, delta);
     }
     @Override
     public void render(Graphics2D g, Screen screen, Game gameInstance)

@@ -17,6 +17,7 @@ import racingplatformer.gameobject.GameObject;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;
 import racingplatformer.renderengine.StringRenderer;
+import racingplatformer.utilities.Timer;
 
 /**
  *
@@ -38,7 +39,7 @@ public class Vehicle extends GameObject
     protected float wheelRotation;
     
     protected boolean isRacing;
-    private int finishPosition;
+    private String finishPosition;
     
     private int racerID;
     
@@ -56,20 +57,23 @@ public class Vehicle extends GameObject
     
     protected float halfWidth;
     
+    private Timer idleTimer;
     private Vec2 lastPosition;
-    private boolean inactive;
-    private int timer;
+    private boolean active;
     
     public Vehicle(int rid)
     {
         this.racerID = rid;
         this.isRacing = true;
         this.lastPosition = new Vec2(0,0);
+        this.idleTimer = new Timer(5);
+        this.active = true;
     }
     
     @Override
-    public void onUpdate(Race race) 
+    public void onUpdate(Race race, long delta) 
     {
+        race.registerTimer(this.idleTimer);
         //Update the location of the vehicle
         
         //Depending on the controller it will move the vehicle based on those conditions
@@ -83,17 +87,23 @@ public class Vehicle extends GameObject
             this.rearWheelSpring.setMotorSpeed(0.0f);
         }
         
-        System.out.println("Last Position: "+this.lastPosition);
-        System.out.println("Current Position "+this.frame.getPosition());
         Vec2 deltaPosition = this.frame.getPosition().sub(this.lastPosition);
-        System.out.println(deltaPosition);
-        if(deltaPosition.lengthSquared() < 0.01)
+        if(deltaPosition.lengthSquared() < 0.00001)
         {
-            timer++;
-            System.out.println("Inactive "+timer);
-            this.inactive = true;
+            this.idleTimer.startTimer();
         }
-        this.lastPosition = this.frame.getPosition();
+        else
+        {
+            this.idleTimer.pauseTimer();
+            this.idleTimer.resetTimer();
+        }
+        
+        if(this.idleTimer.hasTimerExpired())
+        {
+            this.active = false;
+        }
+        
+        this.lastPosition = new Vec2(this.frame.getPosition());
 
     }
 
@@ -205,12 +215,12 @@ public class Vehicle extends GameObject
         this.isRacing = flag;
     }
     
-    public void setFinishPosition(int i)
+    public void setFinishPosition(String s)
     {
-        this.finishPosition = i;
+        this.finishPosition = s;
     }
     
-    public int getCurrentPosition(Race race)
+    public String getCurrentPosition(Race race)
     {
         if(this.isRacing)
         {
@@ -242,6 +252,11 @@ public class Vehicle extends GameObject
     public boolean getFrontWheelOnGround()
     {
         return this.isFrontWheelOnGround;
+    }
+    
+    public boolean isActive()
+    {
+        return this.active;
     }
     
 }

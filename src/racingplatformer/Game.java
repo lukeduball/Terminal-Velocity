@@ -60,6 +60,8 @@ public class Game extends Canvas
     //True if the current key for a given key code is down
     private final boolean[] keys = new boolean[512];
     
+    long lastTickTime;
+    
     public Game()
     {
         this.gameRunning = true;
@@ -119,11 +121,12 @@ public class Game extends Canvas
         
         MainMenuGui mainMenu = new MainMenuGui(this);
         this.activeGui = mainMenu;
-        //this.setActiveRace(new Race(this));
+        this.lastTickTime = System.nanoTime();
         
         while(gameRunning)
         {
             long currentTime = System.nanoTime();
+            long delta = currentTime - this.lastTickTime;
             
             //Sets the width factors by dividing the window width and height in pixels by our pseudo values
             Game.widthFactor = this.getParent().getWidth() / PSEUDO_WIDTH;
@@ -136,7 +139,7 @@ public class Game extends Canvas
             //Update the races current logic
             if(this.getActiveRace() != null)
             {
-                this.getActiveRace().onUpdate();
+                this.getActiveRace().onUpdate(delta);
             }
             
             
@@ -164,6 +167,7 @@ public class Game extends Canvas
             //Shows the drawn image on the screen
             strategy.show();
             
+            this.lastTickTime = System.nanoTime();
             long updateTime = System.nanoTime() - currentTime;
             
             lastFpsTime += updateTime;
