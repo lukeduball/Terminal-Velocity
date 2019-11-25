@@ -7,7 +7,6 @@ package racingplatformer;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import racingplatformer.renderengine.gui.Gui;
 
 /**
  *

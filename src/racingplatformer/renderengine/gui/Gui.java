@@ -9,12 +9,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import racingplatformer.Game;
 import racingplatformer.renderengine.ResourceManager;
-import racingplatformer.renderengine.gui.components.Button;
-import racingplatformer.renderengine.gui.components.CharField;
 import racingplatformer.renderengine.gui.components.Component;
 
 /**

@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import org.jbox2d.common.Vec2;
-import racingplatformer.Game;
-import racingplatformer.gameobject.GameObject;
 import racingplatformer.gameobject.vehicles.Vehicle;
 import racingplatformer.race.Chunk;
 import racingplatformer.race.Race;
@@ -139,6 +137,10 @@ public class Screen
     
     public void updateScreenPositionAndDimensions(int numScreens)
     {
+        float parentHeight = race.getGameInstance().getParent().getHeight();
+        float parentWidth = race.getGameInstance().getParent().getWidth();
+        System.out.println("Parent Width: "+parentHeight);
+        System.out.println("Parent Height: "+parentWidth);
         if(numScreens > 1)
         {
             height = race.getGameInstance().getParent().getHeight() / 2;

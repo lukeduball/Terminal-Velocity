@@ -8,7 +8,6 @@ package racingplatformer.race;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.ArrayList;
-import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
 import racingplatformer.renderengine.Screen;
 

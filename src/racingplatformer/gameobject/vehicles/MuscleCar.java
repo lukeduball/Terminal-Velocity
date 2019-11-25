@@ -11,7 +11,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.joints.WheelJoint;
 import org.jbox2d.dynamics.joints.WheelJointDef;
-import racingplatformer.Game;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.Screen;
@@ -121,21 +120,10 @@ public class MuscleCar extends Vehicle{
 
         float wheelWidth = (45.0f/64.0f);
 
-        float leftWheelXOffset = translateToGameSpace(42, frameWidth, mcBodyImg.getWidth(null));
-        float wheelYOffset = translateToGameSpace(39, frameHeight, mcBodyImg.getHeight(null));
-        float rightWheelXOffset = translateToGameSpace(207, frameWidth, mcBodyImg.getWidth(null));
-
         this.drawWheel(g, mcWheelImg, this.rearWheel, wheelWidth, screen);
         this.drawFrame(g, mcBodyImg, frameWidth, frameHeight, screen);
         this.drawWheel(g, mcWheelImg, this.frontWheel, wheelWidth, screen);
 
         super.render(g, screen);
-    }
-
-    //TODO move this into a static function in a helper class
-    private float translateToGameSpace(float offset, float transformed, float original)
-    {
-        float result = offset * transformed / original;
-        return result;
     }
 }

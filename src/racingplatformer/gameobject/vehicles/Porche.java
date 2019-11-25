@@ -10,15 +10,12 @@ import java.awt.Image;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.joints.*;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.WheelJoint;
 import org.jbox2d.dynamics.joints.WheelJointDef;
-import racingplatformer.Game;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.Screen;
@@ -129,21 +126,10 @@ public class Porche extends Vehicle
         
         float wheelWidth = (45.0f/64.0f);
         
-        float leftWheelXOffset = translateToGameSpace(42, frameWidth, porcheImg.getWidth(null));
-        float wheelYOffset = translateToGameSpace(39, frameHeight, porcheImg.getHeight(null));
-        float rightWheelXOffset = translateToGameSpace(207, frameWidth, porcheImg.getWidth(null));
-        
         this.drawFrame(g, porcheImg, frameWidth, frameHeight, screen);
         this.drawWheel(g, porcheWheelImg, this.frontWheel, wheelWidth, screen);
         this.drawWheel(g, porcheWheelImg, this.rearWheel, wheelWidth, screen);
 
         super.render(g, screen);
-    }
-    
-    //TODO move this into a static function in a helper class
-    private float translateToGameSpace(float offset, float transformed, float original)
-    {
-        float result = offset * transformed / original;
-        return result;
     }
 }

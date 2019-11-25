@@ -11,7 +11,6 @@ import java.awt.Image;
 import racingplatformer.Game;
 import racingplatformer.PlayMusic;
 import racingplatformer.renderengine.ResourceManager;
-import racingplatformer.renderengine.gui.Gui;
 import racingplatformer.renderengine.gui.RenderHelper;
 
 /**

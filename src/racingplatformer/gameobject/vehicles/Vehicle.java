@@ -12,7 +12,6 @@ import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.joints.WheelJoint;
-import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;

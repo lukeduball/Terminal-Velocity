@@ -5,8 +5,6 @@
  */
 package racingplatformer.gameobject.vehicles;
 
-import racingplatformer.race.Race;
-
 /**
  *
  * @author Luke

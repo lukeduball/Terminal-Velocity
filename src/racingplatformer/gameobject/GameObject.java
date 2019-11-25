@@ -7,7 +7,6 @@ package racingplatformer.gameobject;
 
 import java.awt.Graphics2D;
 import org.jbox2d.common.Vec2;
-import racingplatformer.Game;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;
 

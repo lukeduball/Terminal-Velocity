@@ -227,7 +227,10 @@ public class Race implements ContactListener
     {
         if(this.vehicleList.size() <= 1 && !this.isTutorialRace)
         {
-            this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
+            if(this.vehicleList.size() > 0)
+            {
+                this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
+            }
             if(gameInstance.getAreSoundEffectsActivated()) {
                 PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
             }
