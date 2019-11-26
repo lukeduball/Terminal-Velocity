@@ -78,8 +78,8 @@ public class OptionsMenuGui extends Gui
     
     public void onSoundToggleButtonClicked()
     {
-        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.gameInstance.toggleSoundEffects();
+        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
     }
     
 }
