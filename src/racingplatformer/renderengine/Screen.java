@@ -32,6 +32,8 @@ public class Screen
     
     private Chunk[] loadedChunks;
     
+    private static float EXPECTED_RATIO = 1920 / 986;
+    
     public Screen(int pos, Race r)
     {
         this.position = pos;
@@ -49,7 +51,6 @@ public class Screen
     {   
         //Clear the clipping rectangle
         g.setClip(null);
-        
         Rectangle clippingRect = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g.setColor(new Color(228, 224, 255));
         g.fill(clippingRect);
@@ -139,8 +140,7 @@ public class Screen
     {
         float parentHeight = race.getGameInstance().getParent().getHeight();
         float parentWidth = race.getGameInstance().getParent().getWidth();
-        System.out.println("Parent Width: "+parentHeight);
-        System.out.println("Parent Height: "+parentWidth);
+        
         if(numScreens > 1)
         {
             height = race.getGameInstance().getParent().getHeight() / 2;
@@ -175,6 +175,14 @@ public class Screen
         else
         {
             this.x = 0;
+        }
+        
+        float actualRatio = width / height;
+        if(actualRatio > EXPECTED_RATIO)
+        {
+            int oldWidth = width;
+            width = (height * 1920) / 986;
+            this.x += (int)(oldWidth - width) / 2;
         }
         
         //TODO Decide if the width or height change is greater to decide which one to use to set the scaleFactor
