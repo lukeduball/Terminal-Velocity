@@ -12,11 +12,11 @@ import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.joints.WheelJoint;
-import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
 import racingplatformer.race.Race;
 import racingplatformer.renderengine.Screen;
 import racingplatformer.renderengine.StringRenderer;
+import racingplatformer.utilities.Timer;
 
 /**
  *
@@ -38,7 +38,7 @@ public class Vehicle extends GameObject
     protected float wheelRotation;
     
     protected boolean isRacing;
-    private int finishPosition;
+    private String finishPosition;
     
     private int racerID;
     
@@ -56,31 +56,59 @@ public class Vehicle extends GameObject
     
     protected float halfWidth;
     
-    public Vehicle(int rid)
+    private Timer idleTimer;
+    private Vec2 lastPosition;
+    private boolean active;
+    
+    public Vehicle(Race race, int rid)
     {
+        super(race);
         this.racerID = rid;
         this.isRacing = true;
+        this.lastPosition = new Vec2(0,0);
+        this.idleTimer = new Timer(5);
+        race.registerTimer(idleTimer);
+        this.active = true;
     }
     
     @Override
-    public void onUpdate(Race race) 
+    public void onUpdate(long delta) 
     {
         //Update the location of the vehicle
         
         //Depending on the controller it will move the vehicle based on those conditions
         if(this.movementController != null && isRacing)
         {
-            this.movementController.moveVehicle(race);
+            this.movementController.moveVehicle();
         }
         else
         {
             this.frontWheelSpring.setMotorSpeed(0.0f);
             this.rearWheelSpring.setMotorSpeed(0.0f);
         }
+        
+        Vec2 deltaPosition = this.frame.getPosition().sub(this.lastPosition);
+        if(deltaPosition.lengthSquared() < 0.00001)
+        {
+            this.idleTimer.startTimer();
+        }
+        else
+        {
+            this.idleTimer.pauseTimer();
+            this.idleTimer.resetTimer();
+        }
+        
+        if(this.idleTimer.hasTimerExpired())
+        {
+            this.active = false;
+        }
+        
+        this.lastPosition = new Vec2(this.frame.getPosition());
+
     }
 
     @Override
-    public void render(Graphics2D g, Screen screen, Game gameInstance) 
+    public void render(Graphics2D g, Screen screen) 
     {
         if(this.movementController != null)
         {
@@ -100,7 +128,7 @@ public class Vehicle extends GameObject
         return this.frame.getAngle();
     }
     
-    protected void drawFrame(Graphics2D g, Image img, float width, float height, Screen screen, Game gameInstance)
+    protected void drawFrame(Graphics2D g, Image img, float width, float height, Screen screen)
     {
         float scaleX = (width * screen.getScaleFactor()) / img.getWidth(null);
         float scaleY = (height * screen.getScaleFactor()) / img.getHeight(null);
@@ -113,10 +141,10 @@ public class Vehicle extends GameObject
         at.translate(screenPos.x, screenPos.y);
         at.rotate(this.getRotation(), rotationOffset.x, rotationOffset.y);
         at.scale(scaleX, scaleY);
-        g.drawImage(img, at, gameInstance);
+        g.drawImage(img, at, race.getGameInstance());
     }
     
-    protected void drawWheel(Graphics2D g, Image img, Body wheelBody, float width, Screen screen, Game gameInstance)
+    protected void drawWheel(Graphics2D g, Image img, Body wheelBody, float width, Screen screen)
     {
         float factor = width / img.getWidth(null);
         float height = (float)img.getHeight(null) * factor;
@@ -132,7 +160,7 @@ public class Vehicle extends GameObject
         at.translate(screenPos.x, screenPos.y);
         at.rotate(wheelBody.getAngle() * 0.1, wheelCenterOffset.x, wheelCenterOffset.y);
         at.scale(scaleX, scaleY);
-        g.drawImage(img, at, gameInstance);
+        g.drawImage(img, at, race.getGameInstance());
     }
     
     private void drawPlayerLabel(Graphics2D g, Screen screen)
@@ -187,12 +215,12 @@ public class Vehicle extends GameObject
         this.isRacing = flag;
     }
     
-    public void setFinishPosition(int i)
+    public void setFinishPosition(String s)
     {
-        this.finishPosition = i;
+        this.finishPosition = s;
     }
     
-    public int getCurrentPosition(Race race)
+    public String getCurrentPosition()
     {
         if(this.isRacing)
         {
@@ -224,6 +252,16 @@ public class Vehicle extends GameObject
     public boolean getFrontWheelOnGround()
     {
         return this.isFrontWheelOnGround;
+    }
+    
+    public boolean isActive()
+    {
+        return this.active;
+    }
+    
+    public Race getRace()
+    {
+        return this.race;
     }
     
 }

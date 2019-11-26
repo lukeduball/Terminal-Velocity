@@ -8,7 +8,6 @@ package racingplatformer.race;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.ArrayList;
-import racingplatformer.Game;
 import racingplatformer.gameobject.GameObject;
 import racingplatformer.renderengine.Screen;
 
@@ -25,14 +24,17 @@ public class Chunk
     public static int CHUNK_WIDTH = 20;
     public static int CHUNK_HEIGHT = 16;
     
-    public Chunk(int cnkID)
+    private Race race;
+    
+    public Chunk(Race r, int cnkID)
     {
+        this.race = r;
         this.chunkID = cnkID;
         this.boundaryList = new ArrayList();
         this.gameObjectList = new ArrayList<>();
     }
     
-    public void onUpdate(Race race)
+    public void onUpdate(long delta)
     {
         List<GameObject> removeList = new ArrayList<>();
         for(GameObject o : gameObjectList)
@@ -49,7 +51,7 @@ public class Chunk
                     chunk.addGameObject(o);
                 }
             }
-            o.onUpdate(race);
+            o.onUpdate(delta);
         }
         
         for(GameObject o : removeList)
@@ -63,20 +65,20 @@ public class Chunk
         return this.chunkID;
     }
     
-    public void renderGameObjects(Graphics2D g, Screen screen, Game gameInstance)
+    public void renderGameObjects(Graphics2D g, Screen screen)
     {
         for(GameObject o : gameObjectList)
         {
-            o.render(g, screen, gameInstance);
+            o.render(g, screen);
         }
     }
     
-    public void renderTrack(Graphics2D g, Screen screen, Game gameInstance)
+    public void renderTrack(Graphics2D g, Screen screen)
     {
         //Draw the track segments first
         for(TrackSegment segment : this.boundaryList)
         {
-            segment.render(g, screen, gameInstance); 
+            segment.render(g, screen); 
         }
     }
     

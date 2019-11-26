@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import org.jbox2d.common.Vec2;
-import racingplatformer.Game;
 import racingplatformer.gameobject.vehicles.Vehicle;
 import racingplatformer.renderengine.ResourceManager;
 import racingplatformer.renderengine.Screen;
@@ -21,15 +20,17 @@ import racingplatformer.renderengine.Screen;
 public class FinishLine 
 {
     private final Vec2 position;
+    private Race race;
     
     private static final Image finishLineImg = ResourceManager.loadImage("src/resources/images/objects/racingflag.png");
     
-    public FinishLine(Vec2 pos)
+    public FinishLine(Race r, Vec2 pos)
     {
+        this.race = r;
         this.position = pos;
     }
     
-    public void render(Graphics2D g, Screen screen, Game gameInstance)
+    public void render(Graphics2D g, Screen screen)
     {
         float width = (199.0f/64.0f);
         float factor = width / finishLineImg.getWidth(null);
@@ -44,12 +45,12 @@ public class FinishLine
         AffineTransform at = new AffineTransform();
         at.translate(screenPos.x, screenPos.y);
         at.scale(scaleX, scaleY);
-        g.drawImage(finishLineImg, at, gameInstance);
+        g.drawImage(finishLineImg, at, race.getGameInstance());
     }
     
     public boolean hasVehicleFinishedRace(Vehicle vehicle)
     {
-        return vehicle.getPosition().x > this.position.x;
+        return vehicle.getFrontOfVehiclePosition().x > this.position.x;
     }
     
 }

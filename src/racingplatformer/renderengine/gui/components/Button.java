@@ -6,10 +6,8 @@
 package racingplatformer.renderengine.gui.components;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import racingplatformer.Game;

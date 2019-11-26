@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import org.jbox2d.common.Vec2;
-import racingplatformer.Game;
-import racingplatformer.gameobject.GameObject;
 import racingplatformer.gameobject.vehicles.Vehicle;
 import racingplatformer.race.Chunk;
 import racingplatformer.race.Race;
@@ -30,28 +28,29 @@ public class Screen
     
     private float scaleFactor;
     
-    private Game gameInstance;
+    private Race race;
     
     private Chunk[] loadedChunks;
     
-    public Screen(int pos, Game g)
+    private static float EXPECTED_RATIO = 1920 / 986;
+    
+    public Screen(int pos, Race r)
     {
         this.position = pos;
-        this.gameInstance = g;
+        this.race = r;
         this.loadedChunks = new Chunk[3];
     }
     
-    public Screen(int pos, Game g, Vehicle fv)
+    public Screen(int pos, Race r, Vehicle fv)
     {
-        this(pos, g);
+        this(pos, r);
         this.focusVehicle = fv;
     }
     
-    public void renderScreen(Graphics2D g, Race race)
+    public void renderScreen(Graphics2D g)
     {   
         //Clear the clipping rectangle
         g.setClip(null);
-        
         Rectangle clippingRect = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         g.setColor(new Color(228, 224, 255));
         g.fill(clippingRect);
@@ -67,8 +66,8 @@ public class Screen
             //Safeguard against attempting to draw a null chunk
             if(chunk != null)
             {
-                chunk.renderTrack(g, this, gameInstance);
-                race.getFinishLine().render(g, this, gameInstance);
+                chunk.renderTrack(g, this);
+                race.getFinishLine().render(g, this);
             }
         }
         
@@ -76,25 +75,25 @@ public class Screen
         {
             if(chunk != null)
             {
-                chunk.renderGameObjects(g, this, gameInstance);
+                chunk.renderGameObjects(g, this);
             }
         }
         
         Vec2 placePosition = new Vec2(this.focusVehicle.getPosition());
         placePosition.x += Chunk.CHUNK_WIDTH - 2;
         placePosition.y -= ((float)Chunk.CHUNK_HEIGHT * .5) - 2;
-        int racePosition = this.focusVehicle.getCurrentPosition(race);
-        StringRenderer.drawCenteredString(g, ""+racePosition,
+        String racePosition = this.focusVehicle.getCurrentPosition();
+        StringRenderer.drawCenteredString(g, racePosition,
                 placePosition, Color.black, this);
     }
     
-    public void updateScreen(int numScreens, Race race)
+    public void updateScreen(int numScreens)
     {
-        this.updateLoadedChunks(race);
+        this.updateLoadedChunks();
         this.updateScreenPositionAndDimensions(numScreens);
     }
     
-    public void updateLoadedChunks(Race race)
+    public void updateLoadedChunks()
     {
         if(this.focusVehicle != null)
         {
@@ -139,22 +138,25 @@ public class Screen
     
     public void updateScreenPositionAndDimensions(int numScreens)
     {
+        float parentHeight = race.getGameInstance().getParent().getHeight();
+        float parentWidth = race.getGameInstance().getParent().getWidth();
+        
         if(numScreens > 1)
         {
-            height = gameInstance.getParent().getHeight() / 2;
+            height = race.getGameInstance().getParent().getHeight() / 2;
         }
         else
         {
-            height = gameInstance.getParent().getHeight();
+            height = race.getGameInstance().getParent().getHeight();
         }
         
         if(numScreens > 2)
         {
-            width = gameInstance.getParent().getWidth() / 2;
+            width = race.getGameInstance().getParent().getWidth() / 2;
         }
         else
         {
-            width = gameInstance.getParent().getWidth();
+            width = race.getGameInstance().getParent().getWidth();
         }
         
         if(this.position % 2 == 0)
@@ -173,6 +175,14 @@ public class Screen
         else
         {
             this.x = 0;
+        }
+        
+        float actualRatio = width / height;
+        if(actualRatio > EXPECTED_RATIO)
+        {
+            int oldWidth = width;
+            width = (height * 1920) / 986;
+            this.x += (int)(oldWidth - width) / 2;
         }
         
         //TODO Decide if the width or height change is greater to decide which one to use to set the scaleFactor

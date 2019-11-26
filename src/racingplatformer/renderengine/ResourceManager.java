@@ -32,7 +32,6 @@ public class ResourceManager
         catch (IOException ex) 
         {
             System.err.println("ERROR: Image not found at path: "+path);
-            //Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, "Image not found at path: "+path, ex);
         }
         return new ImageIcon("").getImage();
     }

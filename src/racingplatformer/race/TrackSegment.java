@@ -8,7 +8,6 @@ package racingplatformer.race;
 import java.awt.Graphics2D;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
-import racingplatformer.Game;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -24,5 +23,5 @@ public abstract class TrackSegment
         
     }
     
-    public abstract void render(Graphics2D g, Screen screen, Game gameInstance);
+    public abstract void render(Graphics2D g, Screen screen);
 }

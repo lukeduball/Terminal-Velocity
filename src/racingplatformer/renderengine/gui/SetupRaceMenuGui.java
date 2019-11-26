@@ -7,7 +7,6 @@ package racingplatformer.renderengine.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.HashSet;
 import racingplatformer.Game;
 import racingplatformer.PlayMusic;
 import racingplatformer.race.Race;

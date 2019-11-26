@@ -14,7 +14,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import racingplatformer.Game;
 import racingplatformer.renderengine.Screen;
 
 /**
@@ -47,7 +46,7 @@ public class FlatTrackSegment extends TrackSegment
     }
 
     @Override
-    public void render(Graphics2D g, Screen screen, Game gameInstance)
+    public void render(Graphics2D g, Screen screen)
     {
         g.setColor(Color.green);
         g.setStroke(new BasicStroke(10));

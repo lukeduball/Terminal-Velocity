@@ -22,11 +22,10 @@ import racingplatformer.PlayMusic;
 import racingplatformer.gameobject.vehicles.*;
 import racingplatformer.renderengine.DebugDrawTV;
 import racingplatformer.renderengine.Screen;
-import racingplatformer.renderengine.gui.MainMenuGui;
 import racingplatformer.renderengine.gui.TutorialWinnerGui;
 import racingplatformer.renderengine.gui.WinnerGui;
 import racingplatformer.renderengine.gui.components.VehicleSelector;
-
+import racingplatformer.utilities.Timer;
 /**
  *
  * @author Luke
@@ -55,15 +54,19 @@ public class Race implements ContactListener
     private int finishedVehicles = 0;
     
     private List<Integer> finishOrderList;
-    
+    private List<Integer> disqualificationList;
+
     private VehicleSelector[] selectorData;
     
+    private List<Timer> timerList;
+
     private static final float DT = 1.0f / 60.0f;
     private static final int VEL_IT = 3;
     private static final int POS_IT = 8;
     
     public Race(Game gameInst, VehicleSelector[] selectors)
     {
+        this.timerList = new ArrayList<>();
         this.selectorData = selectors;
         this.gameInstance = gameInst;
         
@@ -72,6 +75,7 @@ public class Race implements ContactListener
         this.screens = new ArrayList<>();
         
         this.finishOrderList = new ArrayList<>();
+        this.disqualificationList = new ArrayList<>();
         this.vehicleList = new ArrayList<>();
         
         this.chunkList = new ArrayList<>();
@@ -95,7 +99,7 @@ public class Race implements ContactListener
             else
             {
                 movementController = new PlayerController(vehicle, i+1);
-                Screen screen = new Screen(i+1, gameInst, vehicle);
+                Screen screen = new Screen(i+1, this, vehicle);
                 this.screens.add(screen);
             }
             vehicle.setMovementController(movementController);
@@ -104,13 +108,16 @@ public class Race implements ContactListener
         }
     }
     
+    //This constructor is used to setup a tutorial race
     public Race(Game gameInst)
     {
+        this.timerList = new ArrayList<>();
         world = new World(new Vec2(0.0f, 9.81f));
         world.setContactListener(this);
         this.screens = new ArrayList<>();
         
         this.finishOrderList = new ArrayList<>();
+        this.disqualificationList = new ArrayList<>();
 
         this.gameInstance = gameInst;
         this.chunkList = new ArrayList<>();
@@ -123,9 +130,9 @@ public class Race implements ContactListener
         Vec2 startPosition = Track.generateTutorialTrack(this, world, chunkList);
 
 
-        Porche porche = new Porche(world, startPosition.x, startPosition.y, 1);
+        Porche porche = new Porche(this, startPosition.x, startPosition.y, 1);
         porche.setMovementController(new PlayerController(porche, 1));
-        Screen screen = new Screen(1, gameInst, porche);
+        Screen screen = new Screen(1, this, porche);
 
         this.screens.add(screen);
         this.chunkList.get(0).addGameObject(porche);
@@ -143,24 +150,50 @@ public class Race implements ContactListener
     /***
      * Called to update the logic of the race each frame
      */
-    public void onUpdate()
+    public void onUpdate(long delta)
     {
         world.step(DT, VEL_IT, POS_IT);
         for(Screen screen : screens)
         {
-            screen.updateScreen(screens.size(), this);
+            screen.updateScreen(screens.size());
         }
-        
+
+        updateTimers(delta);
+
         for(Chunk chunk : this.loadedChunksList)
         {
             if(chunk != null)
             {
-                chunk.onUpdate(this);   
+                chunk.onUpdate(delta);
             }
         }
         this.checkForFinishedVehicles();
     }
     
+    private void updateTimers(long delta)
+    {
+        for(Timer timer : this.timerList)
+        {
+            if(!timer.hasTimerExpired())
+            {
+                timer.decreaseCounter(delta);
+            }
+        }
+    }
+
+    public void registerTimer(Timer t)
+    {
+        if(!this.timerList.contains(t))
+        {
+            this.timerList.add(t);
+        }
+    }
+
+    public void removeTimer(Timer t)
+    {
+        this.timerList.remove(t);
+    }
+
     private void checkForFinishedVehicles()
     {
         List<Vehicle> removeList = new ArrayList<>();
@@ -174,6 +207,13 @@ public class Race implements ContactListener
                 removeList.add(vehicle);
                 this.finishOrderList.add(vehicle.getRacerID());
             }
+            else if(!vehicle.isActive())
+            {
+                vehicle.setFinishPosition("DQ");
+                vehicle.setRacing(false);
+                this.disqualificationList.add(vehicle.getRacerID());
+                removeList.add(vehicle);
+            }
         }
         
         for(Vehicle vehicle : removeList)
@@ -185,12 +225,15 @@ public class Race implements ContactListener
     
     private void checkForEndOfRace()
     {
-        if(this.vehicleList.size() == 1 && !this.isTutorialRace)
+        if(this.vehicleList.size() <= 1 && !this.isTutorialRace)
         {
-            this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
+            if(this.vehicleList.size() > 0)
+            {
+                this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
+            }
             PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav", gameInstance);
             this.gameInstance.setActiveRace(null);
-            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.selectorData));
+            this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.disqualificationList, this.selectorData));
         }
         else if(this.isTutorialRace && this.vehicleList.isEmpty())
         {
@@ -210,7 +253,7 @@ public class Race implements ContactListener
         g.fillRect(0, 0, this.gameInstance.getWidth(), this.gameInstance.getHeight());
         for(Screen screen : screens)
         {
-            screen.renderScreen(g, this);
+            screen.renderScreen(g);
         }
         
         //Draw the debug data last so that it is drawn over all images
@@ -263,7 +306,7 @@ public class Race implements ContactListener
         return this.gameInstance.isKeyDown(this.gameInstance.getPlayerControlKeys(playerID-1)[keyIdentifier]);
     }
     
-    public int getCurrentPosition(Vehicle vehicle)
+    public String getCurrentPosition(Vehicle vehicle)
     {
         int position = finishedVehicles+1;
         for(Vehicle v : this.vehicleList)
@@ -277,7 +320,7 @@ public class Race implements ContactListener
                 position++;
             }
         }
-        return position;
+        return ""+position;
     }
     
     public FinishLine getFinishLine()
@@ -289,27 +332,32 @@ public class Race implements ContactListener
     {
         this.finishLine = fl;
     }
-    
-    public int getCurrentFPS()
-    {
-        return this.gameInstance.getCurrentFPS();
-    }
-    
+
     public Vehicle getVehicleForIndex(int i, int racerID, Vec2 startPos)
     {
         switch(i)
         {
             case 0:
-                return new Porche(this.world, startPos.x, startPos.y, racerID);
+                return new Porche(this, startPos.x, startPos.y, racerID);
             case 1:
-                return new MuscleCar(this.world, startPos.x, startPos.y, racerID);
+                return new MuscleCar(this, startPos.x, startPos.y, racerID);
             case 2:
-                return new RallyRacer(this.world, startPos.x, startPos.y, racerID);
+                return new RallyRacer(this, startPos.x, startPos.y, racerID);
             case 3:
-                return new MonsterTruck(this.world, startPos.x, startPos.y, racerID);
+                return new MonsterTruck(this, startPos.x, startPos.y, racerID);
             default:
                 return null;
         }
+    }
+
+    public Game getGameInstance()
+    {
+        return this.gameInstance;
+    }
+
+    public World getWorld()
+    {
+        return this.world;
     }
 
     @Override
