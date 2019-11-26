@@ -45,18 +45,18 @@ public class WinnerGui extends Gui{
     }
 
     public void onMainMenuButtonClicked(){
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
+        //if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
+        //}
         MainMenuGui mainMenuGui = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenuGui);
     }
 
     public void onRaceAgainButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
-        }
+       // if(gameInstance.getAreSoundEffectsActivated()) {
+            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav", gameInstance);
+        //}
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance, this.selectorData));

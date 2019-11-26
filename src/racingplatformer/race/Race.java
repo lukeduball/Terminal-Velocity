@@ -188,17 +188,13 @@ public class Race implements ContactListener
         if(this.vehicleList.size() == 1 && !this.isTutorialRace)
         {
             this.finishOrderList.add(this.vehicleList.get(0).getRacerID());
-            if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
-            }
+            PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav", gameInstance);
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new WinnerGui(this.gameInstance, this.finishOrderList, this.selectorData));
         }
         else if(this.isTutorialRace && this.vehicleList.isEmpty())
         {
-            if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav");
-            }
+            PlayMusic.soundFX("src/resources/SFX/EndRaceCheerSFX.wav", gameInstance);
             this.gameInstance.setActiveRace(null);
             this.gameInstance.setActiveGui(new TutorialWinnerGui(this.gameInstance));
         }

@@ -152,15 +152,11 @@ public class VehicleSelector extends Component
     {
         if(this.currentIndex > 0)
         {
-            if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-            }
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
             this.currentIndex--;
             this.rightArrow.setDisabled(false);
         }
 
-
-        
         if(this.currentIndex == 0){
             this.leftArrow.setDisabled(true);
         }
@@ -170,9 +166,7 @@ public class VehicleSelector extends Component
     {
         if(this.currentIndex < vehicleImage.length - 1)
         {
-            if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-            }
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
             this.currentIndex ++;
             this.leftArrow.setDisabled(false);
         }

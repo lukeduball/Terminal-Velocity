@@ -49,9 +49,7 @@ public class SetupRaceMenuGui extends Gui
     
     public void onRaceButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav", gameInstance);
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance, this.vehicleData));
@@ -59,9 +57,7 @@ public class SetupRaceMenuGui extends Gui
     
     public void onMainMenuButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
         MainMenuGui mainMenu = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenu);
     }

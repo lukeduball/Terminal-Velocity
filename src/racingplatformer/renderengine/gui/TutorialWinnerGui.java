@@ -23,18 +23,14 @@ public class TutorialWinnerGui extends Gui {
     }
 
     public void onMainMenuButtonClicked(){
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
         MainMenuGui mainMenuGui = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenuGui);
     }
 
     public void onRepeatTutorialButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav", gameInstance);
         System.out.println("Start Race!");
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance));

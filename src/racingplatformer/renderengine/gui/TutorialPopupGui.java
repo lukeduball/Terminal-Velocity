@@ -47,16 +47,12 @@ public class TutorialPopupGui extends PopupGui
     
     //Add button call methods below -- To close the popup just call its close method
     public void onNoButtonClicked(){
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
         close();
     }
 
     public void onYesButtonClicked(){
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/StartRaceSFX.wav", gameInstance);
         this.gameInstance.setActiveGui(null);
         this.gameInstance.setActiveRace(new Race(this.gameInstance));
     }

@@ -83,16 +83,13 @@ public class ToggleButton extends Button
     {
         if(this.getIsOn())
         {
-            if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-            }
+            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
+
             this.isOn = false;
         }
         else
         {
-            if(gameInstance.getAreSoundEffectsActivated()) {
-                PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-            }
+            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
             this.isOn = true;
         }
     }

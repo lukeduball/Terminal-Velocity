@@ -60,9 +60,7 @@ public class MainMenuGui extends Gui
      */
     public void onRaceButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         SetupRaceMenuGui setupRaceMenu = new SetupRaceMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(setupRaceMenu);
     }
@@ -72,9 +70,7 @@ public class MainMenuGui extends Gui
      */
     public void onOptionsButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         OptionsMenuGui optionsGui = new OptionsMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(optionsGui);
     }
@@ -84,9 +80,7 @@ public class MainMenuGui extends Gui
      */
     public void onHelpButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.setCurrentPopup(this.tutorialPopup);
         //this.setCurrentPopup(new PlayerControlsPopupGui(this.gameInstance, this));
     }
@@ -96,9 +90,7 @@ public class MainMenuGui extends Gui
      */
     public void onExitButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
         //Closes the program
         System.exit(0);
     }

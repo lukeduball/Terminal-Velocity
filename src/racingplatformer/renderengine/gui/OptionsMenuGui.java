@@ -36,9 +36,7 @@ public class OptionsMenuGui extends Gui
     
     public void onMainMenuButtonClicked()
     {
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav", gameInstance);
         MainMenuGui mainMenuGUI = new MainMenuGui(this.gameInstance);
         this.gameInstance.setActiveGui(mainMenuGUI);
     }
@@ -70,27 +68,17 @@ public class OptionsMenuGui extends Gui
     public void onPlayerControlsButtonClicked()
     {
         this.setCurrentPopup(new PlayerControlsPopupGui(this.gameInstance, this));
-        if(gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
     }
     
     public void onMusicToggleButtonClicked()
     {
-//        if(gameInstance.getAreSoundEffectsActivated() && gameInstance.getIsMusicActivated()) {
-//            PlayMusic.soundFX("src/resources/SFX/TVNegativeSFX.wav");
-//        }
-//        else if(gameInstance.getAreSoundEffectsActivated()) {
-//            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-//        }
         this.gameInstance.toggleMusic();
     }
     
     public void onSoundToggleButtonClicked()
     {
-        if(!gameInstance.getAreSoundEffectsActivated()) {
-            PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav");
-        }
+        PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.gameInstance.toggleSoundEffects();
     }
     
