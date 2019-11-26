@@ -101,9 +101,6 @@ public class MuscleCar extends Vehicle{
         jd.frequencyHz = 9f;
         jd.dampingRatio = 0.7f;
         rearWheelSpring = (WheelJoint) world.createJoint(jd);
-
-        //TODO set position of vehicle to startingPos
-        //TODO flip vehicle along y-axis
     }
 
     @Override

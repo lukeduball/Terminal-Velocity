@@ -51,11 +51,7 @@ public class MouseHandler implements MouseListener
     @Override
     public void mouseReleased(MouseEvent e) 
     {
-        //Fixes non-response issues, introduces ability to click then release into
-        if(this.gameInstance.getActiveGui() != null)
-        {
-            //this.gameInstance.getActiveGui().onMouseClicked(e);
-        }
+
     }
 
     @Override
