@@ -11,12 +11,12 @@ package racingplatformer.utilities;
  */
 public class Timer 
 {
-    boolean isActive;
+    private boolean isActive;
     private int counter;
-    private int fullTimer;
-    long nanoCounter;
+    private final int fullTimer;
+    private long nanoCounter;
     
-    private static long ONE_SECOND = 1000000000;
+    private static final long ONE_SECOND = 1000000000;
     
     public Timer(int sec)
     {
@@ -38,6 +38,7 @@ public class Timer
     public void resetTimer()
     {
         this.counter = fullTimer;
+        this.nanoCounter = ONE_SECOND;
     }
     
     public void decreaseCounter(long delta)
@@ -56,5 +57,10 @@ public class Timer
     public boolean hasTimerExpired()
     {
         return this.counter <= 0;
+    }
+    
+    public boolean isActive()
+    {
+        return this.isActive;
     }
 }
