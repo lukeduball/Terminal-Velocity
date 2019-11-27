@@ -77,6 +77,14 @@ public class Vehicle extends GameObject
         //Update the location of the vehicle
         
         //Depending on the controller it will move the vehicle based on those conditions
+        this.processControllers();
+        //Processes the last position of the vehicle to check if it is idle
+        this.processIdleStatus();
+
+    }
+    
+    public void processControllers()
+    {
         if(this.movementController != null && isRacing)
         {
             this.movementController.moveVehicle();
@@ -86,7 +94,10 @@ public class Vehicle extends GameObject
             this.frontWheelSpring.setMotorSpeed(0.0f);
             this.rearWheelSpring.setMotorSpeed(0.0f);
         }
-        
+    }
+    
+    public void processIdleStatus()
+    {
         Vec2 deltaPosition = this.frame.getPosition().sub(this.lastPosition);
         if(deltaPosition.lengthSquared() < 0.00001)
         {
@@ -104,7 +115,6 @@ public class Vehicle extends GameObject
         }
         
         this.lastPosition = new Vec2(this.frame.getPosition());
-
     }
 
     @Override
@@ -262,6 +272,11 @@ public class Vehicle extends GameObject
     public Race getRace()
     {
         return this.race;
+    }
+    
+    public Timer getIdleTimer()
+    {
+        return this.idleTimer;
     }
     
 }
