@@ -11,6 +11,10 @@ import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+
+import java.io.*;
+import javax.sound.sampled.*;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import racingplatformer.race.Race;
@@ -23,6 +27,7 @@ import racingplatformer.renderengine.gui.MainMenuGui;
  */
 public class Game extends Canvas
 {
+    private Clip clip;
     private final BufferStrategy strategy;
     
     private boolean gameRunning;
@@ -110,7 +115,9 @@ public class Game extends Canvas
     
     private void gameLoop()
     {
-        PlayMusic.music("src/resources/music/TVRaceTheme1.wav", this);
+        clip = PlayMusic.setupClip("src/resources/music/TVRaceTheme1.wav", clip);
+        PlayMusic.changeMusic(clip, this);
+
         final int TARGET_FPS = 60;
         final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
         long lastFpsTime = 0L;
@@ -312,5 +319,8 @@ public class Game extends Canvas
     public boolean isKeyDown(int keyCode)
     {
         return this.keys[keyCode];
+    }
+    public Clip getClip(){
+        return clip;
     }
 }
