@@ -223,7 +223,7 @@ public class Race implements ContactListener
         this.checkForEndOfRace();
     }
     
-    private void checkForEndOfRace()
+    public void checkForEndOfRace()
     {
         if(this.vehicleList.size() <= 1 && !this.isTutorialRace)
         {
@@ -296,7 +296,7 @@ public class Race implements ContactListener
         this.loadedChunksList.remove(chunk);
     }
     
-    private boolean isChunkLoaded(Chunk chunk)
+    public boolean isChunkLoaded(Chunk chunk)
     {
         return this.loadedChunksList.contains(chunk);
     }
