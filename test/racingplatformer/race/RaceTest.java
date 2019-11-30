@@ -9,40 +9,43 @@ import racingplatformer.renderengine.gui.components.VehicleSelector;
 public class RaceTest {
 
     private static Race raceTut, raceGame;
-    private static Game gameTut, gameRace;
+    private static Game game;
 
     @BeforeClass
     public static void initialize()
     {
-        gameTut = new Game();
-        raceTut = new Race(gameTut);
+        game = new Game();
+        raceTut = new Race(game);
 
-        gameRace = new Game();
         VehicleSelector[] vehicleSelectors = new VehicleSelector[2];
-        vehicleSelectors[0] = new VehicleSelector(gameRace,1, 32, 40, 200, 95);
-        vehicleSelectors[1] = new VehicleSelector(gameRace,2, 32, 40, 200, 95);
-        raceGame = new Race(gameRace, vehicleSelectors);
+        vehicleSelectors[0] = new VehicleSelector(game,1, 32, 40, 200, 95);
+        vehicleSelectors[1] = new VehicleSelector(game,2, 32, 40, 200, 95);
+        raceGame = new Race(game, vehicleSelectors);
 
     }
 
     @Test
     public void testCheckForEndOfRace(){
+        game.setActiveRace(raceTut);
+        assertEquals(game.getActiveRace(), raceTut);
         raceTut.checkForEndOfRace();
-        assertNull(gameTut.getActiveGui());
+        assertNull(game.getActiveGui());
 
+        game.setActiveRace(raceGame);
+        assertEquals(game.getActiveRace(), raceGame);
         raceGame.checkForEndOfRace();
-        assertNull(gameRace.getActiveGui());
+        assertNull(game.getActiveGui());
     }
 
     @Test
     public void testGetChunk(){
-        assertTrue(raceTut.getChunk(0) != null);
+        assertNotNull(raceTut.getChunk(0));
         assertNull(raceTut.getChunk(-1));
     }
 
     @Test
     public void testGetChunkFromLocation(){
-        assertTrue(raceTut.getChunkFromLocation(100) != null);
+        assertNotNull(raceTut.getChunkFromLocation(100));
         assertNull(raceTut.getChunkFromLocation(-1000));
         assertEquals(raceTut.getChunkFromLocation(10), raceTut.getChunk(0));
     }
