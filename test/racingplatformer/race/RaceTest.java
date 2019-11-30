@@ -4,46 +4,56 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import racingplatformer.Game;
-//import racingplatformer.renderengine.gui.components.VehicleSelector;
+import racingplatformer.renderengine.gui.components.VehicleSelector;
 
 public class RaceTest {
 
-    private static Race race;
+    private static Race raceTut, raceGame;
+    private static Game gameTut, gameRace;
 
     @BeforeClass
     public static void initialize()
     {
-        Game game = new Game();
-//        VehicleSelector[] vehicleSelectors = new VehicleSelector[1];
-//        vehicleSelectors[0] = new VehicleSelector(game,1, 32, 40, 200, 95);
-        race = new Race(game);
+        gameTut = new Game();
+        raceTut = new Race(gameTut);
+
+        gameRace = new Game();
+        VehicleSelector[] vehicleSelectors = new VehicleSelector[2];
+        vehicleSelectors[0] = new VehicleSelector(gameRace,1, 32, 40, 200, 95);
+        vehicleSelectors[1] = new VehicleSelector(gameRace,2, 32, 40, 200, 95);
+        raceGame = new Race(gameRace, vehicleSelectors);
+
     }
 
     @Test
     public void testCheckForEndOfRace(){
-        //private method
+        raceTut.checkForEndOfRace();
+        assertNull(gameTut.getActiveGui());
+
+        raceGame.checkForEndOfRace();
+        assertNull(gameRace.getActiveGui());
     }
 
     @Test
     public void testGetChunk(){
-        assertTrue(race.getChunk(0) != null);
-        assertNull(race.getChunk(-1));
+        assertTrue(raceTut.getChunk(0) != null);
+        assertNull(raceTut.getChunk(-1));
     }
 
     @Test
     public void testGetChunkFromLocation(){
-        assertTrue(race.getChunkFromLocation(100) != null);
-        assertNull(race.getChunkFromLocation(-1000));
-        assertEquals(race.getChunkFromLocation(10), race.getChunk(0));
+        assertTrue(raceTut.getChunkFromLocation(100) != null);
+        assertNull(raceTut.getChunkFromLocation(-1000));
+        assertEquals(raceTut.getChunkFromLocation(10), raceTut.getChunk(0));
     }
 
     @Test
     public void testIsChunkLoadedAndLoadAndUnloadChunkMethods(){
-        assertFalse(race.isChunkLoaded(race.getChunk(1)));
-        race.loadChunk(race.getChunk(0));
-        assertTrue(race.isChunkLoaded(race.getChunk(0)));
-        race.unloadChunk(race.getChunk(0));
-        assertFalse(race.isChunkLoaded(race.getChunk(0)));
+        assertFalse(raceTut.isChunkLoaded(raceTut.getChunk(1)));
+        raceTut.loadChunk(raceTut.getChunk(0));
+        assertTrue(raceTut.isChunkLoaded(raceTut.getChunk(0)));
+        raceTut.unloadChunk(raceTut.getChunk(0));
+        assertFalse(raceTut.isChunkLoaded(raceTut.getChunk(0)));
     }
 
 }
