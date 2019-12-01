@@ -30,21 +30,21 @@ public class FrontVehiclePositionTest {
 
     @Test
     public void testPorcheGetFrontOfVehiclePosition(){
-        assertEquals(vehicle1.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(vehicle1.halfWidth, 0)));
+        assertEquals(vehicle1.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(134.5f/64f, 0)));
     }
 
     @Test
     public void testMuscleCarGetFrontOfVehiclePosition(){
-        assertEquals(vehicle2.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(vehicle2.halfWidth, 0)));
+        assertEquals(vehicle2.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(127f/64f, 0)));
     }
 
     @Test
     public void testRallyRacerGetFrontOfVehiclePosition(){
-        assertEquals(vehicle3.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(vehicle3.halfWidth, 0)));
+        assertEquals(vehicle3.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(130f/64f, 0)));
     }
 
     @Test
     public void testMonsterTruckGetFrontOfVehiclePosition(){
-        assertEquals(vehicle4.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(vehicle4.halfWidth, 0)));
+        assertEquals(vehicle4.getFrontOfVehiclePosition(), new Vec2(startX,startY).add(new Vec2(130f/64f, 0)));
     }
 }
