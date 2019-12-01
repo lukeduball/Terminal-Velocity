@@ -37,6 +37,12 @@ public class Track
     public static Vec2 generateTutorialTrack(Race race, World world, List<Chunk> chunkList)
     {
         Chunk firstChunk = new Chunk(race, 0);
+        
+        firstChunk.addBoundary(new TextSegment(world, "Press the W key to go forward", new Vec2(2.0f, -6.0f)));
+        firstChunk.addBoundary(new TextSegment(world, "Press the S key to go backward", new Vec2(2.0f, -5.0f)));
+        firstChunk.addBoundary(new TextSegment(world, "If you are still for 5 seconds", new Vec2(2.0f, -3.9f)));
+        firstChunk.addBoundary(new TextSegment(world, "you will be disqualified", new Vec2(2.5f, -2.9f)));
+        
         float yCoordinate = 0.0f;
         Vec2 point1 = new Vec2(-5, yCoordinate);
         Vec2 point2 = new Vec2(Chunk.CHUNK_WIDTH, yCoordinate);
@@ -71,6 +77,8 @@ public class Track
             {
                 Vec2 wallPoint = new Vec2((i+1) * Chunk.CHUNK_WIDTH, yCoordinate);
                 chunk.addBoundary(new WallTrackSegment(world, p2, wallPoint, 0.0f));
+                chunk.addBoundary(new TextSegment(world, "Hold A to rotate the vehicle up", new Vec2((i+1)*Chunk.CHUNK_WIDTH - 15, yCoordinate - 5*(i-9)-5)));
+                chunk.addBoundary(new TextSegment(world, "Hold D to rotate the vehicle down", new Vec2((i+1)*Chunk.CHUNK_WIDTH - 15, yCoordinate - 5*(i-9)-4)));
             }
         }
         
@@ -82,6 +90,9 @@ public class Track
             chunk.addBoundary(new FlatTrackSegment(world, p1, p2));
             chunkList.add(chunk);
         }
+        
+        Chunk lastChunk = chunkList.get(i-1);
+        lastChunk.addBoundary(new TextSegment(world, "Pass through the finish line to end a race", new Vec2((i)*Chunk.CHUNK_WIDTH - 25, yCoordinate - 4)));
         
         generateFinishLineArea(race, world, chunkList, i++, yCoordinate);
         return startPosition.add(new Vec2(2, -1));
