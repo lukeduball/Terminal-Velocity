@@ -28,7 +28,6 @@ import racingplatformer.renderengine.Screen;
 public class CurvedTrackSegment extends TrackSegment
 {
     private List<Vec2> pointList;
-    private Body physicsBody;
     
     public CurvedTrackSegment(int chunkID, PerlinNoise pNoise, World world)
     {
