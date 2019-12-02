@@ -69,6 +69,9 @@ public class CharField extends Component
         {
             this.keyCode = e.getKeyCode();
         }
+        else{
+            return;
+        }
         //Reflection in Java used to call a method in the parent gui with the name on(name of the button)ButtonClicked
         Method method = null;
         try

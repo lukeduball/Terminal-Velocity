@@ -119,24 +119,36 @@ public class PlayerControlsPopupGui extends PopupGui
     
     public void onForwardKeyFieldTyped()
     {
+        if(this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.FORWARD] == this.inputFields[Game.FORWARD].getKeyCode()){
+            return;
+        }
         PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.FORWARD] = this.inputFields[Game.FORWARD].getKeyCode();
     }
     
     public void onTiltLKeyFieldTyped()
     {
+        if(this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.TILT_UP] == this.inputFields[Game.TILT_UP].getKeyCode()){
+            return;
+        }
         PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.TILT_UP] = this.inputFields[Game.TILT_UP].getKeyCode();
     }
         
     public void onTiltRKeyFieldTyped()
     {
+        if(this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.TILT_DOWN] == this.inputFields[Game.TILT_DOWN].getKeyCode()){
+            return;
+        }
         PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.TILT_DOWN] = this.inputFields[Game.TILT_DOWN].getKeyCode();
     }
     
     public void onBackKeyFieldTyped()
     {
+        if(this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.BACKWARD] == this.inputFields[Game.BACKWARD].getKeyCode()){
+            return;
+        }
         PlayMusic.soundFX("src/resources/SFX/TVAffirmativeSFX.wav", gameInstance);
         this.gameInstance.getPlayerControlKeys(this.selectedPlayer)[Game.BACKWARD] = this.inputFields[Game.BACKWARD].getKeyCode();
     }

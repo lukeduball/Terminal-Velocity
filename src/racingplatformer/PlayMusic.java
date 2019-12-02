@@ -8,7 +8,7 @@ import java.io.*;
 import javax.sound.sampled.*;
 public class PlayMusic 
 {
-    public static Clip setupClip(String string, Clip clip){
+    public static Clip setupClip(Clip clip){
         try {
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("src/resources/music/TVRaceTheme1.wav"));
             clip = AudioSystem.getClip();

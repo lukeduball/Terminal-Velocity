@@ -115,7 +115,7 @@ public class Game extends Canvas
     
     private void gameLoop()
     {
-        clip = PlayMusic.setupClip("src/resources/music/TVRaceTheme1.wav", clip);
+        clip = PlayMusic.setupClip(clip);
         PlayMusic.changeMusic(clip, this);
 
         final int TARGET_FPS = 60;
