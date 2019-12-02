@@ -77,7 +77,7 @@ public class Game extends Canvas
         this.initDefaultKeyControls();
         
         //Creates the window that contains the canvas
-        JFrame container = new JFrame("Racing Platformer");
+        JFrame container = new JFrame("Terminal Velocity");
         
         //Sets the window to the default screen size
         Dimension fullScreen = Toolkit.getDefaultToolkit().getScreenSize();
