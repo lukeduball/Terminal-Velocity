@@ -105,4 +105,14 @@ public class Chunk
             this.boundaryList.add(trackSegment);
         }
     }
+    
+    public List<TrackSegment> getBoundaryList()
+    {
+        return this.boundaryList;
+    }
+    
+    public List<GameObject> getGameObjectList()
+    {
+        return this.gameObjectList;
+    }
 }
