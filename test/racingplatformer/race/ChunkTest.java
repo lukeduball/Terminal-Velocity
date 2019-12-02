@@ -10,7 +10,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import racingplatformer.Game;
-import racingplatformer.gameobject.vehicles.PlayerController;
 import racingplatformer.gameobject.vehicles.Porche;
 
 /**

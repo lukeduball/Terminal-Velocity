@@ -121,7 +121,7 @@ public class Screen
     }
     
     //Determines which chunk to unload based on if the new middle chunk is greater or less than the old middle chunk
-    private Chunk getChunkToUnload(Chunk currentChunk, Chunk previousMiddleChunk)
+    public Chunk getChunkToUnload(Chunk currentChunk, Chunk previousMiddleChunk)
     {
         if(currentChunk == null || previousMiddleChunk == null)
             return null;
@@ -241,6 +241,11 @@ public class Screen
             }
         }
         return false;
+    }
+    
+    public Chunk[] getLoadedChunks()
+    {
+        return this.loadedChunks;
     }
     
 }
